@@ -1,0 +1,249 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+
+
+
+body .panel-primary {
+    border-color: #FFFFFF !important;
+    box-shadow: 3px 3px 16px #00000012 !important;
+}
+
+.form-control {
+    border-color: #f1f4f6 !important;
+    box-shadow: none !important;
+    background: #f6f1f2 !important;
+}
+
+.form-head {
+    border-color: #f1f4f6 !important;
+    box-shadow: none !important;
+    background: #f1f4f6 !important;
+}
+
+#contenedor {
+    display: inline-block;
+    min-width: 100px;
+}
+
+#texto {
+    background-color: red;
+    width: 100%;
+}
+
+body .frame-principal .main {
+    margin-top: 60px;
+}
+
+body .form-group {
+    margin-bottom: 15px !important;
+}
+
+body .panel-primary {
+    border-color: #ddd;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+}
+
+body .panel-heading {
+    padding-left: 1%;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+
+.modal-custom-lg .modal-dialog {
+    max-width: 99%;
+    max-height: 99%;
+    width: 99%;
+    height: 99%;
+}
+
+body .panel-primary {
+    border-color: #FFFFFF !important;
+    box-shadow: 3px 3px 16px #00000012 !important;
+}
+
+body .panel-primary {
+    border-color: #ddd;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+}
+
+.divider {
+    border-bottom: 1px solid rgb(53, 58, 60) !important;
+    color: rgb(207, 203, 197);
+}
+
+li.divider {
+    border-bottom-color: 1px solid rgb(53, 58, 60);
+    color: rgb(207, 203, 197);
+}
+
+.right-divider {
+    border-left-color: rgb(60, 65, 68);
+}
+
+@media screen and (max-width: 600px) {
+
+    .bar-right-rspnsv,
+    .bar-left {
+        transform: scale(0.8) translateX(-37px);
+    }
+}
+
+
+@media screen and (max-width: 767px) {
+    .section {
+        padding: 6px 0px !important;
+    }
+
+    app-menu>div>.sidebar-custom {
+        margin-right: 0;
+    }
+
+    body .frame-principal {
+        margin-right: 0 !important;
+    }
+
+    body {
+        padding-bottom: 100px !important;
+    }
+
+    .menu-rspnsv>.sidebar-nav-pm {
+        top: 70px;
+        max-height: calc(100vh - 175px);
+        overflow: scroll;
+        box-shadow: 0px 4px 10px #00000038;
+    }
+
+    .bk-gray>label#pm-url {
+        /*float:none;
+      margin-top:7px;*/
+        display: none;
+    }
+
+    .sidebar-custom-alt {
+        width: 265px !important;
+        margin-right: 50px !important;
+    }
+
+    .ng-isolate-scope>.sidebar-custom {
+        margin-right: 0px;
+        /*box-shadow: 2px 0px 13px rgba(0, 0, 0, 0.42);*/
+    }
+
+    .menu-pm {
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+
+    .section>.row {
+        margin-right: 0px;
+        margin-left: -10px;
+    }
+
+    .menu-rspnsv {
+        -webkit-transition: all .3s ease;
+        transition: all .3s ease;
+        opacity: 0;
+        width: 0;
+        position: absolute;
+        z-index: 9999;
+        /*width: calc(100% - 65px);*/
+        left: 100%;
+        background: white;
+        overflow: hidden;
+    }
+
+    #menu-rspnsv-id:checked+.menu-rspnsv {
+        width: 50px;
+        opacity: 1;
+        left: calc(100% - 50px);
+    }
+
+    .btn-menu-rspnsv {
+        cursor: pointer;
+        height: 40px;
+        width: 40px;
+        background: #368bb5;
+        border-radius: 50%;
+        position: fixed;
+        z-index: 999;
+        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.32);
+        right: 5px;
+        top: 4px;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 23px;
+    }
+
+    #menu-rspnsv-id {
+        /*display:none;*/
+        width: 40px;
+        height: 40px;
+        position: fixed;
+        right: 5px;
+        top: 4px;
+        z-index: 9999;
+        opacity: 0;
+    }
+
+    #sw-submenu-1>div>.sidebar-brand {
+        padding-right: 65px;
+        width: 265px;
+    }
+
+    .menu-height>.sidebar-nav {
+        padding-right: 70px;
+    }
+
+    .table-responsive {
+        border: none;
+    }
+
+    .mobile-table-box {
+        box-shadow: 0px 0px 13px rgba(0, 0, 0, 0.25);
+        overflow-y: scroll;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    .mobile-table-box>table {
+        border: none;
+    }
+
+    .cnt-modal-msj>.modal-msj {
+        right: 44px;
+        z-index: 12;
+    }
+
+    .pull-rspnsv {
+        float: none !important;
+    }
+
+    .cierre-caja {
+        right: 6% !important;
+        left: 6% !important;
+    }
+}
+
+.absolute {
+    margin: 15px 20px 20px 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+

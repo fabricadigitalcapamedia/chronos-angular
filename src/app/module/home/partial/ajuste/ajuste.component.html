@@ -1,0 +1,120 @@
+<div class="absolute">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-12 pl-0 pr-0">
+        <form #form="ngForm">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+                    <mat-tab label="Cambio Contraseña">
+                        <div class="form-group col-md-12 p-4 panel panel-primary">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-sm-6 col-12 form-group">
+                                    <label class="D-label">Usuario</label>
+                                    <input type="text" autocomplete="off" name="user" class="form-control"
+                                        [disabled]="true" [(ngModel)]="datapass.user">
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 col-sm-6 col-12 form-group">
+                                    <label class="D-label">Nueva Contraseña</label>
+                                    <div class="input-group">
+                                        <input type="{{ getPasswordFieldType('password') }}" autocomplete="off"
+                                            name="password" class="form-control" placeholder="Contraseña"
+                                            [(ngModel)]="datapass.password">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                (click)="togglePasswordVisibility('password')">
+                                                <i [ngClass]="{'fa': true, 'fa-eye': !showPassword, 'fa-eye-slash': showPassword}"
+                                                    id="eyeIcon"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 col-sm-6 col-12 form-group">
+                                    <label class="D-label">Repita Contraseña</label>
+                                    <div class="input-group">
+                                        <input type="{{ getPasswordFieldType('reppassword') }}" autocomplete="off"
+                                            name="reppassword" class="form-control" placeholder="Contraseña"
+                                            [(ngModel)]="reppassword">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                (click)="togglePasswordVisibility('reppassword')">
+                                                <i [ngClass]="{'fa': true, 'fa-eye': !repshowPassword, 'fa-eye-slash': repshowPassword}"
+                                                    id="eyeIcon"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <label class="D-label red-text"> {{mesajepass}}</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-12 form-group text-center">
+                            <button class="form-group btn btn-primary" (click)="savePassword()"
+                                title="Guardar">Guardar</button>
+                        </div>
+                        <mat-tab label="Azure">
+                            <div class="form-group col-md-12 ">
+                                <div class="col-md-12 p-0">
+                                    <div class="form-group col-md-12 p-4 panel panel-primary">
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label class="D-label">Correo</label>
+                                                    <input type="text" autocomplete="off" name="email"
+                                                        class="form-control" [(ngModel)]="dataazure.email">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-8 col-md-6 col-sm-6 col-12 form-group">
+                                                <label class="D-label">Contraseña</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" title="Ayuda"
+                                                            (click)="open(content)"><i class="fa fa fa-info"></i></span>
+                                                    </div>
+                                                    <input type="{{ getPasswordFieldTypeazure() }}" autocomplete="off"
+                                                        [(ngModel)]="dataazure.passwordazure" name="passwordazure"
+                                                        class="form-control" placeholder="Contraseña">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline-secondary" type="button"
+                                                            (click)="togglePasswordVisibilityazure()">
+                                                            <i [ngClass]="{'fa': true, 'fa-eye': !showPasswordazure, 'fa-eye-slash': showPasswordazure}"
+                                                                id="eyeIcon"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 form-group text-center">
+                                        <button class="form-group btn btn-primary"
+                                            title="Agregar campo response" (click)="saveToken()">Guardar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Pasos</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <h4 class="font-weight-bold">1.</h4>
+        <img src="assets/img/access-token-01.png" alt="" class="img-fluid img-thumbnail">
+        <br>
+        <h4 class="font-weight-bold">2.</h4>
+        <img src="assets/img/access-token-02.png" alt="" class="img-fluid img-thumbnail">
+        <br>
+        <h4 class="font-weight-bold">3.</h4>
+        <img src="assets/img/access-token-03.png" alt="" class="img-fluid img-thumbnail">
+        <br>
+    </div>
+    <div class="modal-footer">
+    </div>
+</ng-template>

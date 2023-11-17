@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  bmi-project:
+    container_name: bmi-chronos
+    restart: always
+    networks:
+      - bmi-net
+    build: 
+      context: .
+      dockerfile: dockerfile
+
+networks:
+  bmi-net:
+    driver: bridge
+    name: bmi-net
+    

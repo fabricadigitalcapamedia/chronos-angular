@@ -1,0 +1,272 @@
+<div class="absolute" data-aos="fade-right">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+        <form #form="ngForm">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="form-group col-md-12 row">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 form-group">
+                        <input type="text" class="form-control" [(ngModel)]="filtroNombre" name="filtroNombre"
+                            [ngbTypeahead]="search" placeholder="Buscar service..."
+                            [resultTemplate]="searchResultTemplate" (selectItem)="seleccionarElemento($event.item)">
+
+                        <ng-template #searchResultTemplate let-r="result" let-t="term">
+                            <ngb-highlight [result]="r" [term]="t"></ngb-highlight>
+                        </ng-template>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 form-group">
+                        <i class="fa fa-search" aria-hidden="true" (click)="seleccionarElemento(filtroNombre)"
+                            title="Buscar"></i>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="form-group col-md-12">
+                            <div
+                                class="form-group col-md-12 p-4 panel panel-primary">
+                                <div class="form-group col-md-12 tit-alt">SERVICE</div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 form-group">
+                                        <label class="D-label">Nombre Servicio</label>
+                                        <input type="text" autocomplete="off" id="nameservice" name="nameservice"
+                                            [(ngModel)]="metododata.nameservice" class="form-control">
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label class="D-label">Namespace</label>
+                                            <input type="text" id="namespace" name="namespace"
+                                                [(ngModel)]="metododata.namespace" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label class="D-label">Infraestructura</label>
+                                            <input type="text" id="infraestructura" name="infraestructura"
+                                                [(ngModel)]="metododata.infraestructura" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label class="D-label">Path</label>
+                                            <input type="text" id="path" name="path" [(ngModel)]="metododata.path"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        
+
+                        <div class="form-group col-md-12">
+                            <mdb-accordion [flush]="true">
+                                <mdb-accordion-item mdb-accordion-item
+                                    *ngFor="let dato of metododata.metodo let i = index">
+                                    <ng-template mdbAccordionItemHeader>{{ dato.namemetodo }}</ng-template>
+                                    <ng-template mdbAccordionItemBody>
+                                        <div class="form-group col-md-12">
+                                            <div class="col-md-12 p-0">
+                                                <div class="row">
+                                                    <div class="form-group col-md-12 p-3 panel panel-primary">
+                                                        <div class="row">
+                                                            <div class="col-lg-3 col-md-6 col-sm-6 col-12 form-group">
+                                                                <label class="D-label">Nombre de Método</label>
+                                                                <input type="text" name="dato.namemetodo_{{i}}"
+                                                                    [(ngModel)]="dato.namemetodo" class="form-control">
+                                                            </div>
+
+                                                            <div class="col-lg-2 col-md-6 col-sm-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label class="D-label">Tipo de método</label>
+                                                                    <select name="dato.peticion_{{i}}"
+                                                                        class="form-control"
+                                                                        [(ngModel)]="dato.peticion">
+                                                                        <option value="">Seleccione..</option>
+                                                                        <option value="Get">Get</option>
+                                                                        <option value="Post">Post</option>
+                                                                        <option value="Put">Put</option>
+                                                                        <option value="Delete">Delete</option>
+                                                                        <option value="Patch">Patch</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-3 col-md-6 col-sm-6 col-12 form-group">
+                                                                <div class="form-group">
+                                                                    <label class="D-label">Url Metodo</label>
+                                                                    <input type="text" name="dato.urlmetodo_{{i}}"
+                                                                        [(ngModel)]="dato.urlmetodo"
+                                                                        class="form-control"
+                                                                        (ngModelChange)="actualizarUrlCompleta(metododata,i)">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-4 col-md-6 col-sm-6 col-12 form-group">
+                                                                <div class="form-group">
+                                                                    <label class="D-label">Url Completa</label>
+                                                                    <input type="text" disabled="true"
+                                                                        name="dato.urlcompleta{{i}}"
+                                                                        [(ngModel)]="dato.urlcompleta" readonly
+                                                                        class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 p-0">
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                                                        <div class="col-md-12 p-3 panel panel-primary">
+                                                            <div class="form-group col-md-12 tit-alt">REQUEST</div>
+                                                            <div class="row"
+                                                                *ngFor="let param of dato.request; let j = index">
+                                                                <div
+                                                                    class="col-lg-4 col-md-6 col-sm-6 col-12 form-group">
+                                                                    <div class="form-group">
+                                                                        <label class="D-label">Nombre</label>
+                                                                        <input type="text"
+                                                                            name="param.nameparam_{{j}}_{{i}}"
+                                                                            [(ngModel)]="param.nameparam"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                                                    <div class="form-group">
+                                                                        <label class="D-label">Tipo Parametro</label>
+                                                                        <select class="form-control"
+                                                                            name="param.tipo_{{j}}_{{i}}"
+                                                                            [(ngModel)]="param.tipo">
+                                                                            <option value="">Seleccione..</option>
+                                                                            <option value="string">Texto(String)
+                                                                            </option>
+                                                                            <option value="number">Numero(number)
+                                                                            </option>
+                                                                            <option value="boolean">Boolean(true o
+                                                                                false)
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                                                                    <div class="form-group">
+                                                                        <label class="D-label">Descripcion</label>
+                                                                        <input type="text"
+                                                                            name="param.descripparam_{{j}}_{{i}}"
+                                                                            [(ngModel)]="param.descripparam"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-1 col-md-2 col-sm-2 col-12">
+                                                                    <button class="btn btn-danger"
+                                                                        (click)="deleteRequestParam(dato, j)"
+                                                                        title="Eliminar Parametro Request">-</button>
+                                                                </div>
+
+                                                            </div>
+                                                            <button class=" form-group btn btn-primary"
+                                                                (click)="agregarParametroEntrada(dato)"
+                                                                title="Agregar campo Request">+</button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                                                        <div class="col-md-12 p-3 panel panel-primary">
+                                                            <div class="form-group col-md-12 tit-alt">RESPONSE</div>
+                                                            <div class="row"
+                                                                *ngFor="let response of dato.response; let j = index">
+                                                                <div
+                                                                    class="col-lg-3 col-md-6 col-sm-6 col-12 form-group">
+                                                                    <div class="form-group">
+                                                                        <label class="D-label">Nombre</label>
+                                                                        <input type="text"
+                                                                            name="response.namerespon_{{j}}_{{i}}"
+                                                                            [(ngModel)]="response.namerespon"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                                                    <div class="form-group">
+                                                                        <label class="D-label">Tipo de método</label>
+                                                                        <select name="response.tiporespon_{{j}}_{{i}}"
+                                                                            class="form-control"
+                                                                            [(ngModel)]="response.tiporespon">
+                                                                            <option value="">Seleccione..</option>
+                                                                            <option value="string">Texto(String)
+                                                                            </option>
+                                                                            <option value="number">Numero(number)
+                                                                            </option>
+                                                                            <option value="boolean">Boolean(true o
+                                                                                false)
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                                                    <div class="form-group">
+                                                                        <label class="D-label">Descripcion</label>
+                                                                        <input type="text"
+                                                                            name="response.descrirespon_{{j}}_{{i}}"
+                                                                            [(ngModel)]="response.descrirespon"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-lg-2 col-md-6 col-sm-6 col-12">
+                                                                    <div class="form-group">
+                                                                        <label class="D-label">Ejemplo</label>
+                                                                        <input type="text"
+                                                                            name="response.ejemploreson_{{j}}_{{i}}"
+                                                                            [(ngModel)]="response.ejemploreson"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-lg-1 col-md-2 col-sm-2 col-12">
+                                                                    <button class="btn btn-danger"
+                                                                        (click)="deleteResponseParam(dato, j)"
+                                                                        title="Eliminar Response">-</button>
+                                                                </div>
+                                                            </div>
+
+                                                            <button class="form-group btn btn-primary"
+                                                                (click)="agregarResponse(dato)"
+                                                                title="Agregar campo response">+</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-control col-xl-12 col-lg-2 col-sm-6 col-xs-12 col-md-2">
+                                                <div class="justify-content-center align-items-center">
+                                                    <button class="btn btn-danger mt-2" (click)="eliminarMetodo(i)"
+                                                        title="Eliminar metodo">Eliminar {{ dato.namemetodo }}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </mdb-accordion-item>
+                            </mdb-accordion>
+                        </div>
+
+                        <button class="form-group btn btn-primary mt-2" title="Agregar Método"
+                            (click)="agregarMetodo()">Agregar
+                            Método</button>
+
+                        <div class="container mt-4">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <button class="btn btn-success mt-2" (click)="openModal()">Ver Json</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
