@@ -1,0 +1,13 @@
+<!-- modal-content.component.html -->
+<div class="modal-header"  data-aos="flip-left">
+  <h4 class="modal-title">Información del Servicio</h4>
+  <button class="btn btn-secondary" (click)="activeModal.close('Close click')">X</button>
+</div>
+<div class="modal-body">
+  <pre>{{ data | json }}</pre>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-secondary" (click)="exportarAJSON()">Exportar Json</button>
+  <button class="btn btn-secondary" (click)="copyToClipboard()">{{ mensaje}}</button>
+</div>
+

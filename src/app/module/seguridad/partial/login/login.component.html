@@ -1,0 +1,84 @@
+<section class="vh-100">
+    <div class="container-fluid h-custom">
+        <ul class="list-inline ml-auto">
+            <li class="list-inline-item"><a href="home/demoaplicacion">Demo aplicación</a></li>
+            <li class="list-inline-item ml-2"><a href="home/estimaciones">Estimación</a></li>
+            <li class="list-inline-item ml-2"><a href="home/hallazgos">Hallazgos</a></li>
+        </ul>
+
+        <div class="row d-flex justify-content-center align-items-center h-100" *ngIf="restablecerPass==false">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                    class="img-fluid" alt="Sample image">
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <form>
+                    <div class="form-outline mb-4">
+                        <label class="form-label">Usario</label>
+                        <input type="text" name="user" [(ngModel)]="user" class="form-control form-control-lg"
+                            placeholder="Ingrese usuario" />
+                    </div>
+
+                    <div class="form-outline mb-3">
+                        <label class="form-label" for="password">Contraseña</label>
+                        <input type="password" name="password" [(ngModel)]="password"
+                            class="form-control form-control-lg" placeholder="Ingrese contraseña"
+                            (keyup.enter)="login()">
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <!-- Checkbox -->
+                        <div class="form-check mb-0">
+                            <label class="form-check-label" for="form2Example3">Recordar</label>
+                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+                        </div>
+                        <!-- <a href="#!" class="text-body">Forgot password?</a>-->
+                    </div>
+
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="button" class="btn btn-primary btn-lg"
+                            style="padding-left: 2.5rem; padding-right: 2.5rem;" [disabled]="isDisabled"
+                            (click)="login()">Ingresar</button>
+                    </div>
+                    <div class="row">
+                        <div class="text-center text-lg-start mt-4 pt-2"><a class="link-danger"
+                                (click)="olvidasteContrasena()">Olvidaste la
+                                Contraseña</a>
+                        </div>
+                        <div class="text-center text-lg-start mt-4 pt-2"><a href="#!"
+                                class="link-danger">Registrarme</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+
+        <div class="row d-flex justify-content-center align-items-center h-100" *ngIf="restablecerPass">
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <form>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="form-group col-lg-6 col-md-6 col-sm-12 col-12">
+                            <label class="form-label">Usuario</label>
+                            <input type="text" name="user" [(ngModel)]="user" class="form-control form-control-lg"
+                                placeholder="Ingrese usuario" />
+                        </div>
+
+                        <div class="text-center  form-group col-lg-6 col-md-6 col-sm-12 col-12">
+                            <button type="button" class="btn btn-primary btn-lg"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem;"
+                                (click)="login()">Recuperar</button>
+                        </div>
+
+                        <div class="text-center form-group col-lg-6 col-md-6 col-sm-12 col-12"><a class="link-danger"
+                                (click)="olvidasteContrasena()">Iniciar Sesion</a>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
