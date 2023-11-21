@@ -3,13 +3,6 @@ import * as CryptoJS from 'crypto-js';
 import { LoginService } from './../../service/login.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { NgForm } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AutenticationService } from 'src/app/autentication.service';
 
 

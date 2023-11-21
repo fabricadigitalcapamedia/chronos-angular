@@ -25,9 +25,7 @@ import { AutenticationService } from './autentication.service';
 import { GanttComponent } from './basico/gantt/gantt.component';
 import { NgxGanttModule } from '@worktile/gantt';
 import { MatMenuModule } from '@angular/material/menu';
-import { TabsModule } from 'ngx-bootstrap/tabs'; 
-
-
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 
 
@@ -35,7 +33,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
   declarations: [
     AppComponent,
     LoginComponent,
-    GanttComponent,    
+    GanttComponent,   
   ],
   imports: [
     MatMenuModule,

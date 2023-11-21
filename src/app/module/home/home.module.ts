@@ -17,6 +17,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { TabsModule } from 'ngx-bootstrap/tabs'; 
 import {MatTabsModule} from '@angular/material/tabs';
 import { AjusteComponent } from './partial/ajuste/ajuste.component';
+import { SharedModule } from '../shared/shared.module';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -41,7 +43,13 @@ import { AjusteComponent } from './partial/ajuste/ajuste.component';
     FormsModule,
     MdbAccordionModule,
     TabsModule.forRoot(),
-    MatTabsModule
-  ]
+    MatTabsModule,
+    SharedModule,
+    RouterModule
+  ],
+  exports: [
+    MenuComponent,
+    AjusteComponent
+  ],
 })
 export class HomeModule { }

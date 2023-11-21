@@ -3,7 +3,8 @@
 /node_modules
 /documentation
 /coverage
-
+/.angular
+/.vscode
 # Logs
 logs
 *.log

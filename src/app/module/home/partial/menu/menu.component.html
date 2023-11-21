@@ -1,3 +1,4 @@
+<!--
 <mat-toolbar color="primary" class="my-custom-toolbar">
     <mat-toolbar-row>
         <mat-icon mat-button title="" (click)="open()">{{menu}}</mat-icon>
@@ -37,5 +38,11 @@
     </mat-sidenav-content>
 
 </mat-sidenav-container>
-
-
+-->
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<div class="content-wrapper">
+    <app-breadcrumbs></app-breadcrumbs>
+    <router-outlet></router-outlet>
+</div>
+<app-footer></app-footer>
