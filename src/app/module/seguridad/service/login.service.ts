@@ -4,13 +4,14 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { LoggerService } from '../../../shared/config/logger.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  constructor(private http: HttpClient, private router:Router,private toastr: ToastrService,) { }
+  constructor(private http: HttpClient, private router:Router,private toastr: ToastrService, private log: LoggerService,) { }
 
   url = environment.apiUrl;
   
@@ -20,6 +21,8 @@ export class LoginService {
   
   
   getLogin(data: string): Observable<any> {
+    this.log.log('Inicio Login: ', data);
+    
     return this.http.get(this.url + '/seguridad?usuario=' + data).pipe(
       catchError((error: any) => {
         // Manejar el error aquí, por ejemplo, registrándolo o devolviendo un error personalizado.

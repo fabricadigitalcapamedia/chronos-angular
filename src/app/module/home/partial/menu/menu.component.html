@@ -1,41 +1,7 @@
-<mat-toolbar color="primary" class="my-custom-toolbar">
-    <mat-toolbar-row>
-        <mat-icon mat-button title="" (click)="open()">{{menu}}</mat-icon>
-        <div class="spacer"></div>
-        {{ nameuser }}
-        <mat-icon mat-button>account_circle</mat-icon>
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <mat-menu #dropdown="matMenu">
-                    <button mat-menu-item (click)="logout()"><mat-icon>exit_to_app</mat-icon>Cerrar Sesion</button>
-                    <button mat-menu-item><mat-icon>perm_identity</mat-icon> Perfil</button>
-                    <div class="mat-divider"></div>
-                    <button mat-menu-item routerLink="ajuste" style="text-decoration: none;">
-                        <mat-icon>settings</mat-icon>
-                        Ajustes
-                    </button>
-                </mat-menu>
-                <mat-icon mat-button [matMenuTriggerFor]="dropdown">
-                    <mat-icon>arrow_drop_down</mat-icon>
-                </mat-icon>
-            </li>
-        </ul>
-    </mat-toolbar-row>
-</mat-toolbar>
-
-<mat-sidenav-container>
-    <mat-sidenav [(opened)]="opened" mode="side">
-        <mat-list>
-            <mat-list-item><a routerLink="hallazgos" style="text-decoration: none;">Hallazgos</a></mat-list-item>
-            <mat-list-item><a routerLink="demoaplicacion"
-                    style="text-decoration: none;">demoaplicacion</a></mat-list-item>
-        </mat-list>
-    </mat-sidenav>
-
-    <mat-sidenav-content>
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
-
-</mat-sidenav-container>
-
-
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<div class="content-wrapper">
+    <app-breadcrumbs></app-breadcrumbs>
+    <router-outlet></router-outlet>
+</div>
+<app-footer></app-footer>
