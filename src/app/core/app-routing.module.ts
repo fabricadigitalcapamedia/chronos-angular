@@ -25,6 +25,7 @@ const routes: Routes = [
   {
     path: 'home', component: MenuComponent,
     canActivate: [(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AutenticationService).canActivate()],
+    data: {titulo: 'Home'},
     children: [
       {
         path: '',
