@@ -1,0 +1,4 @@
+<div class="col-md-12 pb-3 pt-3 pl-0 pr-4">
+    <app-grid-chronos [gridOptions]="gridData" (jsonDinamicoEnviado)="recibirJsonDinamico($event)"></app-grid-chronos>
+    <p>JSON Dinámico recibido en el padre: {{ jsonDinamicoRecibido | json }}</p>
+</div>

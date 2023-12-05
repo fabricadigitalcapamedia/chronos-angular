@@ -18,7 +18,9 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import {MatTabsModule} from '@angular/material/tabs';
 import { AjusteComponent } from './partial/ajuste/ajuste.component';
 import { SharedModule } from '../../../app/shared/shared.module';
+
 import { RouterModule } from '@angular/router';
+import { ParametrizacionModule } from '../parametrizacion/parametrizacion.module';
 
 
 
@@ -45,6 +47,7 @@ import { RouterModule } from '@angular/router';
     TabsModule.forRoot(),
     MatTabsModule,
     SharedModule,
+    ParametrizacionModule,
     RouterModule
   ],
   exports: [

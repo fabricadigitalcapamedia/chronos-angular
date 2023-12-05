@@ -65,7 +65,7 @@ import { SharedModule } from '../shared/shared.module';
       serverLogLevel: NgxLoggerLevel.ERROR,
       serverLoggingUrl: 'http://localhost:4200/',
       disableConsoleLogging: false 
-    }) 
+    })
   ],
   providers: [AutenticationService],
   bootstrap: [AppComponent]
