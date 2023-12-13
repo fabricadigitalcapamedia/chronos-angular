@@ -1,0 +1,146 @@
+<app-toolbar [toolbar]="toolbarAction"></app-toolbar>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-12 pl-0 pr-0 ">
+    <form [ngClass]="validate ? 'was-validated' : ''" #form="ngForm">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card card-danger" *ngIf="verGrid==false">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="bankSelect">Tipo</label>
+                                <mat-select [(ngModel)]="DatosProyecto.codproyectotipo" #singleSelect
+                                    class="form-control" name="codproyectotipo"  placeholder="Seleccione.." [required]="true">
+                                    <mat-option>
+                                        <ngx-mat-select-search [formControl]="tipoFilterCtrl" placeholder="Buscar"
+                                            placeholderLabel="Buscar"
+                                            noEntriesFoundLabel="No hay Registros"></ngx-mat-select-search>
+                                    </mat-option>
+
+                                    <mat-option *ngFor="let tipo of filteredTipo | async" [value]="tipo.id"
+                                        noEntriesFoundLabel="Buscar">
+                                        {{ tipo.nombre }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="bankSelect">Presupuesto</label>
+                                <mat-select [(ngModel)]="DatosProyecto.codpresupuesto" #singleSelect
+                                    class="form-control" name="codpresupuesto" placeholder="Seleccione.." [required]="true">
+                                    <mat-option>
+                                        <ngx-mat-select-search [formControl]="presuFilterCtrl" placeholder="Buscar"
+                                            placeholderLabel="Buscar"
+                                            noEntriesFoundLabel="No hay Registros" [required]="true"></ngx-mat-select-search>
+                                    </mat-option>
+
+                                    <mat-option *ngFor="let presu of filteredPresu | async" [value]="presu.id"
+                                        noEntriesFoundLabel="Buscar" >
+                                        {{ presu.elemento_pep }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Código</label>
+                                <input type="text" [required]="true"
+                                    [(ngModel)]="DatosProyecto.codigoproyecto" name="codigoproyecto" class="form-control"
+                                    placeholder="Código">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input type="text"  [required]="true" name="nombre" [(ngModel)]="DatosProyecto.nombre" class="form-control"
+                                    placeholder="Nombre">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="pb-4">
+                                <label class="D-label">Fecha Inicio</label>
+                                <div class="input-group">
+                                    <input name="fechainicio"  [required]="true" type="text" bsDatepicker #dp1="bsDatepicker"
+                                        placeholder="DD/MM/AAAA" class="form-control"
+                                        [(ngModel)]="DatosProyecto.fechainicio"
+                                        [bsConfig]="{ adaptivePosition: true,isAnimated: true, dateInputFormat: 'DD/MM/YYYY',containerClass:'theme-dark-blue', customTodayClass: 'bg-warning'}">
+                                    <span class="input-group-addon calendar-icon" (click)="dp1.show()"
+                                        [attr.aria-expanded]="dp1.isOpen">
+                                        <i class="fa fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="pb-4">
+                                <label class="D-label">Fecha Fin</label>
+                                <div class="input-group">
+                                    <input name="fechafin" [required]="true" type="text" bsDatepicker #dp2="bsDatepicker"
+                                        placeholder="DD/MM/AAAA" class="form-control"
+                                        [(ngModel)]="DatosProyecto.fechafin"
+                                        [bsConfig]="{ adaptivePosition: true,isAnimated: true, dateInputFormat: 'DD/MM/YYYY',containerClass:'theme-dark-blue', customTodayClass: 'bg-warning'}">
+                                    <span class="input-group-addon calendar-icon" (click)="dp2.show()"
+                                        [attr.aria-expanded]="dp2.isOpen">
+                                        <i class="fa fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Nombre Local</label>
+                                <input type="text" name="nombreLocal" [(ngModel)]="DatosProyecto.nombreLocal" class="form-control"
+                                    placeholder="Nombre Local">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="vehicle1">Prioritario</label><br>
+                                <input type="checkbox" name="prioritario" [(ngModel)]="DatosProyecto.prioritario" id="vehicle2"
+                                    name="vehicle2" value="Car">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <!-- textarea -->
+                            <div class="form-group">
+                                <label>Descripción</label>
+                                <textarea class="form-control" name="descripcion" rows="3" placeholder="Descripción"
+                                    [(ngModel)]="DatosProyecto.descripcion"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 text-center">
+                                <button type="button" class="btn btn-success" (click)="guardar()">Guardar</button>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 text-center">
+                                <button type="button" class="btn btn-primary" (click)="filtrar()">Filtrar</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+
+            <div class="col-md-12 pb-3 pt-3 pl-0 pr-1" *ngIf="verGrid">
+                <app-grid-chronos [gridOptions]="gridData"
+                    (jsonDinamicoEnviado)="recibirJsonDinamico($event)"></app-grid-chronos>
+            </div>
+        </div>
+    </form>
+</div>

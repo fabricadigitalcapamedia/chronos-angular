@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
+@import "~ag-grid-community/styles/ag-grid.css";
+@import "~ag-grid-community/styles/ag-theme-balham.css";
 
 
 
@@ -234,6 +236,26 @@ li.divider {
 
 .absolute {
     margin: 15px 20px 20px 15px;
+}
+
+.calendar-icon {
+    font-size: 28px;
+    /* Tamaño del ícono, ajusta según sea necesario */
+    line-height: 1.5;
+    /* Ajusta según sea necesario para centrar verticalmente */
+    cursor: pointer;
+    /* Cambia el cursor al pasar sobre el ícono */
+}
+
+.was-validated .form-control:invalid,
+.form-control.is-invalid {
+    border-color: #dc3545 !important;
+    background-image: none !important;
+}
+
+.was-validated .form-control:valid,
+.form-control.is-valid {
+    background-image: none !important;
 }
 
 

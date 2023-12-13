@@ -5,6 +5,11 @@ import { BreadcrumbsComponent } from './components/design/breadcrumbs/breadcrumb
 import { FooterComponent } from './components/design/footer/footer.component';
 import { SidebarComponent } from './components/design/sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
+import { DataTablesModule,DataTableDirective } from 'angular-datatables';
+import { AgGridModule } from 'ag-grid-angular';
+import { TemplateRenderComponent } from './components/grid-chronos/template-render/template-render.component';
+import { GridChronosComponent } from './components/grid-chronos/grid-chronos.component';
+import { ToolbarComponent } from './components/design/toolbar/toolbar.component';
 
 
 
@@ -14,16 +19,24 @@ import { RouterModule } from '@angular/router';
     FooterComponent,
     SidebarComponent,
     BreadcrumbsComponent,
+    TemplateRenderComponent,
+    GridChronosComponent,
+    ToolbarComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    DataTablesModule,    
+    AgGridModule,
+    
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
     BreadcrumbsComponent,
+    GridChronosComponent,
+    ToolbarComponent
   ],
 })
 export class SharedModule { }

@@ -41,4 +41,13 @@ export class MenuComponent implements OnInit {
     }
   }
 
+  gridData?: any[];
+
+
+  jsonDinamicoRecibido?: { [key: string]: any };
+
+  recibirJsonDinamico(json: { [key: string]: any }) {
+    this.jsonDinamicoRecibido = json;
+  }
+
 }

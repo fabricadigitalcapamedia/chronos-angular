@@ -4,34 +4,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SidebarService {
-  menu: any[] = [{
-    titulo: 'Configuracion',
-    icon: 'nav-icon fas fa-tachometer-alt',
-    submenu: [
-      { titulo: 'Estimacion', url: 'estimaciones', icon: 'fa fa-users' },
-      { titulo: 'Hallazgos', url: 'hallazgos', icon: 'fa fa-cubes' }
-    ]
-  }, {
-    titulo: 'Prueba',
-    icon: 'nav-icon fas fa-tachometer-alt',
-    submenu: [
-      { titulo: 'Estimacion', url: 'estimaciones', icon: 'fa fa-users' },
-      { titulo: 'Hallazgos', url: 'hallazgos', icon: 'fa fa-cubes' }
-    ]
-  }]
-
 
   data = [
-    { id: 1, titulo: 'Configuracion', icon: 'nav-icon fas fa-tachometer-alt', idparent: null,path: null  },
-    { id: 2, titulo: 'Estimación', icon: 'fa fa-users', idparent: 1, path: 'estimaciones' },
-    { id: 3, titulo: 'Hallazgos', icon: 'fa fa-cubes', idparent: 1, path: 'hallazgos' },
-    { id: 4, titulo: 'Prueba', icon: 'nav-icon fas fa-tachometer-alt', idparent: null,path: null },
-    { id: 5, titulo: 'Elfer', icon: 'fa fa-users', idparent: 4, path: null },
-    { id: 6, titulo: 'Hallazgos', icon: 'fa fa-cubes', idparent: 5, path: 'hallazgos' },
-    { id: 7, titulo: 'Eestimaciones', icon: 'fa fa-users', idparent: 4, path: 'estimaciones' },
-    { id: 8, titulo: 'Seguridad', icon: 'nav-icon fas fa-tachometer-alt', idparent: null,path: 'estimaciones'  },
+    { id: 1, titulo: 'Parametrizacion', icon: 'fa fa-cogs', idparent: null, path: null },
+    { id: 2, titulo: 'Proyecto', icon: 'fa fa-folder-open', idparent: 1, path: 'proyecto' },
   ];
-   
+
   constructor() { }
 
   ejecutar() {
