@@ -10,7 +10,8 @@ import { GerateJsonComponent } from '../module/home/partial/gerate-json/gerate-j
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { HttpClientModule } from '@angular/common/http';
-
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import {Component} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -28,6 +29,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { TabsModule } from 'ngx-bootstrap/tabs'; 
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { SharedModule } from '../shared/shared.module';
+import { CalendarComponent } from '../shared/components/calendar/calendar.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 
 
@@ -37,7 +40,8 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     AppComponent,
     LoginComponent,
-    GanttComponent,    
+    GanttComponent,
+    CalendarComponent,
   ],
   imports: [
     MatMenuModule,
@@ -65,7 +69,9 @@ import { SharedModule } from '../shared/shared.module';
       serverLogLevel: NgxLoggerLevel.ERROR,
       serverLoggingUrl: 'http://localhost:4200/',
       disableConsoleLogging: false 
-    }) 
+    }),
+    BrowserAnimationsModule,
+    FullCalendarModule,
   ],
   providers: [AutenticationService],
   bootstrap: [AppComponent]
