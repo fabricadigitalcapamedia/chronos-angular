@@ -4,26 +4,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SidebarService {
-  menu: any[] = [{
-    titulo: 'Configuracion',
-    icon: 'nav-icon fas fa-tachometer-alt',
-    submenu: [
-      { titulo: 'Estimacion', url: 'estimaciones', icon: 'fa fa-users' },
-      { titulo: 'Hallazgos', url: 'hallazgos', icon: 'fa fa-cubes' }
-    ]
-  }, {
-    titulo: 'Prueba',
-    icon: 'nav-icon fas fa-tachometer-alt',
-    submenu: [
-      { titulo: 'Estimacion', url: 'estimaciones', icon: 'fa fa-users' },
-      { titulo: 'Hallazgos', url: 'hallazgos', icon: 'fa fa-cubes' }
-    ]
-  }]
-
 
   data = [
-    { id: 1, titulo: 'Parametrizacion', icon: 'nav-icon fas fa-tachometer-alt', idparent: null, path: null },
-    { id: 2, titulo: 'Proyecto', icon: 'nav-icon fas fa-tachometer-alt', idparent: 1, path: 'proyecto' },
+    { id: 1, titulo: 'Parametrizacion', icon: 'fa fa-cogs', idparent: null, path: null },
+    { id: 2, titulo: 'Proyecto', icon: 'fa fa-folder-open', idparent: 1, path: 'proyecto' },
   ];
 
   constructor() { }

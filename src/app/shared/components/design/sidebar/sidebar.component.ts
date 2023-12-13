@@ -16,7 +16,7 @@ export class SidebarComponent implements OnInit {
   user = localStorage.getItem('user');
   nameuser = localStorage.getItem('nameuser');
   constructor(private sidebarService: SidebarService, private router: Router, private autenticationService: AutenticationService) {
-    this.menuItems = sidebarService.menu;
+    
     this.mymenu = sidebarService.ejecutar();
     console.log(this.mymenu);
     sidebarService.ejecutar();

@@ -12,11 +12,24 @@ export class ProyectoService {
 
   constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) { }
   url = environment.apiUrl;
-  user= localStorage.getItem("user")
 
   getProyecto(clUsuario: any): Observable<any> {
     const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);
     return this.http.get(this.url + '/proyecto', { headers });
+  }
+
+
+  getProyectoXid(clUsuario: any, id: number): Observable<any> {
+    const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);
+    return this.http.get(this.url + '/proyecto/' + id, { headers });
+  }
+
+  getPresupuesto(): Observable<any> {
+    return this.http.get(this.url + '/presupuesto');
+  }
+
+  getProyectoTipo(): Observable<any> {
+    return this.http.get(this.url + '/proyectotipo');
   }
 
   createItem(item: any): Observable<any> {
@@ -24,7 +37,9 @@ export class ProyectoService {
   }
 
   // Operación de actualización (PUT)
-  updateItem(id: number, item: any): Observable<any> {
-    return this.http.put(this.url + '/servicedemo/' + id, item);
+  updateItem(clUsuario: any, id: number): Observable<any> {
+    const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);
+    return this.http.put(this.url + '/proyecto/' + id, { headers });
   }
 }
+

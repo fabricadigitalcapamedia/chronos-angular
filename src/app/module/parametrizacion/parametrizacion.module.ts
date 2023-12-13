@@ -20,6 +20,15 @@ import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { ParametrizacionRoutingModule } from './parametrizacion-routing.module';
 import { SharedModule } from "../../shared/shared.module";
 
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
+
+
 
 
 
@@ -29,6 +38,13 @@ import { SharedModule } from "../../shared/shared.module";
     ],
     exports: [],
     imports: [
+        BsDatepickerModule.forRoot(),
+        MatNativeDateModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        NgxMatSelectSearchModule,
         CommonModule,
         MatMenuModule,
         MatSidenavModule,

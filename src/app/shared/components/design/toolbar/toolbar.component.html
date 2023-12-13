@@ -1,0 +1,99 @@
+<div class="col-lg-12 pt-3 pb-3 col-md-12  col-sm-12 col-12 toolbar-top" [hidden]="hidden">
+    <div id="head" class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 section">
+      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+        <div class="col-md-12 p-0">
+          <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center" (click)="toolbar.new()" title="Nuevo (Ctrl + F9)"
+            *ngIf="toolbar.new && (toolbar.newShow == null || toolbar.newShow)" [disabled]="loadingBar.progress$|async">
+            <i class="fa fa-plus"></i> Nuevo
+          </button>
+    
+          <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center" (click)="toolbar.save()"
+            title="Guardar (Ctrl + F10)" *ngIf="toolbar.save && (toolbar.saveShow == null || toolbar.saveShow)"
+            [disabled]="loadingBar.progress$|async">
+            <i class="fa fa-save text-success"></i> Guardar 
+          </button>
+    
+          <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center" (click)="toolbar.edit()" title="Editar (F2)"
+            *ngIf="toolbar.edit && (toolbar.editShow == null || toolbar.editShow)" [disabled]="loadingBar.progress$|async">
+            <i class="fa fa-edit text-default"></i> Editar 
+          </button>
+    
+          <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center" (click)="toolbar.delete()"
+            title="Eliminar (Ctrl + F12)" *ngIf="toolbar.delete && (toolbar.deleteShow == null || toolbar.deleteShow)"
+            [disabled]="loadingBar.progress$|async">
+            <i class="fa fa-trash text-danger"></i> Eliminar
+          </button>
+    
+          <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center" (click)="toolbar.cancel()"
+            title="Cancelar (Ctrl + F11)" *ngIf="toolbar.cancel && (toolbar.cancelShow == null || toolbar.cancelShow)"
+            [disabled]="loadingBar.progress$|async">
+            <i class="fa fa-times text-default"></i> Cancelar
+          </button>
+    
+          <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center" (click)="toolbar.searchQ()" title="Buscar (F9)"
+            *ngIf="toolbar.searchQ && (toolbar.searchQShow == null || toolbar.searchQShow)"
+            [disabled]="loadingBar.progress$|async">
+            <i class="fa fa-search text-default"></i>
+          </button>
+    
+          <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center" (click)="toolbar.report()" title="Reporte"
+            *ngIf="toolbar.report && (toolbar.reportShow == null || toolbar.reportShow)"
+            [disabled]="loadingBar.progress$|async">
+            <i class="fa icon-rpttransaccion text-default"></i>
+          </button>
+    
+          <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center" (click)="toolbar.process()" title="Calcular"
+            *ngIf="toolbar.process && (toolbar.processShow == null || toolbar.processShow)"
+            [disabled]="loadingBar.progress$|async">
+            <i class="fa fa-cogs text-default"></i>
+          </button>
+    
+          <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center" (click)="toolbar.input()" title="Procesar"
+            *ngIf="toolbar.input && (toolbar.inputShow == null || toolbar.inputShow)"
+            [disabled]="loadingBar.progress$|async">
+            <i class="fa fa-bolt text-default"></i>
+          </button>
+    
+        </div>
+      </div>
+    
+      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="col-md-12 p-0 text-right">
+    
+          <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center" (click)="toolbar.dynamicProperties()"
+            title="Campos Personalizables"
+            *ngIf="toolbar.dynamicProperties && (toolbar.dynamicPropertiesShow == null || toolbar.dynamicPropertiesShow)">
+            <i class="fa fa-object-ungroup text-default"></i>
+          </button>
+    
+          <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center" (click)="toolbar.attachment()" title="Adjuntar"
+            *ngIf="toolbar.attachment && (toolbar.attachmentShow == null || toolbar.attachmentShow)">
+            <i class="fa fa-paperclip text-default"></i>
+          </button>
+    
+    
+          <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center" (click)="toolbar.helpField()" title="Ayuda Campo"
+            *ngIf="toolbar.helpField && (toolbar.helpFieldShow == null || toolbar.helpFieldShow)">
+            <i class="fa fa-info text-info"></i>
+          </button>
+    
+          <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center" (click)="toolbar.email()" title="Email"
+            *ngIf="toolbar.email && (toolbar.emailShow == null || toolbar.emailShow)">
+            <i class="fa fa-envelope-o text-default"></i>
+          </button>
+    
+          <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center" (click)="toolbar.Notificacion()" title="Envio Notificacion Push"
+            *ngIf="toolbar.Notificacion && (toolbar.NotificacionShow == null || toolbar.NotificacionShow)">
+            <i class="fa fa-share-square-o text-default"></i>
+          </button>
+    
+          <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-right" (click)="toolbar.tour()" title="Tour"
+          *ngIf="toolbar.tour && (toolbar.tourShow == null || toolbar.tourShow)">
+          <i class="fa icon-tour text-default"></i>
+        </button>
+    
+    
+        </div>
+      </div>
+    </div>
+    </div>
