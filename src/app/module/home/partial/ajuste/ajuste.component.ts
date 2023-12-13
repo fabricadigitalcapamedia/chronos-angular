@@ -43,8 +43,7 @@ export class AjusteComponent implements OnInit {
 
   saveToken() {
     this.ajusteService.updateToken(this.datapass.user,this.dataazure.passwordazure,this.dataazure.email).subscribe((response) => {
-     debugger;
-      this.toastr.success(response.mensaje)
+         this.toastr.success(response.mensaje)
     });
   }
 

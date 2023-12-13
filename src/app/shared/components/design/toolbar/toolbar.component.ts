@@ -14,8 +14,6 @@ export class ToolbarComponent implements OnInit{
 
   constructor(public loadingBar: LoadingBarService){}
   
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
+  ngOnInit(): void {}
 
 }

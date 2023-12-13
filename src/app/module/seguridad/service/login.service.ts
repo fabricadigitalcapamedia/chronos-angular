@@ -29,7 +29,7 @@ export class LoginService {
         console.error('Error en la solicitud HTTP:', error);
         
         // Devuelve un nuevo observable que emite el error
-        debugger
+        
         return (error.status.toString());
       })
     );

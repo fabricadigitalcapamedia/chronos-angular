@@ -32,14 +32,15 @@ export class ProyectoService {
     return this.http.get(this.url + '/proyectotipo');
   }
 
-  createItem(item: any): Observable<any> {
-    return this.http.post(this.url + '/servicedemo', item);
+  createProyecto(clUsuario: any, data: any): Observable<any> {
+    const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);
+    return this.http.post(this.url + '/proyecto', data, { headers });
   }
 
   // Operación de actualización (PUT)
-  updateItem(clUsuario: any, id: number): Observable<any> {
-    const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);
-    return this.http.put(this.url + '/proyecto/' + id, { headers });
+  updateProyecto(clUsuario: any, data: any): Observable<any> {
+    const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);    
+    return this.http.put(this.url + '/proyecto/' + data.id, data, { headers });
   }
 }
 

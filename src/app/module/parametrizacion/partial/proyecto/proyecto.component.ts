@@ -15,7 +15,7 @@ import { NgForm } from '@angular/forms';
 })
 export class ProyectoComponent implements OnInit {
 
-  @ViewChild('form', { static: true }) Form?: NgForm 
+  @ViewChild('form', { static: true }) Form?: NgForm
 
   codproyectotipo = new FormControl();
   tipoFilterCtrl = new FormControl();
@@ -48,7 +48,9 @@ export class ProyectoComponent implements OnInit {
       width: 80
     },
     { field: "codigoproyecto", headerName: 'Codigo Proyecto' },
-    { field: "nombre", headerName: 'Nombre', width: 1000 },
+    { field: "nombre", headerName: 'Nombre', width: 800 },
+    { field: "fechainicio", headerName: 'Fecha Inicio', width: 150 },
+    { field: "fechafin", headerName: 'Fecha Fin', width: 150 },
     // { field: "successful", editable: true },
     // { field: "rocket", tooltipField: 'rocket' },
   ];
@@ -68,31 +70,31 @@ export class ProyectoComponent implements OnInit {
 
     this.toolbarAction = {
       save: () => {
-        this.guardar()
-      }, 
+        this.save();
+      },
       delete: () => {
-      }, 
+      },
       edit: () => {
-      }, 
+      },
       new: () => {
         this.clear();
       },
-      cancel: () => { 
+      filter: () => {
+        this.filtrar();
       },
-      editShow: true,
-      cancelShow: true,
-      saveShow: true,
-      deleteShow: true,
-      newShow: true ,
+      editShow: false,
+      saveShow: false,
+      deleteShow: false,
+      newShow: false,
+      filterShow: false
     }
-
   }
 
   ngOnInit(): void {
     this.fnLoad();
 
-    this.propertyValue=[
-      {codigoproyecto:true,codigomaxlength:100}
+    this.propertyValue = [
+      { codigoproyecto: true, codigomaxlength: 100 }
     ]
   }
 
@@ -147,9 +149,11 @@ export class ProyectoComponent implements OnInit {
       this.llenarCampos();
       this.filterTipo(this.DatosProyecto.codproyectotipo);
       this.filterPresu(this.DatosProyecto.codpresupuesto);
-      console.log("Edit", this.DatosProyecto);
       this.verGrid = false;
       this.router.navigate([], { queryParams: { idProyecto: this.DatosProyecto.id } });
+      this.idProyecto = this.route.snapshot.queryParams;
+      this.activationButtons();
+      console.log("Edit", this.DatosProyecto);
     }
     else {
       this.DatosProyecto = event.data;
@@ -166,8 +170,13 @@ export class ProyectoComponent implements OnInit {
   getProyecto() {
     this.proyectoService.getProyecto(this.user).subscribe((response) => {
       if (response.data.length > 0) {
+        response.data.forEach((element: any) => {
+          element.fechainicio = this.formatFecha(element.fechainicio);
+          element.fechafin = this.formatFecha(element.fechafin);
+        });
         this.gridData.api?.setRowData(response.data);
         this.cargaPresupuesto();
+        this.activationButtons();
       }
       else {
         this.toastr.error('error de conexion con el servidor.')
@@ -181,6 +190,7 @@ export class ProyectoComponent implements OnInit {
       if (response.data) {
         this.DatosProyecto = response.data;
         this.llenarCampos();
+        this.activationButtons();
       }
       else {
         this.toastr.error('error de conexion con el servidor.')
@@ -189,20 +199,35 @@ export class ProyectoComponent implements OnInit {
 
   }
 
-  guardar() {
+  save() {
     if (!this.Form?.valid) {
-      console.log('ee',this.Form?.valid)
       this.validate = true
-      this.toastr.warning('Debe diligenciar los campos remarcados en rojo')
-    //  return false;
+      this.toastr.warning('Debe diligenciar los campos remarcados en rojo');
     }
+    else {
+      const presupuesto = this.Datapresupuesto.filter((item: { id: number; }) => item.id === this.DatosProyecto.codpresupuesto);
+      let data: any = { ...this.DatosProyecto };
+      data.codpresupuesto = presupuesto[0];
+      data.fechainicio = new Date(data.fechainicio);
+      data.fechafin = new Date(data.fechafin);
 
-    
-    if (this.idProyecto.idProyecto) {
-      console.log("Actualizar", this.DatosProyecto)
-    } else {
-      console.log("Crear", this.DatosProyecto)
+      if (this.DatosProyecto.id) {
+        this.proyectoService.updateProyecto(this.user, data).subscribe((response) => {          
+          this.toastr.success(response.mensaje);
+        });
+
+      } else {
+        this.proyectoService.createProyecto(this.user, data).subscribe((response) => {
+          this.DatosProyecto.id = response.data.id;
+          this.router.navigate([], { queryParams: { idProyecto: this.DatosProyecto.id } });
+          this.activationButtons();
+          this.toastr.success(response.mensaje);
+        });
+      }
     }
+  }
+
+  delete() {
   }
 
 
@@ -246,6 +271,7 @@ export class ProyectoComponent implements OnInit {
   filtrar() {
     this.verGrid = true;
     this.router.navigate([], { queryParams: {} });
+    this.idProyecto = {};
     this.getProyecto();
   }
 
@@ -254,8 +280,9 @@ export class ProyectoComponent implements OnInit {
     this.router.navigate([], { queryParams: {} });
     this.DatosProyecto = {};
     this.cargaPresupuesto();
+    this.idProyecto = {};
+    this.activationButtons();
   }
-
 
   fnLoad() {
     this.idProyecto = this.route.snapshot.queryParams;
@@ -269,5 +296,17 @@ export class ProyectoComponent implements OnInit {
   }
 
 
-
+  activationButtons() {
+    if (this.verGrid) {
+      this.toolbarAction.saveShow = false;
+      this.toolbarAction.filterShow = false;
+      this.toolbarAction.deleteShow = false;
+      this.toolbarAction.newShow = true;
+    } else {
+      this.toolbarAction.saveShow = true;
+      this.toolbarAction.filterShow = true;
+      this.DatosProyecto.id ? this.toolbarAction.deleteShow = true : this.toolbarAction.deleteShow = false;
+      this.toolbarAction.newShow = true;
+    }
+  }
 }

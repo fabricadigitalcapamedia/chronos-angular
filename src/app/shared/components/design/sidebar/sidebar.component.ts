@@ -18,14 +18,11 @@ export class SidebarComponent implements OnInit {
   constructor(private sidebarService: SidebarService, private router: Router, private autenticationService: AutenticationService) {
     
     this.mymenu = sidebarService.ejecutar();
-    console.log(this.mymenu);
     sidebarService.ejecutar();
 
   }
-  // menu:any[]
-  ngOnInit(): void {
 
-  }
+  ngOnInit(): void { }
 
   hasChildren(node: any): boolean {
     return this.nodes.some((n: { parent: any; }) => n.parent === node.id);

@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
-import { GerateJsonComponent } from '../module/home/partial/gerate-json/gerate-json.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { HttpClientModule } from '@angular/common/http';
@@ -88,14 +87,14 @@ export const httpInterceptors = [
       serverLoggingUrl: 'http://localhost:4200/',
       disableConsoleLogging: false 
     }),
-    BrowserAnimationsModule,
-    FullCalendarModule,
+    BrowserAnimationsModule,   
     LoadingBarHttpClientModule,
     LoadingBarRouterModule,
     LoadingBarModule,
     MatNativeDateModule,
     MatSelectModule,
     NgxMatSelectSearchModule,
+    FullCalendarModule,
   ],
   providers: [AutenticationService,httpInterceptors],
   bootstrap: [AppComponent]

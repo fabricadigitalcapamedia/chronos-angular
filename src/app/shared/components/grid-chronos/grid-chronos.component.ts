@@ -4,7 +4,6 @@ import {
   ValueFormatterParams,
 } from 'ag-grid-community';
 import { Subject } from 'rxjs';
-import { TemplateRenderComponent } from './template-render/template-render.component';
 
 interface SettingsButtons extends DataTables.Settings {
   buttons?: string[];
@@ -62,6 +61,9 @@ export class GridChronosComponent implements OnInit {
     columns: "Columnas",
     filters: "Filtros",
     noRowsToShow: "No Hay Información Para Mostrar",
+    paginationPageSize: "Cantidad Por Pagina",
+    blank:"Banco"
+
   };
 
 
@@ -83,7 +85,7 @@ export class GridChronosComponent implements OnInit {
       animateRows: true,
       rowData: [],
       // floatingFilter: true,
-      paginationPageSize: 13,
+      paginationPageSize: 14,
       pagination: true,
       //  rowDeselection: true,
       enableCellTextSelection: true,
@@ -97,30 +99,7 @@ export class GridChronosComponent implements OnInit {
       },
       localeText: this.localeText
     }
-
-    /*   this.gridOptions1 = {
-         rowSelection: 'single',
-         animateRows: true,
-         paginationPageSize: 13,
-         pagination: true,
-         columnDefs: [],
-         rowData: [],  // Aquí puedes establecer tus datos
-         enableCellTextSelection: true,
-         defaultColDef: {
-           sortable: true,
-           resizable: true,
-           filter: true,
-           filterParams: {
-             clearButton: true
-           }
-         },
-         frameworkComponents: {
-           appTemplateRender: TemplateRenderComponent,
-         },
-         onGridReady: this.onGridReady.bind(this),
-         localeText: this.localeText
-         // ... otras opciones ...
-       };*/
+    
     this.style = {
       width: '100%',
       height: '462px'
@@ -170,8 +149,7 @@ export class GridChronosComponent implements OnInit {
 
   // Método que manejará el clic en el botón de edición
   handleEditClick(event: any): void {
-    const action = event.data.Accion;
-    debugger
+    const action = event.data.Accion;    
     // Aquí puedes manejar los datos y realizar acciones específicas
     this.jsonDinamicoEnviado.emit(event.data);
   }
