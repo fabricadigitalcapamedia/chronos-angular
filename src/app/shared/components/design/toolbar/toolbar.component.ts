@@ -16,4 +16,24 @@ export class ToolbarComponent implements OnInit{
   
   ngOnInit(): void {}
 
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {    
+    
+    if (event.ctrlKey === true &&  event.key === "F9") {
+      this.toolbar['new']()
+    }
+    else if (event.key === "F2") {
+      this.toolbar['edit']()
+    }
+    else if (event.ctrlKey === true && event.key === "F12") {
+      this.toolbar['delete']()
+    }
+    else if (event.ctrlKey === true && event.key=== "F10"){
+      this.toolbar['save']()
+    }
+    else if (event.ctrlKey === true && event.key=== "F11"){
+      this.toolbar['cancel']()
+    }  
+  }
+
 }

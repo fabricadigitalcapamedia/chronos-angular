@@ -44,7 +44,7 @@ export class ProyectoComponent implements OnInit {
     {
       field: "Accion", cellRenderer: TemplateRenderComponent,
       onCellClicked: this.handleEditClick.bind(this), // Método para manejar el clic en el botón     
-      cellRendererParams: { edit: 'Editar', delete: 'Eliminar' },
+      cellRendererParams: { edit: 'Editar'},
       width: 80
     },
     { field: "codigoproyecto", headerName: 'Codigo Proyecto' },
@@ -305,7 +305,7 @@ export class ProyectoComponent implements OnInit {
     } else {
       this.toolbarAction.saveShow = true;
       this.toolbarAction.filterShow = true;
-      this.DatosProyecto.id ? this.toolbarAction.deleteShow = true : this.toolbarAction.deleteShow = false;
+     // this.DatosProyecto.id ? this.toolbarAction.deleteShow = true : this.toolbarAction.deleteShow = false;
       this.toolbarAction.newShow = true;
     }
   }

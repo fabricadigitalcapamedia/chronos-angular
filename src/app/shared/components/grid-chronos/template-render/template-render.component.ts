@@ -3,7 +3,7 @@ import { ICellRendererAngularComp } from 'ag-grid-angular';
 
 
 interface ButtonConfig {
-  name:string;
+  name: string;
   iconClass: string;
   title: string;
 }
@@ -13,7 +13,9 @@ interface ButtonConfig {
   template: `
   <div style="display: flex; gap: 10px;">
   <div *ngFor="let button of buttons">
+  <button type="button" class="btn btn-sm btn-pad scale-up-center">
     <i  class="{{ button.iconClass }}" title="{{ button.title }}" [id]="button.name"></i>
+  </button>
 </div>
 </div>
 
@@ -42,9 +44,9 @@ export class TemplateRenderComponent implements ICellRendererAngularComp {
   private getButtons(): ButtonConfig[] {
     const buttons: ButtonConfig[] = [];
     if (this.params.colDef.cellRendererParams.edit) {
-      buttons.push({ name:'edit',iconClass: 'fa fa-edit', title: 'Editar' });
+      buttons.push({ name: 'edit', iconClass: 'fa fa-edit', title: 'Editar' });
     } if (this.params.colDef.cellRendererParams.delete) {
-      buttons.push({ name:'delete', iconClass: 'fa fa-trash', title: 'Eliminar' });
+      buttons.push({ name: 'delete', iconClass: 'fa fa-trash', title: 'Eliminar' });
     }
     return buttons;
   }

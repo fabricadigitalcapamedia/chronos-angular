@@ -2,70 +2,70 @@
     <div id="head" class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 section">
         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
             <div class="col-md-12 p-0">
-                <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center"
+                <button type="button" [attr.botonera]="true" class="btn btn-lg btn-pad scale-up-center"
                     (click)="toolbar.new()" title="Nuevo (Ctrl + F9)"
                     *ngIf="toolbar.new && (toolbar.newShow == null || toolbar.newShow)"
                     [disabled]="loadingBar.progress$|async">
                     <i class="fa fa-plus"></i> Nuevo
                 </button>
 
-                <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center"
+                <button type="button" [attr.botonera]="true" class="btn btn-lg btn-pad scale-up-center"
                     (click)="toolbar.save()" title="Guardar (Ctrl + F10)"
                     *ngIf="toolbar.save && (toolbar.saveShow == null || toolbar.saveShow)"
                     [disabled]="loadingBar.progress$|async">
                     <i class="fa fa-save text-success"></i> Guardar
                 </button>
 
-                <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center"
+                <button type="button" [attr.botonera]="true" class="btn btn-lg btn-pad scale-up-center"
                     (click)="toolbar.edit()" title="Editar (F2)"
                     *ngIf="toolbar.edit && (toolbar.editShow == null || toolbar.editShow)"
                     [disabled]="loadingBar.progress$|async">
                     <i class="fa fa-edit text-default"></i> Editar
                 </button>
 
-                <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center"
+                <button type="button" [attr.botonera]="true" class="btn btn-lg btn-pad scale-up-center"
                     (click)="toolbar.delete()" title="Eliminar (Ctrl + F12)"
                     *ngIf="toolbar.delete && (toolbar.deleteShow == null || toolbar.deleteShow)"
                     [disabled]="loadingBar.progress$|async">
                     <i class="fa fa-trash text-danger"></i> Eliminar
                 </button>
 
-                <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center"
+                <button type="button" [attr.botonera]="true" class="btn btn-lg btn-pad scale-up-center"
                     (click)="toolbar.cancel()" title="Cancelar (Ctrl + F11)"
                     *ngIf="toolbar.cancel && (toolbar.cancelShow == null || toolbar.cancelShow)"
                     [disabled]="loadingBar.progress$|async">
                     <i class="fa fa-times text-default"></i> Cancelar
                 </button>
 
-                <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center"
+                <button type="button" [attr.botonera]="true" class="btn btn-lg btn-pad scale-up-center"
                     (click)="toolbar.filter()" title="Filtrar"
                     *ngIf="toolbar.filter && (toolbar.filterShow == null || toolbar.filterShow)"
                     [disabled]="loadingBar.progress$|async">
                     <i class="fa fa-filter text-default"></i> Filtrar
                 </button>
 
-                <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center"
+                <button type="button" [attr.botonera]="true" class="btn btn-lg btn-pad scale-up-center"
                     (click)="toolbar.searchQ()" title="Buscar (F9)"
                     *ngIf="toolbar.searchQ && (toolbar.searchQShow == null || toolbar.searchQShow)"
                     [disabled]="loadingBar.progress$|async">
                     <i class="fa fa-search text-default"></i>
                 </button>
 
-                <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center"
+                <button type="button" [attr.botonera]="true" class="btn btn-lg btn-pad scale-up-center"
                     (click)="toolbar.report()" title="Reporte"
                     *ngIf="toolbar.report && (toolbar.reportShow == null || toolbar.reportShow)"
                     [disabled]="loadingBar.progress$|async">
                     <i class="fa icon-rpttransaccion text-default"></i>
                 </button>
 
-                <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center"
+                <button type="button" [attr.botonera]="true" class="btn btn-lg btn-pad scale-up-center"
                     (click)="toolbar.process()" title="Calcular"
                     *ngIf="toolbar.process && (toolbar.processShow == null || toolbar.processShow)"
                     [disabled]="loadingBar.progress$|async">
                     <i class="fa fa-cogs text-default"></i>
                 </button>
 
-                <button type="button" [attr.botonera]="true" class="btn btn-sm btn-pad scale-up-center"
+                <button type="button" [attr.botonera]="true" class="btn btn-lg btn-pad scale-up-center"
                     (click)="toolbar.input()" title="Procesar"
                     *ngIf="toolbar.input && (toolbar.inputShow == null || toolbar.inputShow)"
                     [disabled]="loadingBar.progress$|async">
