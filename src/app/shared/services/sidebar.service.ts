@@ -8,6 +8,9 @@ export class SidebarService {
   data = [
     { id: 1, titulo: 'Parametrizacion', icon: 'fa fa-cogs', idparent: null, path: null },
     { id: 2, titulo: 'Proyecto', icon: 'fa fa-folder-open', idparent: 1, path: 'proyecto' },
+    { id: 3, titulo: 'Actividades', icon: 'fa fa-calendar', idparent: null, path: 'actividades' },
+    { id: 4, titulo: 'Perfiles', icon: 'fa fa-address-book', idparent: null, path: null },
+    { id: 5, titulo: 'Perfil', icon: 'fa fa-address-book', idparent: 4, path: 'perfil' },
   ];
 
   constructor() { }
@@ -46,7 +49,6 @@ export class SidebarService {
         currentLevel = currentLevel[id].submenu;
       });
     });
-    console.log('eee', tree)
     return Object.values(tree);
   }
 }

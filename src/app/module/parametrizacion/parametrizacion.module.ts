@@ -1,15 +1,12 @@
-import { NgModule } from '@angular/core';
+import { NgModule,Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProyectoComponent } from './partial/proyecto/proyecto.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { FormsModule } from '@angular/forms';
 
-import {Component} from '@angular/core';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { TabsModule } from 'ngx-bootstrap/tabs'; 
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -23,9 +20,10 @@ import { SharedModule } from "../../shared/shared.module";
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { PerfilComponent } from './partial/perfil/perfil.component';
 
 
 
@@ -34,7 +32,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
     declarations: [
-        ProyectoComponent
+        ProyectoComponent,
+        PerfilComponent
     ],
     exports: [],
     imports: [

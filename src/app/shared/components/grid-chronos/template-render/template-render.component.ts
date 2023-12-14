@@ -12,13 +12,12 @@ interface ButtonConfig {
   selector: 'app-template-render',
   template: `
   <div style="display: flex; gap: 10px;">
-  <div *ngFor="let button of buttons">
-  <button type="button" class="btn btn-sm btn-pad scale-up-center">
-    <i  class="{{ button.iconClass }}" title="{{ button.title }}" [id]="button.name"></i>
-  </button>
-</div>
-</div>
-
+   <div *ngFor="let button of buttons">
+    <button type="button" class="btn btn-sm btn-pad scale-up-center">
+      <i  class="{{ button.iconClass }}" title="{{ button.title }}" [id]="button.name"></i>
+    </button>
+   </div>
+  </div>
 `
 })
 export class TemplateRenderComponent implements ICellRendererAngularComp {

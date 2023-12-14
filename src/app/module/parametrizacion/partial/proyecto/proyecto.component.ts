@@ -38,7 +38,7 @@ export class ProyectoComponent implements OnInit {
   idProyecto: any = {};
   validate: boolean = false;
   propertyValue: any = {};
-  toolbarAction: any = {}
+  toolbarButton: any = {};
 
   colDefs: ColDef[] = [
     {
@@ -68,13 +68,11 @@ export class ProyectoComponent implements OnInit {
       // , onSelectionChanged: (event: any) => this.onSelectionChangedCnfAPI(event)
     }
 
-    this.toolbarAction = {
+    this.toolbarButton = {
       save: () => {
         this.save();
       },
       delete: () => {
-      },
-      edit: () => {
       },
       new: () => {
         this.clear();
@@ -92,10 +90,6 @@ export class ProyectoComponent implements OnInit {
 
   ngOnInit(): void {
     this.fnLoad();
-
-    this.propertyValue = [
-      { codigoproyecto: true, codigomaxlength: 100 }
-    ]
   }
 
   filtrardataPresu() {
@@ -153,7 +147,6 @@ export class ProyectoComponent implements OnInit {
       this.router.navigate([], { queryParams: { idProyecto: this.DatosProyecto.id } });
       this.idProyecto = this.route.snapshot.queryParams;
       this.activationButtons();
-      console.log("Edit", this.DatosProyecto);
     }
     else {
       this.DatosProyecto = event.data;
@@ -298,15 +291,15 @@ export class ProyectoComponent implements OnInit {
 
   activationButtons() {
     if (this.verGrid) {
-      this.toolbarAction.saveShow = false;
-      this.toolbarAction.filterShow = false;
-      this.toolbarAction.deleteShow = false;
-      this.toolbarAction.newShow = true;
+      this.toolbarButton.saveShow = false;
+      this.toolbarButton.filterShow = false;
+      this.toolbarButton.deleteShow = false;
+      this.toolbarButton.newShow = true;
     } else {
-      this.toolbarAction.saveShow = true;
-      this.toolbarAction.filterShow = true;
+      this.toolbarButton.saveShow = true;
+      this.toolbarButton.filterShow = true;
      // this.DatosProyecto.id ? this.toolbarAction.deleteShow = true : this.toolbarAction.deleteShow = false;
-      this.toolbarAction.newShow = true;
+      this.toolbarButton.newShow = true;
     }
   }
 }

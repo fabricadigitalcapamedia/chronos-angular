@@ -14,7 +14,7 @@ interface SettingsButtons extends DataTables.Settings {
   templateUrl: './grid-chronos.component.html',
   styleUrls: ['./grid-chronos.component.css'],
 })
-export class GridChronosComponent implements OnInit {
+export class GridChronosComponent implements OnInit,OnDestroy  {
   @Input() data?: any[];
   @Output() jsonDinamicoEnviado = new EventEmitter<{ [key: string]: any }>();
   @Input() gridOptions: any
@@ -61,8 +61,9 @@ export class GridChronosComponent implements OnInit {
     columns: "Columnas",
     filters: "Filtros",
     noRowsToShow: "No Hay Información Para Mostrar",
-    paginationPageSize: "Cantidad Por Pagina",
-    blank:"Banco"
+    blank:"Blanco",
+    NotBlank:"No Blanco",
+    pageSize:"Paginacion"
 
   };
 
@@ -85,7 +86,8 @@ export class GridChronosComponent implements OnInit {
       animateRows: true,
       rowData: [],
       // floatingFilter: true,
-      paginationPageSize: 14,
+      paginationPageSize: 15,
+      paginationPageSizeSelector: [15, 30, 50, 100],
       pagination: true,
       //  rowDeselection: true,
       enableCellTextSelection: true,
@@ -145,6 +147,12 @@ export class GridChronosComponent implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    // Limpia la cuadrícula cuando el componente se destruye
+    if (this.gridApi) {
+      this.gridApi.destroy();
+    }
+  }
 
 
   // Método que manejará el clic en el botón de edición

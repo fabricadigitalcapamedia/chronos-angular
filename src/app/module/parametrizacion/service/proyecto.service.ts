@@ -37,7 +37,6 @@ export class ProyectoService {
     return this.http.post(this.url + '/proyecto', data, { headers });
   }
 
-  // Operación de actualización (PUT)
   updateProyecto(clUsuario: any, data: any): Observable<any> {
     const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);    
     return this.http.put(this.url + '/proyecto/' + data.id, data, { headers });
