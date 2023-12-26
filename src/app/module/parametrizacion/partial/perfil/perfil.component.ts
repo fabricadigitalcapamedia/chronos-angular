@@ -124,16 +124,15 @@ export class PerfilComponent implements OnInit {
   };
 
   getPerfil() {
-    this.perfilService.getPerfil(this.user).subscribe((response) => {
-      if (response.data.length > 0) {
-        this.gridDataPerfil.api?.setColumnDefs(this.colDefs);
-        this.gridDataPerfil.api?.setRowData(response.data);
+    this.perfilService.getPerfil(this.user).subscribe({
+      next: (data) => {
+        this.gridDataPerfil.api?.setRowData(data.data);
         this.activationButtons();
-      }
-      else {
+      },
+      error: (error) => {
         this.toastr.error('error de conexion con el servidor.')
       }
-    });
+    })
   }
 
   getPerfilXid(id: number) {
@@ -147,6 +146,9 @@ export class PerfilComponent implements OnInit {
       }
     });
   }
+
+
+
 
   fnLoad() {
     this.idPerfil = this.route.snapshot.queryParams;

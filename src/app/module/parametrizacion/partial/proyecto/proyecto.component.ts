@@ -167,6 +167,7 @@ export class ProyectoComponent implements OnInit {
           element.fechainicio = this.formatFecha(element.fechainicio);
           element.fechafin = this.formatFecha(element.fechafin);
         });
+        
         this.gridData.api?.setRowData(response.data);
         this.cargaPresupuesto();
         this.activationButtons();

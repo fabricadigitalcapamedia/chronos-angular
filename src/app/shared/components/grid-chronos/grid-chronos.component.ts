@@ -79,8 +79,6 @@ export class GridChronosComponent implements OnInit,OnDestroy  {
   }
 
   constructor() {
-
-
     this._gridOptions = {
       rowSelection: 'single',
       animateRows: true,
@@ -148,9 +146,10 @@ export class GridChronosComponent implements OnInit,OnDestroy  {
   }
 
   ngOnDestroy(): void {
+    
     // Limpia la cuadrícula cuando el componente se destruye
-    if (this.gridApi) {
-      this.gridApi.destroy();
+    if (this._gridOptions && this._gridOptions.destroy) {
+      this._gridOptions.destroy();
     }
   }
 
