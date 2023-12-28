@@ -9,16 +9,6 @@ import { AjusteComponent } from './partial/ajuste/ajuste.component';
 
 const routes: Routes = [
   {
-    path: 'demoaplicacion',
-    component: GerateJsonComponent,
-    data: {titulo: 'Demo Aplicacion'}
-  },
-  {
-    path: 'estimaciones',
-    component: EstimacionesComponent,
-    data: {titulo: 'Estimaciones'}
-  },
-  {
     path: 'hallazgos',
     component: HallazgosComponent,
     data: {titulo: 'Hallazgos'}

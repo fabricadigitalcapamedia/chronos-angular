@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
 import { LoginService } from './../../service/login.service';
 import { ToastrService } from 'ngx-toastr';
@@ -21,12 +21,14 @@ import { AutenticationService } from 'src/app/autentication.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  @ViewChild('form', { static: true }) Form?: NgForm;
+  validate: boolean = false;
   user: string = '';
   password: string = '';
   hashedPassword: string = '';
   private isAuthenticated = false;
   isDisabled = false;
-  restablecerPass= false; // Variable que controla la visibilidad
+  restablecerPass = false; // Variable que controla la visibilidad
 
   constructor(private loginService: LoginService, private toastr: ToastrService, private router: Router, private autenticationService: AutenticationService) {
   }
@@ -36,30 +38,37 @@ export class LoginComponent implements OnInit {
 
 
   login() {
-    this.hashPassword();
-    this.isDisabled = true;
-    this.loginService.getLogin(this.user).subscribe((response) => {
-      this.isDisabled = false;
-      if (response !== "0") {
-        if (response && response.clave === this.hashedPassword) {
-          this.router.navigate(['/home']);
-          localStorage.setItem('login', 'true');
-          localStorage.setItem("user", this.user);
-          localStorage.setItem("nameuser", response.nombre);
-          localStorage.setItem("azureemail", response.azureemail);
-          localStorage.setItem("tokenazure", response.tokenazure);
+    debugger;
+    if (this.user === '' || this.password === '') {
+      this.validate = true
+      this.toastr.warning('Debe diligenciar los campos remarcados en rojo');
+
+    } else {
+      this.hashPassword();
+      this.isDisabled = true;
+      this.loginService.getLogin(this.user).subscribe((response) => {
+        this.isDisabled = false;
+        if (response !== "0") {
+          if (response && response.clave === this.hashedPassword) {
+            this.router.navigate(['/home']);
+            localStorage.setItem('login', 'true');
+            localStorage.setItem("user", this.user);
+            localStorage.setItem("nameuser", response.nombre);
+            localStorage.setItem("azureemail", response.azureemail);
+            localStorage.setItem("tokenazure", response.tokenazure);
+          }
+          else {
+            this.toastr.error('usuario o contraseña incorrecto')
+            localStorage.removeItem('login');
+            localStorage.removeItem("user");
+            localStorage.removeItem("nameuser");
+          }
         }
         else {
-          this.toastr.error('usuario o contraseña incorrecto')
-          localStorage.removeItem('login');
-          localStorage.removeItem("user");
-          localStorage.removeItem("nameuser");
+          this.toastr.error('error de conexion con el servidor.')
         }
-      }
-      else {
-        this.toastr.error('error de conexion con el servidor.')
-      }
-    });
+      });
+    }
   }
 
   hashPassword() {
@@ -67,7 +76,7 @@ export class LoginComponent implements OnInit {
   }
 
   olvidasteContrasena() {
-    this.restablecerPass=!this.restablecerPass;
+    this.restablecerPass = !this.restablecerPass;
   }
 
 }

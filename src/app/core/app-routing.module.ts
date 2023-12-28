@@ -5,6 +5,8 @@ import { LoginComponent } from '../module/seguridad/partial/login/login.componen
 import { AutenticationService } from '../autentication.service';
 import { GanttComponent } from '../shared/components/gantt/gantt.component';
 import { CalendarComponent } from '../shared/components/calendar/calendar.component';
+import { GerateJsonComponent } from '../module/home/partial/gerate-json/gerate-json.component';
+import { EstimacionesComponent } from '../module/home/partial/estimaciones/estimaciones.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -24,6 +26,16 @@ const routes: Routes = [
     }
   },
   {
+    path: 'demoaplicacion',
+    component: GerateJsonComponent,
+    data: { titulo: 'Demo Aplicacion' }
+  },
+  {
+    path: 'estimaciones',
+    component: EstimacionesComponent,
+    data: { titulo: 'Estimaciones' }
+  },
+  {
     path: 'calendar', component: CalendarComponent,
     //canActivate: [(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AutenticationService).canActivateLogin()],
     data: {
@@ -33,7 +45,7 @@ const routes: Routes = [
   {
     path: 'home', component: MenuComponent,
     canActivate: [(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AutenticationService).canActivate()],
-    data: {titulo: 'Home'},
+    data: { titulo: 'Home' },
     children: [
       {
         path: '',
@@ -45,6 +57,7 @@ const routes: Routes = [
       },
     ]
   },
+
 
 ];
 

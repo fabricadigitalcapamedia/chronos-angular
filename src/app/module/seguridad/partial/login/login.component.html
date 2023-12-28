@@ -1,9 +1,9 @@
 <section class="vh-100">
     <div class="container-fluid h-custom">
         <ul class="list-inline ml-auto">
-            <li class="list-inline-item"><a href="home/demoaplicacion">Demo aplicación</a></li>
-            <li class="list-inline-item ml-2"><a href="home/estimaciones">Estimación</a></li>
-            <li class="list-inline-item ml-2"><a href="home/hallazgos">Hallazgos</a></li>
+            <li class="list-inline-item"><a href="#/demoaplicacion">Demo aplicación</a></li>
+            <li class="list-inline-item ml-2"><a href="#/estimaciones">Estimación</a></li>
+            <li class="list-inline-item ml-2"><a href="#/hallazgos">Hallazgos</a></li>
         </ul>
 
         <div class="row d-flex justify-content-center align-items-center h-100" *ngIf="restablecerPass==false">
@@ -12,18 +12,18 @@
                     class="img-fluid" alt="Sample image">
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                <form>
+                <form [ngClass]="validate ? 'was-validated' : ''" #form="ngForm">
                     <div class="form-outline mb-4">
                         <label class="form-label">Usario</label>
-                        <input type="text" name="user" [(ngModel)]="user" class="form-control form-control-lg"
-                            placeholder="Ingrese usuario" />
+                        <input type="text" name="user" [required]="true" [(ngModel)]="user" class="form-control form-control-lg"
+                            placeholder="Ingrese usuario"/>
                     </div>
 
                     <div class="form-outline mb-3">
                         <label class="form-label" for="password">Contraseña</label>
-                        <input type="password" name="password" [(ngModel)]="password"
+                        <input type="password" name="password" [required]="true" [(ngModel)]="password"
                             class="form-control form-control-lg" placeholder="Ingrese contraseña"
-                            (keyup.enter)="login()">
+                            (keyup.enter)="login()"  >
                     </div>
                     
 
@@ -54,7 +54,7 @@
                         <div class="form-group col-lg-6 col-md-6 col-sm-12 col-12">
                             <label class="form-label">Usuario</label>
                             <input type="text" name="user" [(ngModel)]="user" class="form-control form-control-lg"
-                                placeholder="Ingrese usuario" />
+                                placeholder="Ingrese usuario"  [required]="false" />
                         </div>
 
                         <div class="text-center  form-group col-lg-6 col-md-6 col-sm-12 col-12">
@@ -72,5 +72,4 @@
             </div>
         </div>
     </div>
-
 </section>
