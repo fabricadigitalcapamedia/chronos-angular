@@ -3,8 +3,6 @@ import { ColDef, GridApi, GridOptions } from 'ag-grid-community';
 import { TemplateRenderComponent } from 'src/app/shared/components/grid-chronos/template-render/template-render.component';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
-import { Observable, map, startWith } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { PerfilService } from '../../service/perfil.service';
 
