@@ -23,9 +23,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 import { PerfilComponent } from './partial/perfil/perfil.component';
 import { PerfilTipoComponent } from './partial/perfil-tipo/perfil-tipo.component';
 import { PerfilNivelComponent } from './partial/perfil-nivel/perfil-nivel.component';
+import { LineaProductoComponent } from './partial/linea-producto/linea-producto.component';
+import { PerfilCostoComponent } from './partial/perfil-costo/perfil-costo.component';
 
 
 @NgModule({
@@ -34,6 +37,8 @@ import { PerfilNivelComponent } from './partial/perfil-nivel/perfil-nivel.compon
         PerfilComponent,
         PerfilTipoComponent,
         PerfilNivelComponent,
+        LineaProductoComponent,
+        PerfilCostoComponent,
     ],
     exports: [],
     imports: [

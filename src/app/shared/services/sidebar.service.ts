@@ -13,6 +13,8 @@ export class SidebarService {
     { id: 5, titulo: 'Perfil', icon: 'fa fa-address-book', idparent: 4, path: 'perfil' },
     { id: 6, titulo: 'Perfil Tipo', icon: 'fa fa-address-card', idparent: 4, path: 'perfilTipo' },
     { id: 7, titulo: 'Perfil Nivel', icon: 'fa fa-layer-group', idparent: 4, path: 'perfilNivel' },
+    { id: 8, titulo: 'Linea Producto', icon: 'fa fa fa-archive', idparent: 4, path: 'lineaProducto' },
+    { id: 8, titulo: 'Perfil Costo', icon: 'fa fa fa-archive', idparent: 4, path: 'perfilCosto' },
   ];
 
   constructor() { }
