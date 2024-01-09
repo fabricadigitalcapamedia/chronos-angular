@@ -78,20 +78,35 @@ export class PerfilComponent implements OnInit {
     else {
       let data: any = { ...this.DatosPerfil };
       if (this.DatosPerfil.id) {
-        this.perfilService.updatePerfil(this.user, data).subscribe((response) => {
-          this.toastr.success(response.mensaje);
-        });
-
+        this.update(data);
       } else {
-        data.estado = 'A';
-        this.perfilService.createPerfil(this.user, data).subscribe((response) => {
-          this.DatosPerfil.id = response.data.id;
-          this.router.navigate([], { queryParams: { idProyecto: this.DatosPerfil.id } });
-          this.activationButtons();
-          this.toastr.success(response.mensaje);
-        });
+        this.create(data);
       }
     }
+  }
+
+  create(data: any) {
+    data.estado = 'A';
+    this.perfilService.createPerfil(this.user, data).subscribe({
+      next: (data) => {
+        this.DatosPerfil.id = data.data.id;
+        this.router.navigate([], { queryParams: { idPerfil: this.DatosPerfil.id } });
+        this.activationButtons();
+        this.toastr.success(data.mensaje);
+      }, error: (error) => {
+        this.toastr.error('error de conexion con el servidor.');
+      }
+    });
+  }
+
+  update(data: any) {
+    this.perfilService.updatePerfil(this.user, data).subscribe({
+      next: (data) => {
+        this.toastr.success(data.mensaje);
+      }, error: (error) => {
+        this.toastr.error('error de conexion con el servidor.');
+      }
+    });
   }
 
   clear() {

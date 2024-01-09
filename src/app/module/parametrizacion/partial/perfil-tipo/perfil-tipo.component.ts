@@ -22,17 +22,16 @@ export class PerfilTipoComponent implements OnInit {
   user = localStorage.getItem('user');
   verGrid: boolean = true;
   validate: boolean = false;
-  idPerfil: any = {};
+  idPerfilTipo: any = {};
 
   colDefs: ColDef[] = [
     {
       field: "Accion", cellRenderer: TemplateRenderComponent,
       onCellClicked: this.handleEditClick.bind(this),
       cellRendererParams: { edit: 'Editar' },
-      width: 80
+      width: 100
     },
-    { field: "nombre", headerName: 'Nombre', width: 800 },
-    { field: "estado", headerName: 'Estado', width: 150 }
+    { field: "nombre", headerName: 'Nombre', width: 900 }
   ];
   constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private perfilTipoService: PerfilTipoService) {
     this.gridDataPerfil = {
@@ -66,39 +65,96 @@ export class PerfilTipoComponent implements OnInit {
     this.fnLoad();
   }
 
-  clear() { }
 
-  filtrar() { }
-
-  save() {if (!this.Form?.valid) {
-    this.validate = true
-    this.toastr.warning('Debe diligenciar los campos remarcados en rojo');
-  }
-  else {
-    let data: any = { ...this.DatosPerfil };
-    if (this.DatosPerfil.id) {
-      this.perfilTipoService.updatePerfilTipo(this.user, data).subscribe((response) => {
-        this.toastr.success(response.mensaje);
-      });
-
-    } else {
-      data.estado = 'A';
-      this.perfilTipoService.createPerfilTipo(this.user, data).subscribe((response) => {
-        this.DatosPerfil.id = response.data.id;
-        this.router.navigate([], { queryParams: { idProyecto: this.DatosPerfil.id } });
+  getPerfilTpo() {
+    this.perfilTipoService.getPerfilTipo(this.user).subscribe({
+      next: (data) => {
+        this.gridDataPerfil.api?.setRowData(data.data);
         this.activationButtons();
-        this.toastr.success(response.mensaje);
-      });
+      },
+      error: (error) => {
+        this.toastr.error('error de conexion con el servidor.')
+      }
+    })
+  }
+
+  getPerfilXid(id: number) {
+    this.perfilTipoService.getPerfilTipoXid(this.user, id).subscribe({
+      next: (data) => {
+        this.DatosPerfil = data.data;
+        this.activationButtons();
+      },
+      error: (error) => {
+        this.toastr.error('error de conexion con el servidor.')
+      }
+    });
+  }
+
+
+  clear() {
+    this.verGrid = false;
+    this.router.navigate([], { queryParams: {} });
+    this.DatosPerfil = {};
+    this.idPerfilTipo = {};
+    this.activationButtons();
+  }
+
+  filtrar() {
+    this.verGrid = true;
+    this.router.navigate([], { queryParams: {} });
+    this.idPerfilTipo = {};
+    this.getPerfilTpo();
+  }
+
+  save() {
+    if (!this.Form?.valid) {
+      this.validate = true
+      this.toastr.warning('Debe diligenciar los campos remarcados en rojo');
     }
-  } }
+    else {
+      let data: any = { ...this.DatosPerfil };
+      if (this.DatosPerfil.id) {
+        this.update(data);
+      } else {
+        this.create(data);
+      }
+    }
+  }
+
+  
+  create(data: any) {
+    this.perfilTipoService.updatePerfilTipo(this.user, data).subscribe({
+      next: (data) => {
+        this.DatosPerfil.id = data.data.id;
+        this.router.navigate([], { queryParams: { idPerfilTipo: this.DatosPerfil.id } });
+        this.activationButtons();
+        this.toastr.success(data.mensaje);
+      },
+      error: (error) => {
+        this.toastr.error('error de conexion con el servidor.');
+      }
+    });
+  }
+  
+  update(data: any) {
+    this.perfilTipoService.createPerfilTipo(this.user, data).subscribe({
+      next: (data) => {
+        this.toastr.success(data.mensaje);
+      },
+      error: (error) => {
+        this.toastr.error('error de conexion con el servidor.')
+      }
+    })
+  }
+
 
   handleEditClick(event: any): void {
     var nuevoArray = event.eventPath[0].id;
     if (nuevoArray == 'edit') {
       this.DatosPerfil = event.data;
       this.verGrid = false;
-      this.router.navigate([], { queryParams: { idPerfil: this.DatosPerfil.id } });
-      this.idPerfil = this.route.snapshot.queryParams;
+      this.router.navigate([], { queryParams: { idPerfilTipo: this.DatosPerfil.id } });
+      this.idPerfilTipo = this.route.snapshot.queryParams;
       this.activationButtons();
     }
   };
@@ -116,6 +172,15 @@ export class PerfilTipoComponent implements OnInit {
     }
   }
 
-  fnLoad() { }
+  fnLoad() {
+    this.idPerfilTipo = this.route.snapshot.queryParams;
+    if (this.idPerfilTipo?.idPerfilTipo) {
+      this.getPerfilXid(parseInt(this.idPerfilTipo.idPerfilTipo));
+      this.verGrid = false;
+    }
+    else {
+      this.getPerfilTpo();
+    }
+  }
 
 }

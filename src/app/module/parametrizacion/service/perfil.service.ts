@@ -23,17 +23,29 @@ export class PerfilService {
 
   getPerfilXid(clUsuario: any, id: number): Observable<any> {
     const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);
-    return this.http.get(this.url + '/perfil/' + id, { headers });
+    return this.http.get(this.url + '/perfil/' + id, { headers }).pipe(
+      catchError((error: any) => {
+        return throwError(() => Error(error.message));
+      })
+    );
   }
 
   createPerfil(clUsuario: any, data: any): Observable<any> {
     const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);
-    return this.http.post(this.url + '/perfil', data, { headers });
+    return this.http.post(this.url + '/perfil', data, { headers }).pipe(
+      catchError((error: any) => {
+        return throwError(() => Error(error.message));
+      })
+    );
   }
 
   updatePerfil(clUsuario: any, data: any): Observable<any> {
     const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);
-    return this.http.put(this.url + '/perfil/' + data.id, data, { headers });
+    return this.http.put(this.url + '/perfil/' + data.id, data, { headers }).pipe(
+      catchError((error: any) => {
+        return throwError(() => Error(error.message));
+      })
+    );
   }
-  
+
 }
