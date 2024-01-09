@@ -59,7 +59,6 @@ export const httpInterceptors = [
     AppComponent,
     LoginComponent,
     GanttComponent,
-    CalendarComponent,
   ],
   imports: [
     MatMenuModule,

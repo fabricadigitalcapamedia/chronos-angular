@@ -8,6 +8,7 @@ export class SidebarService {
   data = [
     { id: 1, titulo: 'Parametrizacion', icon: 'fa fa-cogs', idparent: null, path: null },
     { id: 2, titulo: 'Proyecto', icon: 'fa fa-folder-open', idparent: 1, path: 'proyecto' },
+    { id: 3, titulo: 'Actividades', icon: 'fa fa-calendar', idparent: null, path: 'actividades' },
   ];
 
   constructor() { }

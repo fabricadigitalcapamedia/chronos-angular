@@ -25,9 +25,8 @@ const routes: Routes = [
   },
   {
     path: 'calendar', component: CalendarComponent,
-    //canActivate: [(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AutenticationService).canActivateLogin()],
     data: {
-      title: 'calendar'
+      title: 'Tareas'
     }
   },
   {
@@ -42,6 +41,10 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () => import('../module/parametrizacion/parametrizacion.module').then(m => m.ParametrizacionModule)
+      },
+      {
+        path: '',
+        loadChildren: () => import('../module/actividades/actividades.module').then(m => m.ActividadesModule)
       },
     ]
   },
