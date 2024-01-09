@@ -12,6 +12,7 @@ export class SidebarService {
     { id: 4, titulo: 'Perfiles', icon: 'fa fa-address-book', idparent: 1, path: null },
     { id: 5, titulo: 'Perfil', icon: 'fa fa-address-book', idparent: 4, path: 'perfil' },
     { id: 6, titulo: 'Perfil Tipo', icon: 'fa fa-address-card', idparent: 4, path: 'perfilTipo' },
+    { id: 7, titulo: 'Perfil Nivel', icon: 'fa fa-layer-group', idparent: 4, path: 'perfilNivel' },
   ];
 
   constructor() { }

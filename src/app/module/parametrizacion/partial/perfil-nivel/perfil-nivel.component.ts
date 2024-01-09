@@ -4,25 +4,25 @@ import { TemplateRenderComponent } from 'src/app/shared/components/grid-chronos/
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { PerfilTipoService } from '../../service/perfil-tipo.service';
+import { PerfilNivelService } from '../../service/perfil-nivel.service';
 
 @Component({
-  selector: 'app-perfil-tipo',
-  templateUrl: './perfil-tipo.component.html',
-  styleUrl: './perfil-tipo.component.css'
+  selector: 'app-perfil-nivel',
+  templateUrl: './perfil-nivel.component.html',
+  styleUrl: './perfil-nivel.component.css'
 })
-export class PerfilTipoComponent implements OnInit {
+export class PerfilNivelComponent implements OnInit {
   @ViewChild('form', { static: true }) Form?: NgForm;
 
   toolbarButton: any = {};
-  gridDataPerfil: GridOptions;
+  gridDataPerfilNiv: GridOptions;
   column?: any[];
   rowData: any;
   DatosPerfil: any = {};
   user = localStorage.getItem('user');
   verGrid: boolean = true;
   validate: boolean = false;
-  idPerfilTipo: any = {};
+  idPerfilNivel: any = {};
 
   colDefs: ColDef[] = [
     {
@@ -31,10 +31,12 @@ export class PerfilTipoComponent implements OnInit {
       cellRendererParams: { edit: 'Editar' },
       width: 100
     },
-    { field: "nombre", headerName: 'Nombre', width: 900 }
+    { field: "nombre", headerName: 'Nombre', width: 900 },
+    { field: "jerarquia", headerName: 'Jerarquia', width: 150 }
   ];
-  constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private perfilTipoService: PerfilTipoService) {
-    this.gridDataPerfil = {
+
+  constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private perfilNivelService: PerfilNivelService) {
+    this.gridDataPerfilNiv = {
       context: (api: GridApi) => {
         api.setColumnDefs(this.colDefs)
       },
@@ -61,15 +63,30 @@ export class PerfilTipoComponent implements OnInit {
       filterShow: false
     }
   }
+
   ngOnInit(): void {
     this.fnLoad();
   }
 
+  clear() { 
+    this.verGrid = false;
+    this.router.navigate([], { queryParams: {} });
+    this.DatosPerfil = {};
+    this.idPerfilNivel = {};
+    this.activationButtons();
+  }
 
-  getPerfilTpo() {
-    this.perfilTipoService.getPerfilTipo(this.user).subscribe({
+  filtrar() {
+    this.verGrid = true;
+    this.router.navigate([], { queryParams: {} });
+    this.idPerfilNivel = {};
+    this.getPerfilNivel();
+  }
+
+  getPerfilNivel(){
+    this.perfilNivelService.getPerfilNivel(this.user).subscribe({
       next: (data) => {
-        this.gridDataPerfil.api?.setRowData(data.data);
+        this.gridDataPerfilNiv.api?.setRowData(data.data);
         this.activationButtons();
       },
       error: (error) => {
@@ -78,8 +95,8 @@ export class PerfilTipoComponent implements OnInit {
     })
   }
 
-  getPerfilXid(id: number) {
-    this.perfilTipoService.getPerfilTipoXid(this.user, id).subscribe({
+  getPerfilNivelXid(id: number){
+    this.perfilNivelService.getPerfilNivelXid(this.user, id).subscribe({
       next: (data) => {
         this.DatosPerfil = data.data;
         this.activationButtons();
@@ -88,22 +105,6 @@ export class PerfilTipoComponent implements OnInit {
         this.toastr.error('error de conexion con el servidor.')
       }
     });
-  }
-
-
-  clear() {
-    this.verGrid = false;
-    this.router.navigate([], { queryParams: {} });
-    this.DatosPerfil = {};
-    this.idPerfilTipo = {};
-    this.activationButtons();
-  }
-
-  filtrar() {
-    this.verGrid = true;
-    this.router.navigate([], { queryParams: {} });
-    this.idPerfilTipo = {};
-    this.getPerfilTpo();
   }
 
   save() {
@@ -121,9 +122,8 @@ export class PerfilTipoComponent implements OnInit {
     }
   }
 
-  
-  create(data: any) {
-    this.perfilTipoService.createPerfilTipo(this.user, data).subscribe({
+  create(data:any){
+    this.perfilNivelService.createPerfilNivel(this.user, data).subscribe({
       next: (data) => {
         this.DatosPerfil.id = data.data.id;
         this.router.navigate([], { queryParams: { idPerfilTipo: this.DatosPerfil.id } });
@@ -135,9 +135,9 @@ export class PerfilTipoComponent implements OnInit {
       }
     });
   }
-  
-  update(data: any) {
-    this.perfilTipoService.updatePerfilTipo(this.user, data).subscribe({
+
+  update(data:any){
+    this.perfilNivelService.updatePerfilNivel(this.user, data).subscribe({
       next: (data) => {
         this.toastr.success(data.mensaje);
       },
@@ -147,14 +147,13 @@ export class PerfilTipoComponent implements OnInit {
     })
   }
 
-
   handleEditClick(event: any): void {
     var nuevoArray = event.eventPath[0].id;
     if (nuevoArray == 'edit') {
       this.DatosPerfil = event.data;
       this.verGrid = false;
-      this.router.navigate([], { queryParams: { idPerfilTipo: this.DatosPerfil.id } });
-      this.idPerfilTipo = this.route.snapshot.queryParams;
+      this.router.navigate([], { queryParams: { idPerfilNivel: this.DatosPerfil.id } });
+      this.idPerfilNivel = this.route.snapshot.queryParams;
       this.activationButtons();
     }
   };
@@ -173,14 +172,13 @@ export class PerfilTipoComponent implements OnInit {
   }
 
   fnLoad() {
-    this.idPerfilTipo = this.route.snapshot.queryParams;
-    if (this.idPerfilTipo?.idPerfilTipo) {
-      this.getPerfilXid(parseInt(this.idPerfilTipo.idPerfilTipo));
+    this.idPerfilNivel = this.route.snapshot.queryParams;
+    if (this.idPerfilNivel?.idPerfilNivel) {
+      this.getPerfilNivelXid(parseInt(this.idPerfilNivel.idPerfilNivel));
       this.verGrid = false;
     }
     else {
-      this.getPerfilTpo();
+      this.getPerfilNivel();
     }
   }
-
 }

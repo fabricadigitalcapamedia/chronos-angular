@@ -25,10 +25,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PerfilComponent } from './partial/perfil/perfil.component';
 import { PerfilTipoComponent } from './partial/perfil-tipo/perfil-tipo.component';
-
-
-
-
+import { PerfilNivelComponent } from './partial/perfil-nivel/perfil-nivel.component';
 
 
 @NgModule({
@@ -36,6 +33,7 @@ import { PerfilTipoComponent } from './partial/perfil-tipo/perfil-tipo.component
         ProyectoComponent,
         PerfilComponent,
         PerfilTipoComponent,
+        PerfilNivelComponent,
     ],
     exports: [],
     imports: [
