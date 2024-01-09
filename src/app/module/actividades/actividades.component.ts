@@ -1,21 +1,32 @@
-import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, signal } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
+import { Observable, map, startWith } from 'rxjs';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/core';
+import { Calendar } from '@fullcalendar/core';
+import esLocale from '@fullcalendar/core/locales/es';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
-import { INITIAL_EVENTS, createEventId } from './event-utils';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { INITIAL_EVENTS, createEventId } from 'src/app/shared/components/calendar/event-utils';
 @Component({
-  selector: 'app-calendar',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet, FullCalendarModule],
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css']
+  selector: 'app-actividades',
+  templateUrl: './actividades.component.html',
+  styleUrls: ['./actividades.component.css']
 })
-export class CalendarComponent {
+export class ActividadesComponent implements OnInit {
+  @ViewChild('form', { static: true }) Form?: NgForm
+  validate: any;
+  DatosActividades: any = {};
+  horasMes: any;
+  user = localStorage.getItem('user');
+  
 
   calendarVisible = signal(true);
   calendarOptions = signal<CalendarOptions>({
@@ -28,8 +39,9 @@ export class CalendarComponent {
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      //right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     },
+    locale: esLocale,
     initialView: 'dayGridMonth',
     initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
@@ -46,6 +58,7 @@ export class CalendarComponent {
     eventRemove:
     */
   });
+
   currentEvents = signal<EventApi[]>([]);
 
   constructor(private changeDetector: ChangeDetectorRef) {
@@ -88,6 +101,9 @@ export class CalendarComponent {
   handleEvents(events: EventApi[]) {
     this.currentEvents.set(events);
     this.changeDetector.detectChanges(); // workaround for pressionChangedAfterItHasBeenCheckedError
+  }
+
+  ngOnInit() {
   }
 
 }
