@@ -1,1 +1,109 @@
-<p>perfil-costo works!</p>
+<app-toolbar [toolbar]="toolbarButton"></app-toolbar>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-12 pl-0 pr-0 ">
+    <form [ngClass]="validate ? 'was-validated' : ''" #form="ngForm">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card card-danger" [hidden]="verGrid==true">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="bankSelect">Perfil</label>
+                                <mat-select [(ngModel)]="DatosPerfilCost.perfilId" #singleSelect
+                                    class="form-control" name="perfilId" placeholder="Seleccione.."
+                                    [required]="true">
+                                    <mat-option>
+                                        <ngx-mat-select-search [formControl]="perfilFilterCtrl" placeholder="Buscar"
+                                            placeholderLabel="Buscar"
+                                            noEntriesFoundLabel="No hay Registros"></ngx-mat-select-search>
+                                    </mat-option>
+
+                                    <mat-option *ngFor="let perfil of filteredPerfil | async" [value]="perfil.id"
+                                        noEntriesFoundLabel="Buscar">
+                                        {{ perfil.nombre }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="bankSelect">Perfil Tipos</label>
+                                <mat-select [(ngModel)]="DatosPerfilCost.perfilTipoId" #singleSelect
+                                    class="form-control" name="perfilTipoId" placeholder="Seleccione.."
+                                    [required]="true">
+                                    <mat-option>
+                                        <ngx-mat-select-search [formControl]="perfilTipoFilterCtrl" placeholder="Buscar"
+                                            placeholderLabel="Buscar"
+                                            noEntriesFoundLabel="No hay Registros"></ngx-mat-select-search>
+                                    </mat-option>
+
+                                    <mat-option *ngFor="let tipo of filteredPerfilTipo | async" [value]="tipo.id"
+                                        noEntriesFoundLabel="Buscar">
+                                        {{ tipo.nombre }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="bankSelect">Proveedor</label>
+                                <mat-select [(ngModel)]="DatosPerfilCost.proveedorId" #singleSelect
+                                    class="form-control" name="proveedorId" placeholder="Seleccione.."
+                                    [required]="true">
+                                    <mat-option>
+                                        <ngx-mat-select-search [formControl]="proveedorFilterCtrl" placeholder="Buscar"
+                                            placeholderLabel="Buscar"
+                                            noEntriesFoundLabel="No hay Registros"></ngx-mat-select-search>
+                                    </mat-option>
+
+                                    <mat-option *ngFor="let proveedor of filteredProveedor | async" [value]="proveedor.id"
+                                        noEntriesFoundLabel="Buscar">
+                                        {{ proveedor.nombre }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="bankSelect">Nivel Perfil</label>
+                                <mat-select [(ngModel)]="DatosPerfilCost.perfilNivelId" #singleSelect
+                                    class="form-control" name="perfilNivelId" placeholder="Seleccione.."
+                                    [required]="true">
+                                    <mat-option>
+                                        <ngx-mat-select-search [formControl]="nivelFilterCtrl" placeholder="Buscar"
+                                            placeholderLabel="Buscar"
+                                            noEntriesFoundLabel="No hay Registros"></ngx-mat-select-search>
+                                    </mat-option>
+
+                                    <mat-option *ngFor="let nivel of filteredNivel | async" [value]="nivel.id"
+                                        noEntriesFoundLabel="Buscar">
+                                        {{ nivel.nombre }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                        
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Valor</label>
+                                <input type="number" [required]="true" name="valor" [(ngModel)]="DatosPerfilCost.valor"
+                                    class="form-control" placeholder="Valor">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+
+            <div class="col-md-12 pb-3 pt-3 pl-0 pr-1" [hidden]="verGrid==false">
+                <app-grid-chronos [gridOptions]="gridDataPerfilCos"></app-grid-chronos>
+            </div>
+        </div>
+    </form>
+</div>

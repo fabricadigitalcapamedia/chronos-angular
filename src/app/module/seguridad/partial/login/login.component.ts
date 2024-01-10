@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
 
 
   login() {
-    debugger;
     if (this.user === '' || this.password === '') {
       this.validate = true
       this.toastr.warning('Debe diligenciar los campos remarcados en rojo');

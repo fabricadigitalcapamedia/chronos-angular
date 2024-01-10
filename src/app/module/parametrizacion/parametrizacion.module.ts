@@ -29,6 +29,7 @@ import { PerfilTipoComponent } from './partial/perfil-tipo/perfil-tipo.component
 import { PerfilNivelComponent } from './partial/perfil-nivel/perfil-nivel.component';
 import { LineaProductoComponent } from './partial/linea-producto/linea-producto.component';
 import { PerfilCostoComponent } from './partial/perfil-costo/perfil-costo.component';
+import { TercerosComponent } from './partial/terceros/terceros.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { PerfilCostoComponent } from './partial/perfil-costo/perfil-costo.compon
         PerfilNivelComponent,
         LineaProductoComponent,
         PerfilCostoComponent,
+        TercerosComponent,
     ],
     exports: [],
     imports: [

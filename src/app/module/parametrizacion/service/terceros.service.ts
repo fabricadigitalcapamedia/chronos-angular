@@ -6,45 +6,46 @@ import { environment } from '../../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class PerfilCostoService {
+export class TercerosService {
 
   constructor(private http: HttpClient) { }
   url = environment.apiUrl;
 
 
-  getPerfilCosto(clUsuario: any): Observable<any> {
+  getTercero(clUsuario: any): Observable<any> {
     const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);
-    return this.http.get(this.url + '/perfilcosto', { headers }).pipe(
+    return this.http.get(this.url + '/tercero', { headers }).pipe(
       catchError((error: any) => {
         return throwError(() => Error(error.message));
       })
     );
   }
 
-  getPerfilCostoXid(clUsuario: any, id: number): Observable<any> {
+  getTerceroXid(clUsuario: any, id: number): Observable<any> {
     const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);
-    return this.http.get(this.url + '/perfilcosto/' + id, { headers }).pipe(
+    return this.http.get(this.url + '/tercero/' + id, { headers }).pipe(
       catchError((error: any) => {
         return throwError(() => Error(error.message));
       })
     );
   }
 
-  createPerfilCosto(clUsuario: any, data: any): Observable<any> {
+  createTercero(clUsuario: any, data: any): Observable<any> {
     const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);
-    return this.http.post(this.url + '/perfilcosto', data, { headers }).pipe(
+    return this.http.post(this.url + '/tercero', data, { headers }).pipe(
       catchError((error: any) => {
         return throwError(() => Error(error.message));
       })
     );
   }
 
-  updatePerfilCosto(clUsuario: any, data: any): Observable<any> {
+  updateTercero(clUsuario: any, data: any): Observable<any> {
     const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);
-    return this.http.put(this.url + '/perfilcosto/' + data.id, data, { headers }).pipe(
+    return this.http.put(this.url + '/tercero/' + data.id, data, { headers }).pipe(
       catchError((error: any) => {
         return throwError(() => Error(error.message));
       })
     );
   }
+
 }

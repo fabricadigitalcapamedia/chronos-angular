@@ -70,44 +70,6 @@ export class PerfilComponent implements OnInit {
     this.fnLoad();
   }
 
-  save() {
-    if (!this.Form?.valid) {
-      this.validate = true
-      this.toastr.warning('Debe diligenciar los campos remarcados en rojo');
-    }
-    else {
-      let data: any = { ...this.DatosPerfil };
-      if (this.DatosPerfil.id) {
-        this.update(data);
-      } else {
-        this.create(data);
-      }
-    }
-  }
-
-  create(data: any) {
-    data.estado = 'A';
-    this.perfilService.createPerfil(this.user, data).subscribe({
-      next: (data) => {
-        this.DatosPerfil.id = data.data.id;
-        this.router.navigate([], { queryParams: { idPerfil: this.DatosPerfil.id } });
-        this.activationButtons();
-        this.toastr.success(data.mensaje);
-      }, error: (error) => {
-        this.toastr.error('error de conexion con el servidor.');
-      }
-    });
-  }
-
-  update(data: any) {
-    this.perfilService.updatePerfil(this.user, data).subscribe({
-      next: (data) => {
-        this.toastr.success(data.mensaje);
-      }, error: (error) => {
-        this.toastr.error('error de conexion con el servidor.');
-      }
-    });
-  }
 
   clear() {
     this.verGrid = false;
@@ -161,19 +123,44 @@ export class PerfilComponent implements OnInit {
   }
 
 
-
-
-  fnLoad() {
-    this.idPerfil = this.route.snapshot.queryParams;
-    if (this.idPerfil?.idPerfil) {
-      this.getPerfilXid(parseInt(this.idPerfil.idPerfil));
-      this.verGrid = false;
+  save() {
+    if (!this.Form?.valid) {
+      this.validate = true
+      this.toastr.warning('Debe diligenciar los campos remarcados en rojo');
     }
     else {
-      this.getPerfil();
+      let data: any = { ...this.DatosPerfil };
+      if (this.DatosPerfil.id) {
+        this.update(data);
+      } else {
+        this.create(data);
+      }
     }
   }
 
+  create(data: any) {
+    data.estado = 'A';
+    this.perfilService.createPerfil(this.user, data).subscribe({
+      next: (data) => {
+        this.DatosPerfil.id = data.data.id;
+        this.router.navigate([], { queryParams: { idPerfil: this.DatosPerfil.id } });
+        this.activationButtons();
+        this.toastr.success(data.mensaje);
+      }, error: (error) => {
+        this.toastr.error('error de conexion con el servidor.');
+      }
+    });
+  }
+
+  update(data: any) {
+    this.perfilService.updatePerfil(this.user, data).subscribe({
+      next: (data) => {
+        this.toastr.success(data.mensaje);
+      }, error: (error) => {
+        this.toastr.error('error de conexion con el servidor.');
+      }
+    });
+  }
 
   activationButtons() {
     if (this.verGrid) {
@@ -185,6 +172,17 @@ export class PerfilComponent implements OnInit {
       this.toolbarButton.saveShow = true;
       this.toolbarButton.filterShow = true;
       this.toolbarButton.newShow = true;
+    }
+  }
+
+  fnLoad() {
+    this.idPerfil = this.route.snapshot.queryParams;
+    if (this.idPerfil?.idPerfil) {
+      this.getPerfilXid(parseInt(this.idPerfil.idPerfil));
+      this.verGrid = false;
+    }
+    else {
+      this.getPerfil();
     }
   }
 

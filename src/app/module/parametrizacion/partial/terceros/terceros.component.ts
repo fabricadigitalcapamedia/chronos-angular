@@ -3,26 +3,28 @@ import { ColDef, GridApi, GridOptions } from 'ag-grid-community';
 import { TemplateRenderComponent } from 'src/app/shared/components/grid-chronos/template-render/template-render.component';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
-import { LineaProductoService } from '../../service/linea-producto.service';
+import { FormControl, NgForm } from '@angular/forms';
+import { TercerosService } from '../../service/terceros.service';
 
 @Component({
-  selector: 'app-linea-producto',
-  templateUrl: './linea-producto.component.html',
-  styleUrl: './linea-producto.component.css'
+  selector: 'app-terceros',
+  templateUrl: './terceros.component.html',
+  styleUrl: './terceros.component.css'
 })
-export class LineaProductoComponent implements OnInit {
+export class TercerosComponent implements OnInit {
+
   @ViewChild('form', { static: true }) Form?: NgForm;
 
+
   toolbarButton: any = {};
-  gridDataLineaProducto: GridOptions;
+  gridDataTercero: GridOptions;
   column?: any[];
   rowData: any;
-  DatosLineaProduct: any = {};
+  DatosTercero: any = {};
   user = localStorage.getItem('user');
   verGrid: boolean = true;
   validate: boolean = false;
-  idLineaProduct: any = {};
+  idTercero: any = {};
 
   colDefs: ColDef[] = [
     {
@@ -31,12 +33,13 @@ export class LineaProductoComponent implements OnInit {
       cellRendererParams: { edit: 'Editar' },
       width: 100
     },
-    { field: "nombre", headerName: 'Nombre Linea Producto', width: 900 },
-    { field: "fechacreacion", headerName: 'Fecha Creacion', width: 180 },
-    { field: "fechamodificacion", headerName: 'Fecha Modificacion', width: 180 },
+    { field: "nombre", headerName: 'Nombre', width: 400 },
+    { field: "nit", headerName: 'Nit', width: 150 },
+    { field: "telefono", headerName: 'Telefono', width: 150 }
   ];
-  constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private lineaProdcutSerice: LineaProductoService) {
-    this.gridDataLineaProducto = {
+
+  constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private terceroService: TercerosService) {
+    this.gridDataTercero = {
       context: (api: GridApi) => {
         api.setColumnDefs(this.colDefs)
       },
@@ -63,35 +66,30 @@ export class LineaProductoComponent implements OnInit {
       filterShow: false
     }
   }
+
   ngOnInit(): void {
     this.fnLoad();
   }
 
-
-  clear() { 
+  clear() {
     this.verGrid = false;
     this.router.navigate([], { queryParams: {} });
-    this.DatosLineaProduct = {};
-    this.idLineaProduct = {};
+    this.DatosTercero = {};
+    this.idTercero = {};
     this.activationButtons();
   }
 
   filtrar() {
     this.verGrid = true;
     this.router.navigate([], { queryParams: {} });
-    this.idLineaProduct = {};
-    this.getLineaProduct();
+    this.idTercero = {};
+    this.activationButtons();
   }
-  
 
-  getLineaProduct(){
-    this.lineaProdcutSerice.getLineaProduct(this.user).subscribe({
-      next: (data) => {
-        data.data.forEach((element: any) => {
-          element.fechacreacion = this.formatFecha(element.fechacreacion);
-          element.fechamodificacion = this.formatFecha(element.fechamodificacion);
-        });
-        this.gridDataLineaProducto.api?.setRowData(data.data);
+  getTercero() {
+    this.terceroService.getTercero(this.user).subscribe({
+      next: (data) => {       
+        this.gridDataTercero.api?.setRowData(data.data);
         this.activationButtons();
       },
       error: (error) => {
@@ -100,10 +98,10 @@ export class LineaProductoComponent implements OnInit {
     })
   }
 
-  getLineaProductXid(id: number){
-    this.lineaProdcutSerice.getLineaProductXid(this.user, id).subscribe({
+  getTerceroXid(id: number) {
+    this.terceroService.getTerceroXid(this.user, id).subscribe({
       next: (data) => {
-        this.DatosLineaProduct = data.data;
+        this.DatosTercero = data.data;
         this.activationButtons();
       },
       error: (error) => {
@@ -118,53 +116,52 @@ export class LineaProductoComponent implements OnInit {
       this.toastr.warning('Debe diligenciar los campos remarcados en rojo');
     }
     else {
-      let data: any = { ...this.DatosLineaProduct };
-      if (this.DatosLineaProduct.id) {
+      let data: any = { ...this.DatosTercero };
+      this.getTercero();
+      if (this.DatosTercero.id) {
         this.update(data);
       } else {
+        data.codtercerotipo = 1;
         this.create(data);
       }
     }
   }
 
-
-  create(data:any){
-    this.lineaProdcutSerice.creategetLineaProduct(this.user, data).subscribe({
+  create(data: any) {
+    this.terceroService.createTercero(this.user, data).subscribe({
       next: (data) => {
-        this.DatosLineaProduct.id = data.data.id;
-        this.router.navigate([], { queryParams: { idLineaProduct: this.DatosLineaProduct.id } });
+        this.DatosTercero= data.data;
+        this.router.navigate([], { queryParams: { idTercero: this.DatosTercero.id } });
         this.activationButtons();
         this.toastr.success(data.mensaje);
       },
       error: (error) => {
-        this.toastr.error('error al guardar intente nuevamente.');
+        this.toastr.error('error de conexion con el servidor.');
       }
     });
   }
 
-  update(data:any){
-    this.lineaProdcutSerice.updategetLineaProduct(this.user, data).subscribe({
+  update(data: any) {
+    this.terceroService.updateTercero(this.user, data).subscribe({
       next: (data) => {
         this.toastr.success(data.mensaje);
       },
       error: (error) => {
-        this.toastr.error('error al actualizar intente nuevamente.')
+        this.toastr.error('error de conexion con el servidor.')
       }
     })
   }
 
-
   handleEditClick(event: any): void {
     var nuevoArray = event.eventPath[0].id;
     if (nuevoArray == 'edit') {
-      this.DatosLineaProduct = event.data;
+      this.DatosTercero = event.data;
       this.verGrid = false;
-      this.router.navigate([], { queryParams: { idLineaProduct: this.DatosLineaProduct.id } });
-      this.idLineaProduct = this.route.snapshot.queryParams;
+      this.router.navigate([], { queryParams: { idTercero: this.DatosTercero.id } });
+      this.idTercero = this.route.snapshot.queryParams;
       this.activationButtons();
     }
   };
-
 
   activationButtons() {
     if (this.verGrid) {
@@ -179,25 +176,15 @@ export class LineaProductoComponent implements OnInit {
     }
   }
 
-  formatFecha(fecharec: any) {
-    if (typeof fecharec === 'number') {
-      const fecha = new Date(fecharec);
-      const dia = fecha.getDate().toString().padStart(2, '0');
-      const mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); // ¡Recuerda que los meses comienzan desde 0!
-      const anio = fecha.getFullYear();
-      fecharec = `${dia}/${mes}/${anio}`;
-    }
-    return fecharec;
-  }
-
   fnLoad() {
-    this.idLineaProduct = this.route.snapshot.queryParams;
-    if (this.idLineaProduct?.idLineaProduct) {
-      this.getLineaProductXid(parseInt(this.idLineaProduct.idLineaProduct));
+    this.idTercero = this.route.snapshot.queryParams;
+    if (this.idTercero?.idTercero) {
+      this.getTerceroXid(parseInt(this.idTercero.idTercero));
       this.verGrid = false;
     }
     else {
-      this.getLineaProduct();
+      this.getTercero();
     }
   }
+
 }

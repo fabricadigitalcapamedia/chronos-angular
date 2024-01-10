@@ -6,6 +6,7 @@ import { PerfilTipoComponent } from './partial/perfil-tipo/perfil-tipo.component
 import { PerfilNivelComponent } from './partial/perfil-nivel/perfil-nivel.component';
 import { LineaProductoComponent } from './partial/linea-producto/linea-producto.component';
 import { PerfilCostoComponent } from './partial/perfil-costo/perfil-costo.component';
+import { TercerosComponent } from './partial/terceros/terceros.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,11 @@ const routes: Routes = [
     path: 'perfilCosto',
     component: PerfilCostoComponent,
     data: { titulo: 'Perfil Costo' }
+  },
+  {
+    path: 'terceros',
+    component: TercerosComponent,
+    data: { titulo: 'Terceros' }
   },
 ];
 

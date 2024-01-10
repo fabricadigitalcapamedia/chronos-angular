@@ -41,8 +41,6 @@ export class LineaProductoService {
   }
 
   updategetLineaProduct(clUsuario: any, data: any): Observable<any> {
-    
-    debugger;
     const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);
     return this.http.put(this.url + '/lineaproducto/' + data.id, data, { headers }).pipe(
       catchError((error: any) => {
