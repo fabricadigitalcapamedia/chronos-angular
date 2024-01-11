@@ -7,6 +7,7 @@ import { PerfilNivelComponent } from './partial/perfil-nivel/perfil-nivel.compon
 import { LineaProductoComponent } from './partial/linea-producto/linea-producto.component';
 import { PerfilCostoComponent } from './partial/perfil-costo/perfil-costo.component';
 import { TercerosComponent } from './partial/terceros/terceros.component';
+import { TareaTipoComponent } from './partial/tarea-tipo/tarea-tipo.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,11 @@ const routes: Routes = [
     path: 'terceros',
     component: TercerosComponent,
     data: { titulo: 'Terceros' }
+  },
+  {
+    path: 'tareaTipo',
+    component: TareaTipoComponent,
+    data: { titulo: 'Tarea Tipo' }
   },
 ];
 

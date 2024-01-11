@@ -14,9 +14,10 @@ export class SidebarService {
     { id: 6, titulo: 'Perfil Tipo', icon: 'fa fa-address-card', idparent: 4, path: 'perfilTipo' },
     { id: 7, titulo: 'Perfil Nivel', icon: 'fa fa-layer-group', idparent: 4, path: 'perfilNivel' },
     { id: 8, titulo: 'Linea Producto', icon: 'fa fa fa-archive', idparent: 4, path: 'lineaProducto' },
-    { id: 9, titulo: 'Perfil Costo', icon: 'fa fa fa-archive', idparent: 4, path: 'perfilCosto' },
+    { id: 9, titulo: 'Perfil Costo', icon: 'fa fa fa-building', idparent: 4, path: 'perfilCosto' },
     { id: 10, titulo: 'Terceros', icon: 'fa fa fa-archive', idparent: 1, path: 'terceros' },
     { id: 11, titulo: 'Tareas', icon: 'fa fa fa-tasks', idparent: 1, path: null },
+    { id: 12, titulo: 'Tipo', icon: 'fa fa fa-tasks', idparent: 11, path: 'tareaTipo' },
   ];
 
   constructor() { }

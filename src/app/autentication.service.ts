@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { LoginComponent } from './module/seguridad/partial/login/login.component';
-import { GenerateJsonService } from './generate-json.service';
 import { Router } from '@angular/router';
 
 @Injectable({
