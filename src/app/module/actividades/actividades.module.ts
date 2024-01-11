@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ActividadesComponent } from './actividades.component';
 import { ActividadesRoutingModule } from './actividades.routing';
 import { FormsModule } from '@angular/forms';
@@ -27,6 +27,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 @NgModule({
   imports: [
     CommonModule,
+    DatePipe,
     ActividadesRoutingModule,
     BsDatepickerModule.forRoot(),
         MatNativeDateModule,

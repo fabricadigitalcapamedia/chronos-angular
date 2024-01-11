@@ -25,14 +25,15 @@
                     <div class="form-group">
                       <label for="bankSelect">Fecha Fin</label>
                       <div class="input-group">
-                        <input name="fechafin"  [required]="true" type="text" bsDatepicker #dp1="bsDatepicker"
+                        <input name="fechafin" [required]="true" type="text" bsDatepicker #dp2="bsDatepicker"
                             placeholder="DD/MM/AAAA" class="form-control"
                             [(ngModel)]="DatosActividades.fechafin"
-                            [bsConfig]="{ adaptivePosition: true,isAnimated: true, dateInputFormat: 'DD/MM/YYYY',containerClass:'theme-dark-blue', customTodayClass: 'bg-warning'}">
-                        <span class="input-group-addon calendar-icon" (click)="dp1.show()"
-                            [attr.aria-expanded]="dp1.isOpen">
-                            <i class="fa fa fa-calendar"></i>
-                        </span>
+                            [bsConfig]="{ adaptivePosition: true, isAnimated: true, dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', customTodayClass: 'bg-warning'}"
+                            (ngModelChange)="getActividadesFiltro($event)">
+                      <span class="input-group-addon calendar-icon" (click)="dp2.show()" [attr.aria-expanded]="dp2.isOpen">
+                        <i class="fa fa fa-calendar"></i>
+                      </span>
+
                       </div>
                     </div>
                   </div>
@@ -62,7 +63,7 @@
           </div>-->
         
           <div class='demo-app-main'>
-            <full-calendar *ngIf='calendarVisible()' [options]='calendarOptions()'>
+            <full-calendar #calendar *ngIf='calendarVisible()' [options]='calendarOptions()'>
               <ng-template #eventContent let-arg>
                 <b>{{ arg.timeText }}</b>
                 <i>{{ arg.event.title }}</i>

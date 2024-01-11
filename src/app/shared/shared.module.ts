@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { HeaderComponent } from './components/design/header/header.component';
 import { BreadcrumbsComponent } from './components/design/breadcrumbs/breadcrumbs.component';
 import { FooterComponent } from './components/design/footer/footer.component';
@@ -38,5 +38,8 @@ import { ToolbarComponent } from './components/design/toolbar/toolbar.component'
     GridChronosComponent,
     ToolbarComponent
   ],
+  providers: [
+    DatePipe
+  ]
 })
 export class SharedModule { }
