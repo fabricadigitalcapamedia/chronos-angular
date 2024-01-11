@@ -18,9 +18,10 @@ export class SidebarService {
     { id: 10, titulo: 'Terceros', icon: 'fa fa fa-archive', idparent: 1, path: 'terceros' },
     { id: 11, titulo: 'Tareas', icon: 'fa fa fa-tasks', idparent: 1, path: null },
     { id: 12, titulo: 'Tipo', icon: 'fa fa fa-tasks', idparent: 11, path: 'tareaTipo' },
+    { id: 13, titulo: 'Tipo de Estados', icon: 'fa fa fa-tasks', idparent: 11, path: 'tareaTipoEstado' },
   ];
 
-  constructor() { }
+  constructor() { } 
 
   ejecutar() {
     const idToElementMap: any = {};

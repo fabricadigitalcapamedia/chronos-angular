@@ -8,6 +8,7 @@ import { LineaProductoComponent } from './partial/linea-producto/linea-producto.
 import { PerfilCostoComponent } from './partial/perfil-costo/perfil-costo.component';
 import { TercerosComponent } from './partial/terceros/terceros.component';
 import { TareaTipoComponent } from './partial/tarea-tipo/tarea-tipo.component';
+import { TareaTipoEstadoComponent } from './partial/tarea-tipo-estado/tarea-tipo-estado.component';
 
 const routes: Routes = [
   {
@@ -49,6 +50,11 @@ const routes: Routes = [
     path: 'tareaTipo',
     component: TareaTipoComponent,
     data: { titulo: 'Tarea Tipo' }
+  },
+  {
+    path: 'tareaTipoEstado',
+    component: TareaTipoEstadoComponent,
+    data: { titulo: 'Tarea Tipo Estado' }
   },
 ];
 
