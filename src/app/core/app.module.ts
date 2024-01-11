@@ -36,7 +36,7 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 
 
 import LocaleEsCo from '@angular/common/locales/es-CO';
-import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
+import { DatePipe, HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 import { MatNativeDateModule } from '@angular/material/core';
 
 import { defineLocale } from 'ngx-bootstrap/chronos';
@@ -95,7 +95,7 @@ export const httpInterceptors = [
     NgxMatSelectSearchModule,
     FullCalendarModule,
   ],
-  providers: [AutenticationService,httpInterceptors],
+  providers: [AutenticationService,httpInterceptors, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

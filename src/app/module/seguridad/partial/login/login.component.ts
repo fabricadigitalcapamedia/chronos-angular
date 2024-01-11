@@ -50,17 +50,20 @@ export class LoginComponent implements OnInit {
         if (response !== "0") {
           if (response && response.clave === this.hashedPassword) {
             this.router.navigate(['/home']);
+            console.log(response);
             localStorage.setItem('login', 'true');
             localStorage.setItem("user", this.user);
             localStorage.setItem("nameuser", response.nombre);
             localStorage.setItem("azureemail", response.azureemail);
             localStorage.setItem("tokenazure", response.tokenazure);
+            localStorage.setItem("codpersona", response.codpersona)
           }
           else {
             this.toastr.error('usuario o contraseña incorrecto')
             localStorage.removeItem('login');
             localStorage.removeItem("user");
             localStorage.removeItem("nameuser");
+            localStorage.removeItem("codpersona");
           }
         }
         else {
