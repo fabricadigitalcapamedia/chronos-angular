@@ -18,7 +18,7 @@ import { INITIAL_EVENTS, createEventId } from 'src/app/shared/components/calenda
 import { ActividadesService } from './actividades.service';
 import { EmpleadoService } from '../administracion/personas/empleado.service';
 import * as moment from 'moment';
-import { UtilsService } from '../../../app/shared/utils/utils.service';
+//import { UtilsService } from '../../../app/shared/utils/utils.service';
 
 @Component({
   selector: 'app-actividades',
@@ -29,12 +29,13 @@ export class ActividadesComponent implements OnInit {
   @ViewChild('form', { static: true }) Form?: NgForm;
   @ViewChild('calendar')
   calendarComponent!: FullCalendarComponent;
-
+  
   validate: any;
   DatosActividades: any = {
     fechainicio: null,
     fechafin: null
   };
+  events: EventInput[]= [];
   //codPersona: any;
   horasMes: any;
   user = localStorage.getItem('user');
@@ -56,8 +57,8 @@ export class ActividadesComponent implements OnInit {
     },
     locale: esLocale,
     initialView: 'dayGridMonth',
-    initialEvents: this.getActividadesFiltroInit(), // alternatively, use the `events` setting to fetch from a feed
-    weekends: true,
+    initialEvents: this.events, // alternatively, use the `events` setting to fetch from a feed
+    weekends: false,
     editable: true,
     selectable: true,
     selectMirror: true,
@@ -77,7 +78,7 @@ export class ActividadesComponent implements OnInit {
   constructor(private changeDetector: ChangeDetectorRef, 
               private actividadesService: ActividadesService, 
               private empleadoService: EmpleadoService,
-              private utils: UtilsService) {
+              ) {
   
   }
 
@@ -85,41 +86,60 @@ export class ActividadesComponent implements OnInit {
     const calendarApi = this.calendarComponent.getApi();
     const newDateObj = moment(newDate, 'DD/MM/YYYY').toDate();
     calendarApi.gotoDate(newDateObj);
-    console.log(this.getActividadesFiltroInit());
-
+    this.loadEvents();
   }
 
-  getActividadesFiltroInit(): EventInput[] {
+  async loadEvents(): Promise<void> {
     console.log(this.user, ' ',  this.codpersona, ' ', this.DatosActividades.fechainicio, ' ', this.DatosActividades.fechafin)
-    let events: EventInput[]= [];
+    
     this.actividadesService.getActividadesFiltro(this.user, this.codpersona, 
         this.DatosActividades.fechainicio, 
         this.DatosActividades.fechafin).subscribe((response) => {
       if (response.data) {
+        console.log(response.data);
         response.data.forEach((item: any) =>{
-          if (item.start_date && item.fechafinreal) {
-            const fechaInicio: string = new Date(item.fechainireal).toISOString().replace(/T.*$/, '')+'T08:00:00';
-            const fechaFin: string = new Date(item.fechafinreal).toISOString().replace(/T.*$/, '')+'T18:00:00';
-            //const fechaFinFormat: Date = moment(fechaFin, 'YYYY-MM-dd').toDate();
-            //const fechaIniFormat: Date = moment(fechaInicio, 'YYYY-MM-dd').toDate();
-            //let fechaFinEstimada = this.utils.cambiarFormatoFecha(fechaFin, 'dd/MM/YYYY', 'YYYY-MM-dd') || null;
-            //let fechaInicio = this.utils.cambiarFormatoFecha(fechaIni, 'dd/MM/YYYY', 'YYYY-MM-dd');
-            debugger
-            if (fechaFin !== null) {
-              events.push({
-                id: item.id,
+          if (item.fechainiestimada!==null && item.fechafinestimada!==null) {
+            if(String(item.codpersonaasignado)===this.codpersona){
+              
+              let fechaInicio: any;
+              let fechaFin: any;
+
+              if(item.fechainireal != null) {
+                fechaInicio = new Date(item.fechainireal).toISOString().replace(/T.*$/, '')+'T08:00:00';
+              }else {
+                fechaInicio = new Date(item.fechainicio).toISOString().replace(/T.*$/, '')+'T08:00:00';
+              }
+              
+              if(item.fechafin != null) {
+                fechaFin = new Date(item.fechafinreal).toISOString().replace(/T.*$/, '')+'T18:00:00';
+              }else {
+                fechaFin = new Date(item.fechafin).toISOString().replace(/T.*$/, '')+'T18:00:00';
+              }
+            
+            if (fechaInicio !== null && fechaFin !== null) {
+              this.events.push({
+                id: String(item.id),
                 title: item.text,
                 start: fechaInicio,
                 end: fechaFin
               });
+            }else{
+              console.log("FechaFin null: "+ item.id)
+            }
             }
           }
         })
-        console.log(events);
+        console.log(this.events);
+        const calendarApi = this.calendarComponent.getApi();
+        this.events.forEach((event: any) => {
+          calendarApi.addEvent(event);
+        });
+        
       }
     });
-    return events;
   }
+
+  //validacionFechas(fechaOne: any, fechaTwo): 
 
   handleCalendarToggle() {
     this.calendarVisible.update((bool) => !bool);
@@ -156,7 +176,7 @@ export class ActividadesComponent implements OnInit {
   }
 
   handleEvents(events: EventApi[]) {
-    console.log(events);
+    //console.log(events);
     this.currentEvents.set(events);
     this.changeDetector.detectChanges();
   
@@ -168,8 +188,9 @@ export class ActividadesComponent implements OnInit {
   async ngOnInit() {
     this.DatosActividades.fechainicio = moment().subtract(1, 'months').startOf('month').format('DD/MM/YYYY');
     this.DatosActividades.fechafin = moment().endOf('month').format('DD/MM/YYYY');
-    await this.cargaIdEmpleado();
-    console.log(INITIAL_EVENTS);
+    this.loadEvents();
+    this.cargaIdEmpleado();
+    
   }
 
   async cargaIdEmpleado() : Promise<void>{
@@ -186,7 +207,7 @@ export class ActividadesComponent implements OnInit {
     //console.log(idEmpleado);
     this.empleadoService.getHorasRegistradasEmpleado(idEmpleado).subscribe((response) => {
       if (response.data) {
-        this.horasMes = response.data.id;
+        this.horasMes = response.data;
       }else {
         this.horasMes = '0';
       }
