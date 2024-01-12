@@ -30,7 +30,7 @@ export class GridChronosComponent implements OnInit,OnDestroy  {
   public showStatusBar: boolean = false;
   public searchByText!: string;
   public selectAll: boolean = false;
-  _gridOptions: any;
+  _gridOptions!: any;
   public style: any = {};
   rowSelect!: number;
   private localeText: any = {

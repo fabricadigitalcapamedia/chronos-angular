@@ -164,7 +164,7 @@ export class PerfilCostoComponent implements OnInit {
   create(data: any) {
     this.perfilCostoService.createPerfilCosto(this.user, data).subscribe({
       next: (data) => {
-        this.DatosPerfilCost.id = data.data.id;
+        this.DatosPerfilCost = data.data;
         this.router.navigate([], { queryParams: { idPerfilTipo: this.DatosPerfilCost.id } });
         this.activationButtons();
         this.toastr.success(data.mensaje);
