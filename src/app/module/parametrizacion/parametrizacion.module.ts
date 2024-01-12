@@ -32,6 +32,7 @@ import { PerfilCostoComponent } from './partial/perfil-costo/perfil-costo.compon
 import { TercerosComponent } from './partial/terceros/terceros.component';
 import { TareaTipoComponent } from './partial/tarea-tipo/tarea-tipo.component';
 import { TareaTipoEstadoComponent } from './partial/tarea-tipo-estado/tarea-tipo-estado.component';
+import { TareaEstadosComponent } from './partial/tarea-estados/tarea-estados.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { TareaTipoEstadoComponent } from './partial/tarea-tipo-estado/tarea-tipo
         PerfilCostoComponent,
         TercerosComponent,
         TareaTipoComponent,
-        TareaTipoEstadoComponent
+        TareaTipoEstadoComponent,
+        TareaEstadosComponent
     ],
     exports: [],
     imports: [

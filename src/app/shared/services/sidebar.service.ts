@@ -19,6 +19,7 @@ export class SidebarService {
     { id: 11, titulo: 'Tareas', icon: 'fa fa fa-tasks', idparent: 1, path: null },
     { id: 12, titulo: 'Tipo', icon: 'fa fa fa-tasks', idparent: 11, path: 'tareaTipo' },
     { id: 13, titulo: 'Tipo de Estados', icon: 'fa fa fa-tasks', idparent: 11, path: 'tareaTipoEstado' },
+    { id: 14, titulo: 'Estados', icon: 'fa fa fa-tasks', idparent: 11, path: 'tareaEstado' },
   ];
 
   constructor() { } 

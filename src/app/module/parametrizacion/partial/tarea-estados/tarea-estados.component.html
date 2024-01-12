@@ -1,0 +1,58 @@
+<app-toolbar [toolbar]="toolbarButton"></app-toolbar>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-12 pl-0 pr-0 ">
+    <form [ngClass]="validate ? 'was-validated' : ''" #form="ngForm">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card card-danger" [hidden]="verGrid==true">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="bankSelect">Codigo estado tipo</label>
+                                <mat-select [(ngModel)]="DatosTarEst.codtareaestadotipo" #singleSelect
+                                    class="form-control" name="codtareaestadotipo" placeholder="Seleccione.."
+                                    [required]="true">
+                                    <mat-option>
+                                        <ngx-mat-select-search [formControl]="tipoEstFilterCtrl" placeholder="Buscar"
+                                            placeholderLabel="Buscar"
+                                            noEntriesFoundLabel="No hay Registros"></ngx-mat-select-search>
+                                    </mat-option>
+
+                                    <mat-option *ngFor="let tipo of filteredTipo | async" [value]="tipo.id"
+                                        noEntriesFoundLabel="Buscar">
+                                        {{ tipo.nombre }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input type="text" [required]="true" name="nombre" [(ngModel)]="DatosTarEst.nombre"
+                                    class="form-control" placeholder="Nombre">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <label>Descripción</label>
+                                <textarea class="form-control" name="descripcion" rows="3" placeholder="Descripción"
+                                    [(ngModel)]="DatosTarEst.descripcion"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+
+            <div class="col-md-12 pb-3 pt-3 pl-0 pr-1" [hidden]="verGrid==false">
+                <app-grid-chronos [gridOptions]="gridDataTarEst"></app-grid-chronos>
+            </div>
+        </div>
+    </form>
+</div>
+

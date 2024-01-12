@@ -9,6 +9,7 @@ import { PerfilCostoComponent } from './partial/perfil-costo/perfil-costo.compon
 import { TercerosComponent } from './partial/terceros/terceros.component';
 import { TareaTipoComponent } from './partial/tarea-tipo/tarea-tipo.component';
 import { TareaTipoEstadoComponent } from './partial/tarea-tipo-estado/tarea-tipo-estado.component';
+import { TareaEstadosComponent } from './partial/tarea-estados/tarea-estados.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,11 @@ const routes: Routes = [
     path: 'tareaTipoEstado',
     component: TareaTipoEstadoComponent,
     data: { titulo: 'Tarea Tipo Estado' }
+  },
+  {
+    path: 'tareaEstado',
+    component: TareaEstadosComponent,
+    data: { titulo: 'Tarea Estados' }
   },
 ];
 
