@@ -24,6 +24,7 @@ export class PerfilNivelComponent implements OnInit {
   validate: boolean = false;
   idPerfilNivel: any = {};
 
+
   colDefs: ColDef[] = [
     {
       field: "Accion", cellRenderer: TemplateRenderComponent,
@@ -44,8 +45,8 @@ export class PerfilNivelComponent implements OnInit {
       , pagination: false
       , singleClickEdit: false
       , enableCellTextSelection: false
-    }
-
+    }  
+      
     this.toolbarButton = {
       save: () => {
         this.save();
@@ -125,7 +126,7 @@ export class PerfilNivelComponent implements OnInit {
   create(data:any){
     this.perfilNivelService.createPerfilNivel(this.user, data).subscribe({
       next: (data) => {
-        this.DatosPerfil.id = data.data.id;
+        this.DatosPerfil = data.data;
         this.router.navigate([], { queryParams: { idPerfilTipo: this.DatosPerfil.id } });
         this.activationButtons();
         this.toastr.success(data.mensaje);

@@ -142,7 +142,7 @@ export class PerfilComponent implements OnInit {
     data.estado = 'A';
     this.perfilService.createPerfil(this.user, data).subscribe({
       next: (data) => {
-        this.DatosPerfil.id = data.data.id;
+        this.DatosPerfil = data.data;
         this.router.navigate([], { queryParams: { idPerfil: this.DatosPerfil.id } });
         this.activationButtons();
         this.toastr.success(data.mensaje);

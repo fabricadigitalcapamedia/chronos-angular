@@ -1,1 +1,44 @@
-<p>tarea-tipo-estado works!</p>
+<app-toolbar [toolbar]="toolbarButton"></app-toolbar>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-12 pl-0 pr-0 ">
+    <form [ngClass]="validate ? 'was-validated' : ''" #form="ngForm">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card card-danger" [hidden]="verGrid==true">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Código</label>
+                                <input type="text" [required]="true" name="codigotipo" [(ngModel)]="DatosTarTipEst.codigotipo"
+                                    class="form-control" placeholder="Codigo">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input type="text" [required]="true" name="nombre" [(ngModel)]="DatosTarTipEst.nombre"
+                                    class="form-control" placeholder="nombre">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Descripción</label>
+                                <input type="text" [required]="true" name="descripcion" [(ngModel)]="DatosTarTipEst.descripcion"
+                                    class="form-control" placeholder="descripcion">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+
+            <div class="col-md-12 pb-3 pt-3 pl-0 pr-1" [hidden]="verGrid==false">
+                <app-grid-chronos [gridOptions]="gridDataTarTipEst"></app-grid-chronos>
+            </div>
+        </div>
+    </form>
+</div>
+

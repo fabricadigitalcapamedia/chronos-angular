@@ -212,7 +212,7 @@ export class ProyectoComponent implements OnInit {
 
       } else {
         this.proyectoService.createProyecto(this.user, data).subscribe((response) => {
-          this.DatosProyecto.id = response.data.id;
+          this.DatosProyecto = response.data;
           this.router.navigate([], { queryParams: { idProyecto: this.DatosProyecto.id } });
           this.activationButtons();
           this.toastr.success(response.mensaje);

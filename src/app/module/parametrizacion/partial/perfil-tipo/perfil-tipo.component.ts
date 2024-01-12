@@ -125,7 +125,7 @@ export class PerfilTipoComponent implements OnInit {
   create(data: any) {
     this.perfilTipoService.createPerfilTipo(this.user, data).subscribe({
       next: (data) => {
-        this.DatosPerfil.id = data.data.id;
+        this.DatosPerfil = data.data;
         this.router.navigate([], { queryParams: { idPerfilTipo: this.DatosPerfil.id } });
         this.activationButtons();
         this.toastr.success(data.mensaje);
