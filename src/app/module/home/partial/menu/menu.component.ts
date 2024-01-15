@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { AutenticationService } from 'src/app/autentication.service';
+import { AutenticationService } from 'src/app/service/autentication.service';
 import { LoginService } from 'src/app/module/seguridad/service/login.service';
 
 @Component({

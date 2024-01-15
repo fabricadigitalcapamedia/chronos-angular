@@ -9,6 +9,7 @@ import { Observable, map, startWith } from 'rxjs';
 import { PerfilService } from '../../service/perfil.service';
 import { PerfilTipoService } from '../../service/perfil-tipo.service';
 import { PerfilNivelService } from '../../service/perfil-nivel.service';
+import { ValidationService } from '../../../../service/validation.service';
 
 @Component({
   selector: 'app-perfil-costo',
@@ -68,7 +69,7 @@ export class PerfilCostoComponent implements OnInit {
   ];
 
   constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private perfilCostoService: PerfilCostoService,
-    private perfilService: PerfilService, private perfilTipoService: PerfilTipoService, private perfilNivelService: PerfilNivelService) {
+    private perfilService: PerfilService, private perfilTipoService: PerfilTipoService, private perfilNivelService: PerfilNivelService, private validationService: ValidationService) {
     this.gridDataPerfilCos = {
       context: (api: GridApi) => {
         api.setColumnDefs(this.colDefs)
@@ -120,8 +121,8 @@ export class PerfilCostoComponent implements OnInit {
     this.perfilCostoService.getPerfilCosto(this.user).subscribe({
       next: (data) => {
         data.data.forEach((element: any) => {
-          element.fechaCreacion = this.formatFecha(element.fechaCreacion);
-          element.fechaModificacion = this.formatFecha(element.fechaModificacion);
+          element.fechaCreacion = this.validationService.formatFecha(element.fechaCreacion);
+          element.fechaModificacion = this.validationService.formatFecha(element.fechaModificacion);
         });
         this.gridDataPerfilCos.api?.setRowData(data.data);
         this.activationButtons();
@@ -176,6 +177,9 @@ export class PerfilCostoComponent implements OnInit {
   }
 
   update(data: any) {
+    data.fechaModificacion = typeof data.fechaModificacion === 'number' ? data.fechaModificacion : this.validationService.convertirAFecha(data.fechaModificacion);
+    data.fechaCreacion = typeof data.fechaCreacion === 'number' ? data.fechaCreacion : this.validationService.convertirAFecha(data.fechaCreacion);
+    
     this.perfilCostoService.updatePerfilCosto(this.user, data).subscribe({
       next: (data) => {
         this.toastr.success(data.mensaje);
@@ -207,7 +211,7 @@ export class PerfilCostoComponent implements OnInit {
   }
 
   filterperfil(value: string): any[] {
-    if (value == "") {
+    if (typeof value === 'string') {
       const filterValue = value.toLowerCase();
       return this.Dataperfil.filter((perfil: any) => perfil.nombre.toLowerCase().includes(filterValue));
     }
@@ -225,7 +229,7 @@ export class PerfilCostoComponent implements OnInit {
   }
 
   filterTipo(value: string): any[] {
-    if (value == "") {
+    if (typeof value === 'string') {
       const filterValue = value.toLowerCase();
       return this.DataperfilTipo.filter((tipo: any) => tipo.nombre.toLowerCase().includes(filterValue));
     }
@@ -244,7 +248,7 @@ export class PerfilCostoComponent implements OnInit {
   }
 
   filterNivel(value: string): any[] {
-    if (value == "") {
+    if (typeof value === 'string') {
       const filterValue = value.toLowerCase();
       return this.DataperfilNiv.filter((tipo: any) => tipo.nombre.toLowerCase().includes(filterValue));
     }

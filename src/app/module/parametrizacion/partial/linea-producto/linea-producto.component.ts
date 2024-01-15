@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { LineaProductoService } from '../../service/linea-producto.service';
+import { ValidationService } from '../../../../service/validation.service';
 
 @Component({
   selector: 'app-linea-producto',
@@ -35,7 +36,7 @@ export class LineaProductoComponent implements OnInit {
     { field: "fechacreacion", headerName: 'Fecha Creacion', width: 180 },
     { field: "fechamodificacion", headerName: 'Fecha Modificacion', width: 180 },
   ];
-  constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private lineaProdcutSerice: LineaProductoService) {
+  constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private validationService: ValidationService, private lineaProdcutSerice: LineaProductoService) {
     this.gridDataLineaProducto = {
       context: (api: GridApi) => {
         api.setColumnDefs(this.colDefs)
@@ -88,8 +89,8 @@ export class LineaProductoComponent implements OnInit {
     this.lineaProdcutSerice.getLineaProduct(this.user).subscribe({
       next: (data) => {
         data.data.forEach((element: any) => {
-          element.fechacreacion = this.formatFecha(element.fechacreacion);
-          element.fechamodificacion = this.formatFecha(element.fechamodificacion);
+          element.fechacreacion = this.validationService.formatFecha(element.fechacreacion);
+          element.fechamodificacion = this.validationService.formatFecha(element.fechamodificacion);
         });
         this.gridDataLineaProducto.api?.setRowData(data.data);
         this.activationButtons();
@@ -118,10 +119,11 @@ export class LineaProductoComponent implements OnInit {
       this.toastr.warning('Debe diligenciar los campos remarcados en rojo');
     }
     else {
+      debugger
       let data: any = { ...this.DatosLineaProduct };
       if (this.DatosLineaProduct.id) {
         this.update(data);
-      } else {
+      } else {  
         this.create(data);
       }
     }
@@ -131,7 +133,7 @@ export class LineaProductoComponent implements OnInit {
   create(data:any){
     this.lineaProdcutSerice.creategetLineaProduct(this.user, data).subscribe({
       next: (data) => {
-        this.DatosLineaProduct.id = data.data.id;
+        this.DatosLineaProduct = data.data;
         this.router.navigate([], { queryParams: { idLineaProduct: this.DatosLineaProduct.id } });
         this.activationButtons();
         this.toastr.success(data.mensaje);
@@ -143,6 +145,9 @@ export class LineaProductoComponent implements OnInit {
   }
 
   update(data:any){
+    data.fechamodificacion = typeof data.fechamodificacion === 'number' ? data.fechamodificacion : this.validationService.convertirAFecha(data.fechamodificacion);
+    data.fechacreacion = typeof data.fechacreacion === 'number' ? data.fechacreacion : this.validationService.convertirAFecha(data.fechacreacion);
+    
     this.lineaProdcutSerice.updategetLineaProduct(this.user, data).subscribe({
       next: (data) => {
         this.toastr.success(data.mensaje);
@@ -179,16 +184,7 @@ export class LineaProductoComponent implements OnInit {
     }
   }
 
-  formatFecha(fecharec: any) {
-    if (typeof fecharec === 'number') {
-      const fecha = new Date(fecharec);
-      const dia = fecha.getDate().toString().padStart(2, '0');
-      const mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); // ¡Recuerda que los meses comienzan desde 0!
-      const anio = fecha.getFullYear();
-      fecharec = `${dia}/${mes}/${anio}`;
-    }
-    return fecharec;
-  }
+
 
   fnLoad() {
     this.idLineaProduct = this.route.snapshot.queryParams;

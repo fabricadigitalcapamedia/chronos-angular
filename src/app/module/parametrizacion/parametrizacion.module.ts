@@ -33,6 +33,7 @@ import { TercerosComponent } from './partial/terceros/terceros.component';
 import { TareaTipoComponent } from './partial/tarea-tipo/tarea-tipo.component';
 import { TareaTipoEstadoComponent } from './partial/tarea-tipo-estado/tarea-tipo-estado.component';
 import { TareaEstadosComponent } from './partial/tarea-estados/tarea-estados.component';
+import { TareaModificarComponent } from './partial/tarea-modificar/tarea-modificar.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { TareaEstadosComponent } from './partial/tarea-estados/tarea-estados.com
         TercerosComponent,
         TareaTipoComponent,
         TareaTipoEstadoComponent,
-        TareaEstadosComponent
+        TareaEstadosComponent,
+        TareaModificarComponent
     ],
     exports: [],
     imports: [

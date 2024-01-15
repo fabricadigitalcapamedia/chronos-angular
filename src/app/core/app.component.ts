@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AutenticationService } from '../autentication.service';
+import { AutenticationService } from '../service/autentication.service';
 import { NGXLogger } from 'ngx-logger';
 
 @Component({

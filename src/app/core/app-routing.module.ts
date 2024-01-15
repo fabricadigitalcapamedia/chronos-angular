@@ -2,7 +2,7 @@ import { NgModule, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterModule, RouterStateSnapshot, Routes } from '@angular/router';
 import { MenuComponent } from '../module/home/partial/menu/menu.component';
 import { LoginComponent } from '../module/seguridad/partial/login/login.component';
-import { AutenticationService } from '../autentication.service';
+import { AutenticationService } from '../service/autentication.service';
 import { GanttComponent } from '../shared/components/gantt/gantt.component';
 import { CalendarComponent } from '../shared/components/calendar/calendar.component';
 import { GerateJsonComponent } from '../module/home/partial/gerate-json/gerate-json.component';

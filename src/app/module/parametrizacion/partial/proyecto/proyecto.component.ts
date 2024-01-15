@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { Observable, map, startWith } from 'rxjs';
 import { NgForm } from '@angular/forms';
+import { ValidationService } from '../../../../service/validation.service';
 
 @Component({
   selector: 'app-proyecto',
@@ -56,7 +57,7 @@ export class ProyectoComponent implements OnInit {
   ];
 
 
-  constructor(private proyectoService: ProyectoService, private toastr: ToastrService, private router: Router, private route: ActivatedRoute) {
+  constructor(private proyectoService: ProyectoService, private toastr: ToastrService, private router: Router, private route: ActivatedRoute,private validationService: ValidationService) {
     this.gridData = {
       context: (api: GridApi) => {
         api.setColumnDefs(this.colDefs)
@@ -101,11 +102,11 @@ export class ProyectoComponent implements OnInit {
 
 
   filterPresu(value: string): any[] {
-    if (value == "") {
+    if (typeof value === 'string') {
       const filterValue = value.toLowerCase();
       return this.Datapresupuesto.filter((presu: any) => presu.elemento_pep.toLowerCase().includes(filterValue));
     }
-    else {
+    else {      
       const filterValue = parseInt(value);
       return this.Datapresupuesto.filter((presu: any) => presu.id === filterValue);
     }
@@ -119,7 +120,7 @@ export class ProyectoComponent implements OnInit {
   }
 
   filterTipo(value: string): any[] {
-    if (value == "") {
+    if (typeof value === 'string') {
       const filterValue = value.toLowerCase();
       return this.Dataproyectipo.filter((tipo: any) => tipo.nombre.toLowerCase().includes(filterValue));
     }
@@ -156,16 +157,16 @@ export class ProyectoComponent implements OnInit {
 
   llenarCampos() {
     this.DatosProyecto.codpresupuesto = this.DatosProyecto.codpresupuesto.id ? this.DatosProyecto.codpresupuesto.id : this.DatosProyecto.codpresupuesto;
-    this.DatosProyecto.fechainicio = this.formatFecha(this.DatosProyecto.fechainicio);
-    this.DatosProyecto.fechafin = this.formatFecha(this.DatosProyecto.fechafin);
+    this.DatosProyecto.fechainicio = this.validationService.formatFecha(this.DatosProyecto.fechainicio);
+    this.DatosProyecto.fechafin = this.validationService.formatFecha(this.DatosProyecto.fechafin);
   }
 
   getProyecto() {
     this.proyectoService.getProyecto(this.user).subscribe((response) => {
       if (response.data.length > 0) {
         response.data.forEach((element: any) => {
-          element.fechainicio = this.formatFecha(element.fechainicio);
-          element.fechafin = this.formatFecha(element.fechafin);
+          element.fechainicio = this.validationService.formatFecha(element.fechainicio);
+          element.fechafin = this.validationService.formatFecha(element.fechafin);
         });
         
         this.gridData.api?.setRowData(response.data);
@@ -248,19 +249,7 @@ export class ProyectoComponent implements OnInit {
         this.toastr.error('error de conexion con el servidor.')
       }
     });
-  }
-
-
-  formatFecha(fecharec: any) {
-    if (typeof fecharec === 'number') {
-      const fecha = new Date(fecharec);
-      const dia = fecha.getDate().toString().padStart(2, '0');
-      const mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); // ¡Recuerda que los meses comienzan desde 0!
-      const anio = fecha.getFullYear();
-      fecharec = `${dia}/${mes}/${anio}`;
-    }
-    return fecharec;
-  }
+  } 
 
   filtrar() {
     this.verGrid = true;

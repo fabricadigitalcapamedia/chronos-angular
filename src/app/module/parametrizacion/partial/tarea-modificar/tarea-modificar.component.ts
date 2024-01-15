@@ -4,29 +4,28 @@ import { TemplateRenderComponent } from 'src/app/shared/components/grid-chronos/
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, NgForm } from '@angular/forms';
-import { TareaEstadosService } from '../../service/tarea-estados.service';
-import { TareaTipoEstadoService } from '../../service/tarea-tipo-estado.service';
 import { Observable, map, startWith } from 'rxjs';
+import { TareaModificarService } from '../../service/tarea-modificar.service';
 import { ValidationService } from '../../../../service/validation.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-tarea-estados',
-  templateUrl: './tarea-estados.component.html',
-  styleUrl: './tarea-estados.component.css'
+  selector: 'app-tarea-modificar',
+  templateUrl: './tarea-modificar.component.html',
+  styleUrl: './tarea-modificar.component.css'
 })
-export class TareaEstadosComponent implements OnInit {
+export class TareaModificarComponent implements OnInit {
 
   @ViewChild('form', { static: true }) Form?: NgForm;
-
   toolbarButton: any = {};
-  gridDataTarEst: GridOptions;
+  gridDataTarMod: GridOptions;
   column?: any[];
   rowData: any;
-  DatosTarEst: any = {};
+  DatosTarMod: any = {};
   user = localStorage.getItem('user');
   verGrid: boolean = true;
   validate: boolean = false;
-  idTarEst: any = {};
+  idTarMod: any = {};
 
   tipoEstFilterCtrl = new FormControl();
   filteredTipo?: Observable<any>;
@@ -45,10 +44,9 @@ export class TareaEstadosComponent implements OnInit {
     { field: "fechamodificacion", headerName: 'Fecha Modificación', width: 180 },
   ];
 
-  constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private tareaEstadoService: TareaEstadosService,
-    private validationService: ValidationService,private tareaTipoEstado: TareaTipoEstadoService) {
-
-    this.gridDataTarEst = {
+  constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private tareaModificarService: TareaModificarService,
+    private validationService: ValidationService) {
+    this.gridDataTarMod = {
       context: (api: GridApi) => {
         api.setColumnDefs(this.colDefs)
       },
@@ -82,15 +80,15 @@ export class TareaEstadosComponent implements OnInit {
   clear() {
     this.verGrid = false;
     this.router.navigate([], { queryParams: {} });
-    this.DatosTarEst = {};
-    this.idTarEst = {};
+    this.DatosTarMod = {};
+    this.idTarMod = {};
     this.activationButtons();
   }
 
   filtrar() {
     this.verGrid = true;
     this.router.navigate([], { queryParams: {} });
-    this.idTarEst = {};
+    this.idTarMod = {};
     this.getTarEstado();
   }
 
@@ -112,27 +110,16 @@ export class TareaEstadosComponent implements OnInit {
     }
   }
 
-  getTareTipEst() {
-    this.tareaTipoEstado.getTareTipEst(this.user).subscribe({
-      next: (data) => {
-        this.DataTipoEst = data.data;
-        this.filtrardataTipo();
-      },
-      error: (error) => {
-        this.toastr.error('error de conexion con el servidor.')
-      }
-    })
-  }
 
-  
+
   getTarEstado() {
-    this.tareaEstadoService.getTarEst(this.user).subscribe({
-      next: (data) => {      
+    this.tareaModificarService.getTarEst(this.user).subscribe({
+      next: (data) => {
         data.data.forEach((element: any) => {
-          element.fechacreacion = this.validationService.formatFecha(element.fechacreacion);
-          element.fechamodificacion = this.validationService.formatFecha(element.fechamodificacion);
-        });  
-        this.gridDataTarEst.api?.setRowData(data.data);
+          element.fechacreacion = this.formatFecha(element.fechacreacion);
+          element.fechamodificacion = this.formatFecha(element.fechamodificacion);
+        });
+        this.gridDataTarMod.api?.setRowData(data.data);
         this.activationButtons();
       },
       error: (error) => {
@@ -142,18 +129,53 @@ export class TareaEstadosComponent implements OnInit {
   }
 
   getTareaEstadoXid(id: number) {
-    this.tareaEstadoService.getTarEstXid(this.user, id).subscribe((response) => {
-      if (response.data) {        
-        this.DatosTarEst = response.data;
-        this.filterTipo(this.DatosTarEst.codtareaestadotipo);
+    this.tareaModificarService.getTarEstXid(this.user, id).subscribe((response) => {
+      if (response.data) {
+        this.DatosTarMod = response.data;
+        this.filterTipo(this.DatosTarMod.codtareaestadotipo);
         this.activationButtons();
       }
       else {
         this.toastr.error('error de conexion con el servidor.')
       }
     });
-  } 
+  }
 
+
+  getCoordinador() {
+    this.validationService.getCoordinador(this.user).subscribe({
+      next: (data) => {
+        this.DataTipoEst = data.data.filter((tipo: any) => tipo.codestructuratipo === 2 && tipo.nombre.toLowerCase().startsWith('coord'));
+        this.filtrardataTipo();
+      },
+      error: (error) => {
+        this.toastr.error('error de conexion con el servidor.')
+      }
+    })
+  }
+
+  onCoordinacionChange(event: any): void {
+    // Aquí puedes realizar la lógica que necesitas cuando cambie la coordinación
+    console.log('Coordinación seleccionada:', event.value);
+    this.DatosTarMod.codtareaestadotipo = event.value;
+    this.getProyecto();
+    // Puedes agregar más lógica según tus necesidades
+  }
+
+  getProyecto() {
+    const datePipe = new DatePipe('en-US');
+    this.DatosTarMod.fechainicio = datePipe.transform(new Date(this.DatosTarMod.fechainicio), 'dd/MM/yyyy');
+    this.DatosTarMod.fechafin = datePipe.transform(new Date(this.DatosTarMod.fechafin), 'dd/MM/yyyy');
+
+    this.tareaModificarService.getProyecto(this.user, this.DatosTarMod.codtareaestadotipo, this.DatosTarMod.fechainicio, this.DatosTarMod.fechafin,).subscribe({
+      next: (data) => {
+        console.log('PROYECTO', data.data)
+      },
+      error: (error) => {
+        this.toastr.error('error de conexion con el servidor.')
+      }
+    })
+  }
 
   save() {
     if (!this.Form?.valid) {
@@ -161,8 +183,8 @@ export class TareaEstadosComponent implements OnInit {
       this.toastr.warning('Debe diligenciar los campos remarcados en rojo');
     }
     else {
-      let data: any = { ...this.DatosTarEst };
-      if (this.DatosTarEst.id) {
+      let data: any = { ...this.DatosTarMod };
+      if (this.DatosTarMod.id) {
         this.update(data);
       } else {
         this.create(data);
@@ -172,10 +194,10 @@ export class TareaEstadosComponent implements OnInit {
 
   create(data: any) {
     data.estado = 'A';
-    this.tareaEstadoService.createTarEst(this.user, data).subscribe({
+    this.tareaModificarService.createTarEst(this.user, data).subscribe({
       next: (data) => {
-        this.DatosTarEst = data.data;
-        this.router.navigate([], { queryParams: { idTarEst: this.DatosTarEst.id } });
+        this.DatosTarMod = data.data;
+        this.router.navigate([], { queryParams: { idTarMod: this.DatosTarMod.id } });
         this.activationButtons();
         this.toastr.success(data.mensaje);
       }, error: (error) => {
@@ -185,10 +207,10 @@ export class TareaEstadosComponent implements OnInit {
   }
 
   update(data: any) {
-    data.fechamodificacion = typeof data.fechamodificacion === 'number' ? data.fechamodificacion : this.validationService.convertirAFecha(data.fechamodificacion);
-    data.fechacreacion = typeof data.fechacreacion === 'number' ? data.fechacreacion : this.validationService.convertirAFecha(data.fechacreacion);
-    
-    this.tareaEstadoService.updateTarEst(this.user, data).subscribe({
+    data.fechamodificacion = typeof data.fechamodificacion === 'number' ? data.fechamodificacion : this.convertirAFecha(data.fechamodificacion);
+    data.fechacreacion = typeof data.fechacreacion === 'number' ? data.fechacreacion : this.convertirAFecha(data.fechacreacion);
+
+    this.tareaModificarService.updateTarEst(this.user, data).subscribe({
       next: (data) => {
         this.toastr.success(data.mensaje);
       }, error: (error) => {
@@ -201,11 +223,11 @@ export class TareaEstadosComponent implements OnInit {
   handleEditClick(event: any): void {
     var nuevoArray = event.eventPath[0].id;
     if (nuevoArray == 'edit') {
-      this.DatosTarEst = event.data;
+      this.DatosTarMod = event.data;
       this.verGrid = false;
-      this.router.navigate([], { queryParams: { idTarEst: this.DatosTarEst.id } });
-      this.idTarEst = this.route.snapshot.queryParams;
-      this.filterTipo(this.DatosTarEst.codtareaestadotipo);
+      this.router.navigate([], { queryParams: { idTarMod: this.DatosTarMod.id } });
+      this.idTarMod = this.route.snapshot.queryParams;
+      this.filterTipo(this.DatosTarMod.codtareaestadotipo);
       this.activationButtons();
     }
   };
@@ -223,11 +245,27 @@ export class TareaEstadosComponent implements OnInit {
     }
   }
 
+  formatFecha(fecharec: any) {
+    if (typeof fecharec === 'number') {
+      const fecha = new Date(fecharec);
+      const dia = fecha.getDate().toString().padStart(2, '0');
+      const mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); // ¡Recuerda que los meses comienzan desde 0!
+      const anio = fecha.getFullYear();
+      fecharec = `${dia}/${mes}/${anio}`;
+    }
+    return fecharec;
+  }
+
+  convertirAFecha(fechaString: string): Date {
+    const partesFecha = fechaString.split('/');
+    return new Date(parseInt(partesFecha[2]), parseInt(partesFecha[1]) - 1, parseInt(partesFecha[0]));
+  }
+
   fnLoad() {
-    this.idTarEst = this.route.snapshot.queryParams;
-    this.getTareTipEst();
-    if (this.idTarEst?.idTarEst) {
-      this.getTareaEstadoXid(parseInt(this.idTarEst.idTarEst));
+    this.idTarMod = this.route.snapshot.queryParams;
+    this.getCoordinador();
+    if (this.idTarMod?.idTarMod) {
+      this.getTareaEstadoXid(parseInt(this.idTarMod.idTarEst));
       this.verGrid = false;
     }
     else {
@@ -235,6 +273,4 @@ export class TareaEstadosComponent implements OnInit {
     }
   }
 
-
 }
-

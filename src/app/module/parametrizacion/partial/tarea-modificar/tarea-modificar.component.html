@@ -1,0 +1,98 @@
+<app-toolbar [toolbar]="toolbarButton"></app-toolbar>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-12 pl-0 pr-0 ">
+    <form [ngClass]="validate ? 'was-validated' : ''" #form="ngForm">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card card-danger" [hidden]="verGrid==true">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="pb-4">
+                                <label class="D-label">Fecha Inicio</label>
+                                <div class="input-group">
+                                    <input name="fechainicio" [required]="true" type="text" bsDatepicker
+                                        #dp1="bsDatepicker" placeholder="DD/MM/AAAA" class="form-control"
+                                        [(ngModel)]="DatosTarMod.fechainicio"
+                                        [bsConfig]="{ adaptivePosition: true,isAnimated: true, dateInputFormat: 'DD/MM/YYYY',containerClass:'theme-dark-blue', customTodayClass: 'bg-warning'}">
+                                    <span class="input-group-addon calendar-icon" (click)="dp1.show()"
+                                        [attr.aria-expanded]="dp1.isOpen">
+                                        <i class="fa fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="pb-4">
+                                <label class="D-label">Fecha Fin</label>
+                                <div class="input-group">
+                                    <input name="fechafin" [required]="true" type="text" bsDatepicker
+                                        #dp2="bsDatepicker" placeholder="DD/MM/AAAA" class="form-control"
+                                        [(ngModel)]="DatosTarMod.fechafin"
+                                        [bsConfig]="{ adaptivePosition: true,isAnimated: true, dateInputFormat: 'DD/MM/YYYY',containerClass:'theme-dark-blue', customTodayClass: 'bg-warning'}">
+                                    <span class="input-group-addon calendar-icon" (click)="dp2.show()"
+                                        [attr.aria-expanded]="dp2.isOpen">
+                                        <i class="fa fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="bankSelect">Coordinación</label>
+                                <mat-select (selectionChange)="onCoordinacionChange($event)" [(ngModel)]="DataTipoEst.id" #singleSelect
+                                    class="form-control" name="id" placeholder="Seleccione.."
+                                    [required]="true" >
+                                    <mat-option>
+                                        <ngx-mat-select-search [formControl]="tipoEstFilterCtrl" placeholder="Buscar"
+                                            placeholderLabel="Buscar"
+                                            noEntriesFoundLabel="No hay Registros"></ngx-mat-select-search>
+                                    </mat-option>
+
+                                    <mat-option *ngFor="let tipo of filteredTipo | async" [value]="tipo.id"
+                                        noEntriesFoundLabel="Buscar">
+                                        {{ tipo.nombre }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="bankSelect">Proyecto</label>
+                                <mat-select [(ngModel)]="DatosTarMod.codtareaestadotipo" #singleSelect
+                                    class="form-control" name="codtareaestadotipo" placeholder="Seleccione.."
+                                    [required]="true">
+                                    <mat-option>
+                                        <ngx-mat-select-search [formControl]="tipoEstFilterCtrl" placeholder="Buscar"
+                                            placeholderLabel="Buscar"
+                                            noEntriesFoundLabel="No hay Registros"></ngx-mat-select-search>
+                                    </mat-option>
+
+                                    <mat-option *ngFor="let tipo of filteredTipo | async" [value]="tipo.id"
+                                        noEntriesFoundLabel="Buscar">
+                                        {{ tipo.nombre }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+
+
+                       
+
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+
+            <div class="col-md-12 pb-3 pt-3 pl-0 pr-1" [hidden]="verGrid==false">
+                <app-grid-chronos [gridOptions]="gridDataTarMod"></app-grid-chronos>
+            </div>
+        </div>
+    </form>
+</div>

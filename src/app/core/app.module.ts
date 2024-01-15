@@ -18,7 +18,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ToastrModule } from 'ngx-toastr';
 import { LoginComponent } from '../module/seguridad/partial/login/login.component';
 import { RouterModule } from '@angular/router';
-import { AutenticationService } from '../autentication.service';
+import { AutenticationService } from '../service/autentication.service';
 import { GanttComponent } from '../shared/components/gantt/gantt.component';
 import { NgxGanttModule } from '@worktile/gantt';
 import { MatMenuModule } from '@angular/material/menu';

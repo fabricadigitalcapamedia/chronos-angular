@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { TareaTipoEstadoService } from '../../service/tarea-tipo-estado.service';
+import { ValidationService } from '../../../../service/validation.service';
 
 @Component({
   selector: 'app-tarea-tipo-estado',
@@ -40,7 +41,7 @@ export class TareaTipoEstadoComponent implements OnInit {
     { field: "fechamodificacion", headerName: 'Fecha Modificación', width: 150 },
   ];
 
-  constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private tareaTipoEstado: TareaTipoEstadoService) {
+  constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private validationService: ValidationService,private tareaTipoEstado: TareaTipoEstadoService) {
     this.gridDataTarTipEst = {
       context: (api: GridApi) => {
         api.setColumnDefs(this.colDefs)
@@ -93,8 +94,8 @@ export class TareaTipoEstadoComponent implements OnInit {
     this.tareaTipoEstado.getTareTipEst(this.user).subscribe({
       next: (data) => {
         data.data.forEach((element: any) => {
-          element.fechacreacion = this.formatFecha(element.fechacreacion);
-          element.fechamodificacion = this.formatFecha(element.fechamodificacion);
+          element.fechacreacion = this.validationService.formatFecha(element.fechacreacion);
+          element.fechamodificacion = this.validationService.formatFecha(element.fechamodificacion);
         });
         this.gridDataTarTipEst.api?.setRowData(data.data);
         this.activationButtons();
@@ -148,6 +149,9 @@ export class TareaTipoEstadoComponent implements OnInit {
   }
 
   update(data: any) {
+    data.fechamodificacion = typeof data.fechamodificacion === 'number' ? data.fechamodificacion : this.validationService.convertirAFecha(data.fechamodificacion);
+    data.fechacreacion = typeof data.fechacreacion === 'number' ? data.fechacreacion : this.validationService.convertirAFecha(data.fechacreacion);
+    
     this.tareaTipoEstado.updateTareTipEst(this.user, data).subscribe({
       next: (data) => {
         this.toastr.success(data.mensaje);
@@ -180,17 +184,6 @@ export class TareaTipoEstadoComponent implements OnInit {
       this.toolbarButton.filterShow = true;
       this.toolbarButton.newShow = true;
     }
-  }
-
-  formatFecha(fecharec: any) {
-    if (typeof fecharec === 'number') {
-      const fecha = new Date(fecharec);
-      const dia = fecha.getDate().toString().padStart(2, '0');
-      const mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); // ¡Recuerda que los meses comienzan desde 0!
-      const anio = fecha.getFullYear();
-      fecharec = `${dia}/${mes}/${anio}`;
-    }
-    return fecharec;
   }
 
   fnLoad() {

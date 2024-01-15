@@ -3,17 +3,8 @@ import * as CryptoJS from 'crypto-js';
 import { LoginService } from './../../service/login.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgForm } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AutenticationService } from 'src/app/autentication.service';
-
-
-
+import { AutenticationService } from 'src/app/service/autentication.service';
 
 @Component({
   selector: 'app-login',
@@ -38,10 +29,10 @@ export class LoginComponent implements OnInit {
 
 
   login() {
+    this.remove();
     if (this.user === '' || this.password === '') {
       this.validate = true
       this.toastr.warning('Debe diligenciar los campos remarcados en rojo');
-
     } else {
       this.hashPassword();
       this.isDisabled = true;
@@ -60,10 +51,6 @@ export class LoginComponent implements OnInit {
           }
           else {
             this.toastr.error('usuario o contraseña incorrecto')
-            localStorage.removeItem('login');
-            localStorage.removeItem("user");
-            localStorage.removeItem("nameuser");
-            localStorage.removeItem("codpersona");
           }
         }
         else {
@@ -71,6 +58,16 @@ export class LoginComponent implements OnInit {
         }
       });
     }
+  }
+  remove(){
+    localStorage.removeItem('login');
+    localStorage.removeItem("user");
+    localStorage.removeItem("nameuser");
+    localStorage.removeItem("codpersona");
+    localStorage.removeItem("azureemail");
+    localStorage.removeItem("azureemail");
+    localStorage.removeItem("tokenazure");
+    localStorage.removeItem("codpersona");
   }
 
   hashPassword() {
