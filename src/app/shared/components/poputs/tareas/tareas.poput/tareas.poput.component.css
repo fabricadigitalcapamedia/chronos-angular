@@ -1,0 +1,40 @@
+.popup-form {
+    /*border: 1px solid #ccc;*/
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px; /* Ajusta el ancho según tus necesidades */
+  }
+
+  .popup-form input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Estilo del botón */
+  .popup-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Estilo del botón al pasar el mouse sobre él */
+  .popup-form button:hover {
+    background-color: #0056b3;
+  }
+
+  .mat-select-container {
+    position: relative;
+    z-index: 1500; /* Puedes ajustar este valor según tus necesidades */
+  }
+  
+  .mat-select-custom .mat-select-panel {
+    z-index: 1501 !important; /* Ajusta este valor para que sea mayor que el del contenedor */
+  }

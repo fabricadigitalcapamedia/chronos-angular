@@ -10,6 +10,10 @@ import { AgGridModule } from 'ag-grid-angular';
 import { TemplateRenderComponent } from './components/grid-chronos/template-render/template-render.component';
 import { GridChronosComponent } from './components/grid-chronos/grid-chronos.component';
 import { ToolbarComponent } from './components/design/toolbar/toolbar.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TareasPoputComponent } from './components/poputs/tareas/tareas.poput/tareas.poput.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { MatSelectModule } from '@angular/material/select';
 
 
 
@@ -21,14 +25,18 @@ import { ToolbarComponent } from './components/design/toolbar/toolbar.component'
     BreadcrumbsComponent,
     TemplateRenderComponent,
     GridChronosComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    TareasPoputComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     DataTablesModule,    
     AgGridModule,
-    
+    ReactiveFormsModule,
+    FormsModule,
+    BsDatepickerModule.forRoot(),
+    MatSelectModule,
   ],
   exports: [
     HeaderComponent,

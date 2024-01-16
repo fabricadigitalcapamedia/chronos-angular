@@ -26,4 +26,13 @@ export class ActividadesService {
     return this.http.get(url, { headers });
   }
 
+  getTareaById(id: any): Observable<any>{
+    let url = this.url + '/tarea/'+id;
+    return this.http.get(url, )
+  }
+
+  getTareasEstados() : Observable<any>{
+    let url = this.url + '/tareaestado';
+    return this.http.get(url, )
+  }
 }

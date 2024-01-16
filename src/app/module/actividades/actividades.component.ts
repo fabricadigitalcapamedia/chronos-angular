@@ -18,6 +18,8 @@ import { INITIAL_EVENTS, createEventId } from 'src/app/shared/components/calenda
 import { ActividadesService } from './actividades.service';
 import { EmpleadoService } from '../administracion/personas/empleado.service';
 import * as moment from 'moment';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TareasPoputComponent } from '../../../app/shared/components/poputs/tareas/tareas.poput/tareas.poput.component';
 //import { UtilsService } from '../../../app/shared/utils/utils.service';
 
 @Component({
@@ -59,7 +61,7 @@ export class ActividadesComponent implements OnInit {
     initialView: 'dayGridMonth',
     initialEvents: this.events, // alternatively, use the `events` setting to fetch from a feed
     weekends: false,
-    editable: true,
+    editable: false,
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
@@ -78,6 +80,7 @@ export class ActividadesComponent implements OnInit {
   constructor(private changeDetector: ChangeDetectorRef, 
               private actividadesService: ActividadesService, 
               private empleadoService: EmpleadoService,
+              private modalService: NgbModal
               ) {
   
   }
@@ -153,7 +156,7 @@ export class ActividadesComponent implements OnInit {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    const title = prompt('Please enter a new title for your event');
+    /*const title = prompt('Please enter a new title for your event');
     const calendarApi = selectInfo.view.calendar;
 
     calendarApi.unselect(); // clear date selection
@@ -166,13 +169,24 @@ export class ActividadesComponent implements OnInit {
         end: selectInfo.endStr,
         allDay: selectInfo.allDay
       });
-    }
+    }*/
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove();
-    }
+    const modalRef = this.modalService.open(TareasPoputComponent);
+    let id = clickInfo.event.id;
+    console.log(id);
+    modalRef.componentInstance.idTarea = id;
+    modalRef.result.then((result) => {
+      // Aquí puedes manejar el resultado después de cerrar la ventana emergente
+      console.log('Ventana emergente cerrada con resultado:', result);
+    }, (reason) => {
+      // Aquí puedes manejar la razón de cierre de la ventana emergente (si es necesario)
+      console.log('Ventana emergente cerrada debido a:', reason);
+    });
+    //if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+      //clickInfo.event.remove();
+    //}
   }
 
   handleEvents(events: EventApi[]) {
@@ -196,15 +210,12 @@ export class ActividadesComponent implements OnInit {
   async cargaIdEmpleado() : Promise<void>{
     this.empleadoService.getDatosEmpleadoByUsuario(this.user).subscribe((response) => {
       if (response.data) {
-        //this.codPersona = response.data.codpersona;
         this.cargaHoras(response.data.id);
-        //this.getActividadesFiltroInit();
       }
     });
   }
 
   cargaHoras(idEmpleado: any): void{
-    //console.log(idEmpleado);
     this.empleadoService.getHorasRegistradasEmpleado(idEmpleado).subscribe((response) => {
       if (response.data) {
         this.horasMes = response.data;
