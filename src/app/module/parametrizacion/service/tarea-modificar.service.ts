@@ -18,8 +18,18 @@ export class TareaModificarService {
     const params = new HttpParams()
       .set('startDate',startDate)
       .set('finalDate', finalDate )
-      .set('coordinationId', idCoor);
+      .set('coordinationId', idCoor);      
     return this.http.get(this.url + '/tarea/vu/CurrentTasksVU',{ params, headers }).pipe(
+      catchError((error: any) => {
+        return throwError(() => Error(error.message));
+      })
+    );
+  }
+
+
+  getTask(clUsuario: any, codproyecto: number): Observable<any> {
+    const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);
+    return this.http.get(`${this.url}/tarea/vu/codproyecto?v=${codproyecto}`,{  headers }).pipe(
       catchError((error: any) => {
         return throwError(() => Error(error.message));
       })

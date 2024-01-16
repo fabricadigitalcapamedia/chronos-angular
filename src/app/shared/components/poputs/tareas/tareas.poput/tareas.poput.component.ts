@@ -74,12 +74,14 @@ export class TareasPoputComponent  implements OnInit {
   }
 
   getTareaById(id: any){
+    this.getTareasEstadoCombo();
     this.actividadesService.getTareaById(id).subscribe((response) => {
       if (response.data) {
         console.log(response.data);
         this.DatosTareas.nombre = response.data.nombre;
-        this.DatosTareas.descrip = response.data.descripcion === null ? '' : response.data.descripcion;
-        this.getTareasEstadoCombo();
+        this.DatosTareas.descrip = response.data.descripcion === null ? '' : response.data.descripcion;   
+        this.DatosTareas.estado =response.data.codtareaestado;
+        this.filterTipo(this.DatosTareas.estado);     
         this.getProyectoName(response.data.codproyecto);
       }
     });

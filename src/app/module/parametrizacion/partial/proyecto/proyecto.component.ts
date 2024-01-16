@@ -60,7 +60,6 @@ export class ProyectoComponent implements OnInit {
   constructor(private proyectoService: ProyectoService, private toastr: ToastrService, private router: Router, private route: ActivatedRoute,private validationService: ValidationService) {
     this.gridData = {
       context: (api: GridApi) => {
-        api.setColumnDefs(this.colDefs)
       },
       rowSelection: 'multiple'
       , pagination: false
@@ -169,6 +168,7 @@ export class ProyectoComponent implements OnInit {
           element.fechafin = this.validationService.formatFecha(element.fechafin);
         });
         
+        this.gridData.api?.setColumnDefs(this.colDefs)
         this.gridData.api?.setRowData(response.data);
         this.cargaPresupuesto();
         this.activationButtons();

@@ -266,6 +266,8 @@ li.divider {
   .mat-select-custom .mat-select-panel {
     z-index: 1501 !important; /* Ajusta este valor para que sea mayor que el del contenedor */
   }
+
+  .cdk-global-overlay-wrapper, .cdk-overlay-container { z-index: 9999!important; } 
   
 
 

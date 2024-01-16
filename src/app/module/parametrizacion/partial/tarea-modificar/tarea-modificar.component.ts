@@ -27,16 +27,21 @@ export class TareaModificarComponent implements OnInit {
   validate: boolean = false;
   idTarMod: any = {};
 
-  tipoEstFilterCtrl = new FormControl();
-  filteredTipo?: Observable<any>;
-  DataTipoEst: any = {};
+  coordFilterCtrl = new FormControl();
+  filteredCoord?: Observable<any>;
+  DataCoord: any = {};
+
+  proyectoFilterCtrl = new FormControl();
+  filteredProyecto?: Observable<any>;
+  DataProyecto: any = {};
+
 
   colDefs: ColDef[] = [
     {
       field: "Accion", cellRenderer: TemplateRenderComponent,
       onCellClicked: this.handleEditClick.bind(this),
       cellRendererParams: { edit: 'Editar' },
-      width: 80
+      width: 80,
     },
     { field: "nombre", headerName: 'Nombre', width: 200 },
     { field: "descripcion", headerName: 'Descripción', width: 450 },
@@ -48,7 +53,6 @@ export class TareaModificarComponent implements OnInit {
     private validationService: ValidationService) {
     this.gridDataTarMod = {
       context: (api: GridApi) => {
-        api.setColumnDefs(this.colDefs)
       },
       rowSelection: 'multiple'
       , pagination: false
@@ -92,25 +96,42 @@ export class TareaModificarComponent implements OnInit {
     this.getTarEstado();
   }
 
-  filtrardataTipo() {
-    this.filteredTipo = this.tipoEstFilterCtrl.valueChanges.pipe(
+  filtrardataCoord() {
+    this.filteredCoord = this.coordFilterCtrl.valueChanges.pipe(
       startWith(''),
-      map((value) => this.filterTipo(value))
+      map((value) => this.filterCoord(value))
     );
   }
 
-  filterTipo(value: string): any[] {
+  filterCoord(value: string): any[] {
     if (typeof value === 'string') {
       const filterValue = value.toLowerCase();
-      return this.DataTipoEst.filter((tipo: any) => tipo.nombre.toLowerCase().includes(filterValue));
+      return this.DataCoord.filter((tipo: any) => tipo.nombre.toLowerCase().includes(filterValue));
     }
     else {
       const filterValue = parseInt(value);
-      return this.DataTipoEst.filter((tipo: any) => tipo.id === filterValue);
+      return this.DataCoord.filter((tipo: any) => tipo.id === filterValue);
     }
   }
 
 
+  filtrardataProyecto() {
+    this.filteredProyecto = this.proyectoFilterCtrl.valueChanges.pipe(
+      startWith(''),
+      map((value) => this.filterProyecto(value))
+    );
+  }
+
+  filterProyecto(value: string): any[] {
+    if (typeof value === 'string') {
+      const filterValue = value.toLowerCase();
+      return this.DataProyecto.filter((tipo: any) => tipo.project.toLowerCase().includes(filterValue));
+    }
+    else {
+      const filterValue = parseInt(value);
+      return this.DataProyecto.filter((tipo: any) => tipo.id === filterValue);
+    }
+  }
 
   getTarEstado() {
     this.tareaModificarService.getTarEst(this.user).subscribe({
@@ -119,6 +140,7 @@ export class TareaModificarComponent implements OnInit {
           element.fechacreacion = this.formatFecha(element.fechacreacion);
           element.fechamodificacion = this.formatFecha(element.fechamodificacion);
         });
+        this.gridDataTarMod.api?.setColumnDefs(this.colDefs);
         this.gridDataTarMod.api?.setRowData(data.data);
         this.activationButtons();
       },
@@ -132,7 +154,7 @@ export class TareaModificarComponent implements OnInit {
     this.tareaModificarService.getTarEstXid(this.user, id).subscribe((response) => {
       if (response.data) {
         this.DatosTarMod = response.data;
-        this.filterTipo(this.DatosTarMod.codtareaestadotipo);
+        this.filterProyecto(this.DatosTarMod.codtareaestadotipo);
         this.activationButtons();
       }
       else {
@@ -145,8 +167,8 @@ export class TareaModificarComponent implements OnInit {
   getCoordinador() {
     this.validationService.getCoordinador(this.user).subscribe({
       next: (data) => {
-        this.DataTipoEst = data.data.filter((tipo: any) => tipo.codestructuratipo === 2 && tipo.nombre.toLowerCase().startsWith('coord'));
-        this.filtrardataTipo();
+        this.DataCoord = data.data.filter((tipo: any) => tipo.codestructuratipo === 2 && tipo.nombre.toLowerCase().startsWith('coord'));
+        this.filtrardataCoord();
       },
       error: (error) => {
         this.toastr.error('error de conexion con el servidor.')
@@ -155,21 +177,33 @@ export class TareaModificarComponent implements OnInit {
   }
 
   onCoordinacionChange(event: any): void {
-    // Aquí puedes realizar la lógica que necesitas cuando cambie la coordinación
     console.log('Coordinación seleccionada:', event.value);
     this.DatosTarMod.codtareaestadotipo = event.value;
     this.getProyecto();
-    // Puedes agregar más lógica según tus necesidades
   }
 
   getProyecto() {
-    const datePipe = new DatePipe('en-US');
-    this.DatosTarMod.fechainicio = datePipe.transform(new Date(this.DatosTarMod.fechainicio), 'dd/MM/yyyy');
-    this.DatosTarMod.fechafin = datePipe.transform(new Date(this.DatosTarMod.fechafin), 'dd/MM/yyyy');
-
+    this.DatosTarMod.fechainicio = this.formatFecha(this.DatosTarMod.fechainicio);
+    this.DatosTarMod.fechafin = this.formatFecha(this.DatosTarMod.fechafin);
     this.tareaModificarService.getProyecto(this.user, this.DatosTarMod.codtareaestadotipo, this.DatosTarMod.fechainicio, this.DatosTarMod.fechafin,).subscribe({
       next: (data) => {
-        console.log('PROYECTO', data.data)
+        this.DataProyecto = this.obtenerProyectosDistinct(data.data);
+        this.filtrardataProyecto();
+      },
+      error: (error) => {
+        this.toastr.error('error de conexion con el servidor.')
+      }
+    })
+  }
+
+
+  onProyectoChange(event: any): void {
+    console.log('Proyecto seleccionado:', event.value);
+    this.DatosTarMod
+    this.tareaModificarService.getTask(this.user, event.value).subscribe({
+      next: (data) => {
+        this.gridDataTarMod.api?.setColumnDefs(this.colDefs);
+        this.gridDataTarMod.api?.setRowData(data.data);
       },
       error: (error) => {
         this.toastr.error('error de conexion con el servidor.')
@@ -209,7 +243,6 @@ export class TareaModificarComponent implements OnInit {
   update(data: any) {
     data.fechamodificacion = typeof data.fechamodificacion === 'number' ? data.fechamodificacion : this.convertirAFecha(data.fechamodificacion);
     data.fechacreacion = typeof data.fechacreacion === 'number' ? data.fechacreacion : this.convertirAFecha(data.fechacreacion);
-
     this.tareaModificarService.updateTarEst(this.user, data).subscribe({
       next: (data) => {
         this.toastr.success(data.mensaje);
@@ -227,7 +260,7 @@ export class TareaModificarComponent implements OnInit {
       this.verGrid = false;
       this.router.navigate([], { queryParams: { idTarMod: this.DatosTarMod.id } });
       this.idTarMod = this.route.snapshot.queryParams;
-      this.filterTipo(this.DatosTarMod.codtareaestadotipo);
+      this.filterCoord(this.DatosTarMod.codtareaestadotipo);
       this.activationButtons();
     }
   };
@@ -245,6 +278,15 @@ export class TareaModificarComponent implements OnInit {
     }
   }
 
+
+  obtenerProyectosDistinct(proyectos: any[]): any[] {
+    return Array.from(new Set(proyectos.map((proyecto) => proyecto.codeProject))).map(
+      (codeProject) => {
+        return proyectos.find((proyecto) => proyecto.codeProject === codeProject);
+      }
+    );
+  }
+
   formatFecha(fecharec: any) {
     if (typeof fecharec === 'number') {
       const fecha = new Date(fecharec);
@@ -252,6 +294,14 @@ export class TareaModificarComponent implements OnInit {
       const mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); // ¡Recuerda que los meses comienzan desde 0!
       const anio = fecha.getFullYear();
       fecharec = `${dia}/${mes}/${anio}`;
+    }
+    else if (typeof fecharec !== 'string' && typeof fecharec !== 'number') {
+      const fecha = new Date(fecharec);
+      const dia = fecha.getDate().toString().padStart(2, '0');
+      const mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); // ¡Recuerda que los meses comienzan desde 0!
+      const anio = fecha.getFullYear();
+      fecharec = `${dia}/${mes}/${anio}`;
+
     }
     return fecharec;
   }

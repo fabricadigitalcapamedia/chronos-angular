@@ -42,7 +42,7 @@ export class GridChronosComponent implements OnInit,OnDestroy  {
     last: "Ultimo",
     first: "Primero",
     previous: "Anterior",
-    loadingOoo: "No Hay Información Para Mostrar",
+    loadingOoo: "Cargando...",
     selectAll: "Seleccionar Todo",
     searchOoo: "Buscar",
     filterOoo: "Filtro",
@@ -60,7 +60,7 @@ export class GridChronosComponent implements OnInit,OnDestroy  {
     endsWith: "Termina En..",
     columns: "Columnas",
     filters: "Filtros",
-    noRowsToShow: "No Hay Información Para Mostrar",
+    noRowsToShow: "No hay información para mostrar",
     blank:"Blanco",
     NotBlank:"No Blanco",
     pageSize:"Paginacion"
