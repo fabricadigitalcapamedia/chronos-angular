@@ -65,6 +65,7 @@ export class ActividadesComponent implements OnInit {
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
+    
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this)
@@ -93,39 +94,45 @@ export class ActividadesComponent implements OnInit {
   }
 
   async loadEvents(): Promise<void> {
-    console.log(this.user, ' ',  this.codpersona, ' ', this.DatosActividades.fechainicio, ' ', this.DatosActividades.fechafin)
-    
     this.actividadesService.getActividadesFiltro(this.user, this.codpersona, 
         this.DatosActividades.fechainicio, 
         this.DatosActividades.fechafin).subscribe((response) => {
       if (response.data) {
-        console.log(response.data);
         response.data.forEach((item: any) =>{
           if (item.fechainiestimada!==null && item.fechafinestimada!==null) {
             if(String(item.codpersonaasignado)===this.codpersona){
-              
               let fechaInicio: any;
               let fechaFin: any;
-
               if(item.fechainireal != null) {
                 fechaInicio = new Date(item.fechainireal).toISOString().replace(/T.*$/, '')+'T08:00:00';
               }else {
                 fechaInicio = new Date(item.fechainicio).toISOString().replace(/T.*$/, '')+'T08:00:00';
               }
-              
               if(item.fechafin != null) {
                 fechaFin = new Date(item.fechafinreal).toISOString().replace(/T.*$/, '')+'T18:00:00';
               }else {
                 fechaFin = new Date(item.fechafin).toISOString().replace(/T.*$/, '')+'T18:00:00';
               }
-            
             if (fechaInicio !== null && fechaFin !== null) {
-              this.events.push({
-                id: String(item.id),
-                title: item.text,
-                start: fechaInicio,
-                end: fechaFin
-              });
+              if(item.tiemporeal === 0){
+                this.events.push({
+                  id: String(item.id),
+                  title: item.text,
+                  start: fechaInicio,
+                  end: fechaFin,
+                  backgroundColor: 'blue',
+                  borderColor: 'blue'
+                });
+              }else {
+                this.events.push({
+                  id: String(item.id),
+                  title: item.text,
+                  start: fechaInicio,
+                  end: fechaFin,
+                  backgroundColor: 'red',
+                  borderColor: 'red'
+                });
+              }
             }else{
               console.log("FechaFin null: "+ item.id)
             }
@@ -135,7 +142,7 @@ export class ActividadesComponent implements OnInit {
         console.log(this.events);
         const calendarApi = this.calendarComponent.getApi();
         this.events.forEach((event: any) => {
-          calendarApi.addEvent(event);
+          calendarApi.addEvent(event)?.backgroundColor;
         });
         
       }

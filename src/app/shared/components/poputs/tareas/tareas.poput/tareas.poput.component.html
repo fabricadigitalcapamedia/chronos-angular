@@ -46,7 +46,7 @@
                         <label>Estado</label>
                         <div class="mat-select-container">
                         <mat-select [(ngModel)]="DatosTareas.estado" #singleSelect
-                        class="form-control mat-select-custom"  name="estadoTarea" placeholder="Seleccione.."
+                        [ngClass]="{'mat-select-popup': singleSelect.panelOpen}"  name="estadoTarea" placeholder="Seleccione.."
                                     [required]="true">
                                     <mat-option>
                                         <ngx-mat-select-search [formControl]="estadoFilterCtrl" placeholder="Buscar"
