@@ -35,4 +35,14 @@ export class ActividadesService {
     let url = this.url + '/tareaestado';
     return this.http.get(url, )
   }
+
+  getEmpleadoControlByIdTarea(idTarea: any): Observable<any>{
+    let url = this.url + '/empleadocontrol/codtarea?v=' + idTarea ;
+    return this.http.get(url, )
+  }
+
+  saveEmpleadoControl(data: any): Observable<any>{
+    let url = this.url + '/empleadocontrol' ;
+    return this.http.post(url, data, );
+  }
 }

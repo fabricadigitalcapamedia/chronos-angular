@@ -45,7 +45,7 @@
                             <div class="mat-select-container" style="border: 0px ;z-index: 100">
                                 <mat-select [(ngModel)]="DatosTareas.estado" #singleSelect
                                     class="form-control mat-select-custom" name="estadoTarea" placeholder="Seleccione.."
-                                    [required]="true">
+                                    >
                                     <mat-option>
                                         <ngx-mat-select-search [formControl]="estadoFilterCtrl" placeholder="Buscar"
                                             placeholderLabel="Buscar"
@@ -65,10 +65,10 @@
                         <label class="D-label">Fecha</label>
                         <div class="input-group">
                             <input name="fecha" [required]="true" type="text" bsDatepicker #dp1="bsDatepicker"
-                                placeholder="DD/MM/AAAA" class="form-control" [(ngModel)]="DatosTareas.fecha"
-                                [bsConfig]="{ adaptivePosition: true,isAnimated: true, dateInputFormat: 'DD/MM/YYYY',containerClass:'theme-dark-blue', customTodayClass: 'bg-warning'}">
-                            <span class="input-group-addon calendar-icon" (click)="dp1.show()"
-                                [attr.aria-expanded]="dp1.isOpen">
+                                    placeholder="{{ DatosTareas.fecha }}" class="form-control" [(ngModel)]="DatosTareas.fecha"
+                                    [bsConfig]="{ adaptivePosition: true, isAnimated: true, dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', customTodayClass: 'bg-warning' }"
+                                    [disabled]="campoDeshabilitado">
+                            <span class="input-group-addon calendar-icon" (click)="dp1.show()" [attr.aria-expanded]="dp1.isOpen">
                                 <i class="fa fa fa-calendar"></i>
                             </span>
                         </div>
@@ -77,7 +77,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Horas</label>
-                            <input type="text" [required]="true" name="horas" [(ngModel)]="DatosTareas.hora"
+                            <input type="number" [required]="true" name="horas" [(ngModel)]="DatosTareas.hora"
                                 class="form-control" placeholder="Horas">
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Descripción del desarrollo </label>
-                            <textarea class="form-control" name="descripcion" rows="3" placeholder="Descripción"
+                            <textarea [required]="true" class="form-control" name="descripcionRegistro" rows="3" placeholder="Descripción Registro"
                                 [(ngModel)]="DatosTareas.descripcionRegistro"></textarea>
                         </div>
                     </div>

@@ -1,9 +1,11 @@
-import { Component, Output, OnInit, EventEmitter, ViewChild} from '@angular/core';
+import { Component, Output, OnInit, EventEmitter, ViewChild, ChangeDetectorRef} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, NgForm } from '@angular/forms';
 import { ActividadesService } from '../../../../../../app/module/actividades/actividades.service';
 import { Observable, map, startWith} from 'rxjs';
 import { ProyectoService } from '../../../../../../app/module/parametrizacion/service/proyecto.service';
+import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-tareas.poput',
@@ -19,8 +21,8 @@ export class TareasPoputComponent  implements OnInit {
   estadoTarea = new FormControl();
   estadoFilterCtrl = new FormControl();
   filteredEstado?: Observable<any>;
-
-
+  fechaDia: any;
+  campoDeshabilitado: boolean = true;
   DatosTareas: any = {
     nombre: null,
     empleado: null,
@@ -35,12 +37,18 @@ export class TareasPoputComponent  implements OnInit {
   validate: boolean = false;
   toolbarButton: any = {};
   user = localStorage.getItem('user');
+  codempleado: any;
+  idEmpleadoControl: any = 0;
+
   DataEstadoTarea: any= {};
-  
+  DatosEmpleadoControl: any= {};
   constructor(public activeModal: NgbActiveModal, 
     private actividadesService: ActividadesService,
-    private proyectoService: ProyectoService) {
-
+    private proyectoService: ProyectoService,
+    private toastr: ToastrService,
+    private changeDetector: ChangeDetectorRef
+    ) {
+    
     this.toolbarButton = {
       save: () => {
         this.save();
@@ -64,7 +72,36 @@ export class TareasPoputComponent  implements OnInit {
   }
 
   save(){
-
+    if (!this.Form?.valid) {
+      this.validate = true
+      this.toastr.warning('Debe diligenciar los campos remarcados en rojo');
+    }else {
+      let data: any = { ...this.DatosEmpleadoControl }
+      data.codempleado = this.codempleado;
+      data.codtarea = this.idTarea;
+      data.descripcion = this.DatosTareas.descripcionRegistro;
+      data.horas = this.DatosTareas.hora;
+      data.fechahorainicio = this.DatosTareas.fecha;
+      data.fechahorafin = this.DatosTareas.fecha;
+      
+      if(this.DatosTareas.hora > 9) {
+        this.toastr.warning('Las horas no deben superar 9');
+      }else {
+        //Creacion
+        if(this.idEmpleadoControl===0){ 
+          data.id = null;
+          data.fechacreacion = null;
+          data.fechamodificacion = null;
+          this.actividadesService.saveEmpleadoControl(data).subscribe((response) => {
+            if (response.data) {
+              console.log(response.data);
+              this.activeModal.close();
+            } 
+          });  
+        }
+      }
+    }
+    
   }
 
   cancel() {
@@ -79,10 +116,12 @@ export class TareasPoputComponent  implements OnInit {
       if (response.data) {
         console.log(response.data);
         this.DatosTareas.nombre = response.data.nombre;
-        this.DatosTareas.descrip = response.data.descripcion === null ? '' : response.data.descripcion;   
+        this.DatosTareas.descrip = response.data.descripcion === null ? response.data.nombre : response.data.descripcion;   
         this.DatosTareas.estado =response.data.codtareaestado;
+        this.DatosTareas.fecha = this.fechaDia;
         this.filterTipo(this.DatosTareas.estado);     
         this.getProyectoName(response.data.codproyecto);
+        this.getEmpleadoControlById(response.data.id);
       }
     });
   }
@@ -90,7 +129,7 @@ export class TareasPoputComponent  implements OnInit {
   getTareasEstadoCombo(){
     this.actividadesService.getTareasEstados().subscribe((response) => {
       if (response.data) {
-        console.log(response.data);
+        //console.log(response.data);
         this.DataEstadoTarea = response.data;
         this.filtrardataTipo();
       }
@@ -100,8 +139,19 @@ export class TareasPoputComponent  implements OnInit {
   getProyectoName(idProyecto: any){
     this.proyectoService.getProyectoXid(this.user, idProyecto).subscribe((response) => {
       if (response.data) {
-        console.log(response.data);
+        //console.log(response.data);
         this.DatosTareas.proyecto = response.data.nombre;
+      }
+    });
+  }
+
+  getEmpleadoControlById(idTarea: any){
+    this.actividadesService.getEmpleadoControlByIdTarea(idTarea).subscribe((response) => {
+      if (response.data && response.data[0]) {
+        console.log(response.data);
+        this.DatosTareas.hora = response.data[0].horas;
+        this.DatosTareas.descripcionRegistro = response.data[0].descripcion;
+        this.idEmpleadoControl = response.data[0].id;
       }
     });
   }

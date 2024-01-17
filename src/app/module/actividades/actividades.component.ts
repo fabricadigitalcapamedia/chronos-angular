@@ -65,6 +65,7 @@ export class ActividadesComponent implements OnInit {
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
+    
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this)
@@ -80,66 +81,83 @@ export class ActividadesComponent implements OnInit {
   constructor(private changeDetector: ChangeDetectorRef, 
               private actividadesService: ActividadesService, 
               private empleadoService: EmpleadoService,
-              private modalService: NgbModal
+              private modalService: NgbModal,
               ) {
   
   }
 
   getActividadesFiltro(newDate: string) {
     const calendarApi = this.calendarComponent.getApi();
+    calendarApi.removeAllEvents();
     const newDateObj = moment(newDate, 'DD/MM/YYYY').toDate();
     calendarApi.gotoDate(newDateObj);
     this.loadEvents();
   }
 
   async loadEvents(): Promise<void> {
-    console.log(this.user, ' ',  this.codpersona, ' ', this.DatosActividades.fechainicio, ' ', this.DatosActividades.fechafin)
+
+    let fechaFin = this.DatosActividades.fechafin instanceof Date ? 
+      moment(this.DatosActividades.fechafin).format('DD/MM/YYYY') : this.DatosActividades.fechafin;
     
+
     this.actividadesService.getActividadesFiltro(this.user, this.codpersona, 
-        this.DatosActividades.fechainicio, 
-        this.DatosActividades.fechafin).subscribe((response) => {
+        this.DatosActividades.fechainicio, fechaFin).subscribe((response) => {
       if (response.data) {
-        console.log(response.data);
         response.data.forEach((item: any) =>{
           if (item.fechainiestimada!==null && item.fechafinestimada!==null) {
             if(String(item.codpersonaasignado)===this.codpersona){
-              
               let fechaInicio: any;
               let fechaFin: any;
-
               if(item.fechainireal != null) {
                 fechaInicio = new Date(item.fechainireal).toISOString().replace(/T.*$/, '')+'T08:00:00';
               }else {
                 fechaInicio = new Date(item.fechainicio).toISOString().replace(/T.*$/, '')+'T08:00:00';
               }
-              
               if(item.fechafin != null) {
                 fechaFin = new Date(item.fechafinreal).toISOString().replace(/T.*$/, '')+'T18:00:00';
               }else {
                 fechaFin = new Date(item.fechafin).toISOString().replace(/T.*$/, '')+'T18:00:00';
               }
-            
-            if (fechaInicio !== null && fechaFin !== null) {
-              this.events.push({
-                id: String(item.id),
-                title: item.text,
-                start: fechaInicio,
-                end: fechaFin
-              });
-            }else{
-              console.log("FechaFin null: "+ item.id)
-            }
+              if (fechaInicio !== null && fechaFin !== null) {
+                this.eventValidationHours(item, fechaInicio, fechaFin);
+              }else{
+                console.log("FechaFin null: "+ item.id)
+              }
             }
           }
-        })
-        console.log(this.events);
-        const calendarApi = this.calendarComponent.getApi();
-        this.events.forEach((event: any) => {
-          calendarApi.addEvent(event);
         });
         
       }
     });
+  }
+
+  eventValidationHours(item: any, fechaInicio: any, fechaFin: any ){
+    this.actividadesService.getEmpleadoControlByIdTarea(item.id).subscribe((response) => {
+      const calendarApi = this.calendarComponent.getApi();
+      if (response.data && response.data[0]) {
+        calendarApi.addEvent({
+          id: String(item.id),
+          title: item.text,
+          start: fechaInicio,
+          end: fechaFin,
+          backgroundColor: 'blue',
+          borderColor: 'blue',
+          allDay: true,
+        });
+      }else{
+        calendarApi.addEvent({
+          id: String(item.id),
+          title: item.text,
+          start: fechaInicio,
+          end: fechaFin,
+          backgroundColor: 'red',
+          borderColor: 'red',
+          color: 'red',
+          allDay: true
+        });
+      }
+    });
+    
   }
 
   //validacionFechas(fechaOne: any, fechaTwo): 
@@ -175,13 +193,15 @@ export class ActividadesComponent implements OnInit {
   handleEventClick(clickInfo: EventClickArg) {
     const modalRef = this.modalService.open(TareasPoputComponent);
     let id = clickInfo.event.id;
-    console.log(id);
     modalRef.componentInstance.idTarea = id;
+    modalRef.componentInstance.codempleado = this.idEmpleado;
+    modalRef.componentInstance.fechaDia = moment(clickInfo.event.start, 'DD/MM/YYYY').toDate();
     modalRef.result.then((result) => {
-      // Aquí puedes manejar el resultado después de cerrar la ventana emergente
+      this.changeDetector.detectChanges();
+      window.location.reload();
       console.log('Ventana emergente cerrada con resultado:', result);
     }, (reason) => {
-      // Aquí puedes manejar la razón de cierre de la ventana emergente (si es necesario)
+      
       console.log('Ventana emergente cerrada debido a:', reason);
     });
     //if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
@@ -210,6 +230,7 @@ export class ActividadesComponent implements OnInit {
   async cargaIdEmpleado() : Promise<void>{
     this.empleadoService.getDatosEmpleadoByUsuario(this.user).subscribe((response) => {
       if (response.data) {
+        this.idEmpleado = response.data.id;
         this.cargaHoras(response.data.id);
       }
     });
