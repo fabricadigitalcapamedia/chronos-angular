@@ -27,7 +27,7 @@
                     placeholder="DD/MM/AAAA" class="form-control" [(ngModel)]="DatosActividades.fechafin"
                     [bsConfig]="{ adaptivePosition: true, isAnimated: true, dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', customTodayClass: 'bg-warning'}"
                     (ngModelChange)="getActividadesFiltro($event)">
-                  <span class="input-group-addon calendar-icon" (click)="dp2.show()" [attr.aria-expanded]="dp2.isOpen">
+                  <span class="btn btn-outline-secondary" (click)="dp2.show()" [attr.aria-expanded]="dp2.isOpen">
                     <i class="fa fa fa-calendar"></i>
                   </span>
 

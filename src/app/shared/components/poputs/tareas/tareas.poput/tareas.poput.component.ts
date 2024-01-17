@@ -39,8 +39,8 @@ export class TareasPoputComponent  implements OnInit {
   user = localStorage.getItem('user');
   codempleado: any;
   idEmpleadoControl: any = 0;
-
   DataEstadoTarea: any= {};
+  
   DatosEmpleadoControl: any= {};
   constructor(public activeModal: NgbActiveModal, 
     private actividadesService: ActividadesService,
@@ -69,7 +69,30 @@ export class TareasPoputComponent  implements OnInit {
 
   ngOnInit() {
     this.getTareaById(this.idTarea);
+    this.filtrardataTipo();
   }
+
+  
+
+  filtrardataTipo() {
+    this.filteredEstado = this.estadoFilterCtrl.valueChanges.pipe(
+      startWith(''),
+      map((value) => this.filterTipo(value))
+    );
+  }
+
+  filterTipo(value: string): any[] {
+    if (typeof value === 'string') {
+      const filterValue = value.toLowerCase();
+      return this.DataEstadoTarea.filter((tipo: any) => tipo.nombre.toLowerCase().includes(filterValue));
+    }
+    else {
+      const filterValue = parseInt(value);
+      return this.DataEstadoTarea.filter((tipo: any) => tipo.id === filterValue);
+    }
+  }
+
+  
 
   save(){
     if (!this.Form?.valid) {
@@ -111,7 +134,7 @@ export class TareasPoputComponent  implements OnInit {
   }
 
   getTareaById(id: any){
-    this.getTareasEstadoCombo();
+    
     this.actividadesService.getTareaById(id).subscribe((response) => {
       if (response.data) {
         console.log(response.data);
@@ -126,15 +149,7 @@ export class TareasPoputComponent  implements OnInit {
     });
   }
 
-  getTareasEstadoCombo(){
-    this.actividadesService.getTareasEstados().subscribe((response) => {
-      if (response.data) {
-        //console.log(response.data);
-        this.DataEstadoTarea = response.data;
-        this.filtrardataTipo();
-      }
-    });
-  }
+  
 
   getProyectoName(idProyecto: any){
     this.proyectoService.getProyectoXid(this.user, idProyecto).subscribe((response) => {
@@ -156,22 +171,6 @@ export class TareasPoputComponent  implements OnInit {
     });
   }
 
-  filtrardataTipo() {
-    this.filteredEstado = this.estadoFilterCtrl.valueChanges.pipe(
-      startWith(''),
-      map((value) => this.filterTipo(value))
-    );
-  }
-
-  filterTipo(value: string): any[] {
-    if (value == "") {
-      const filterValue = value.toLowerCase();
-      return this.DataEstadoTarea.filter((tipo: any) => tipo.nombre.toLowerCase().includes(filterValue));
-    }
-    else {
-      const filterValue = parseInt(value);
-      return this.DataEstadoTarea.filter((tipo: any) => tipo.id === filterValue);
-    }
-  }
+  
 
 }
