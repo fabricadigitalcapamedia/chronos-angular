@@ -1,6 +1,6 @@
 <app-toolbar [toolbar]="toolbarButton"></app-toolbar>
 
-<div class="col-lg-12 col-md-12 col-sm-12 col-12 pl-0 pr-0 ">
+<div class="col-lg-11 col-md-11 col-sm-12 col-12 pl-0 pr-0 " style="margin: 0 auto;">
     <form [ngClass]="validate ? 'was-validated' : ''" #form="ngForm">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="card card-danger" *ngIf="verGrid==false">
@@ -66,14 +66,14 @@
                         </div>
 
                         <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="pb-4">
+                            <div class="form-group">
                                 <label class="D-label">Fecha Inicio</label>
                                 <div class="input-group">
                                     <input name="fechainicio" [required]="true" type="text" bsDatepicker
                                         #dp1="bsDatepicker" placeholder="DD/MM/AAAA" class="form-control"
                                         [(ngModel)]="DatosProyecto.fechainicio"
                                         [bsConfig]="{ adaptivePosition: true,isAnimated: true, dateInputFormat: 'DD/MM/YYYY',containerClass:'theme-dark-blue', customTodayClass: 'bg-warning'}">
-                                    <span class="input-group-addon calendar-icon" (click)="dp1.show()"
+                                    <span class="btn btn-outline-secondary" (click)="dp1.show()"
                                         [attr.aria-expanded]="dp1.isOpen">
                                         <i class="fa fa fa-calendar"></i>
                                     </span>
@@ -81,16 +81,15 @@
                             </div>
                         </div>
 
-
                         <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="pb-4">
+                            <div class="form-group">
                                 <label class="D-label">Fecha Fin</label>
                                 <div class="input-group">
                                     <input name="fechafin" [required]="true" type="text" bsDatepicker
                                         #dp2="bsDatepicker" placeholder="DD/MM/AAAA" class="form-control"
                                         [(ngModel)]="DatosProyecto.fechafin"
                                         [bsConfig]="{ adaptivePosition: true,isAnimated: true, dateInputFormat: 'DD/MM/YYYY',containerClass:'theme-dark-blue', customTodayClass: 'bg-warning'}">
-                                    <span class="input-group-addon calendar-icon" (click)="dp2.show()"
+                                    <span class="btn btn-outline-secondary" (click)="dp2.show()"
                                         [attr.aria-expanded]="dp2.isOpen">
                                         <i class="fa fa fa-calendar"></i>
                                     </span>
@@ -138,7 +137,7 @@
                 <!-- /.card-body -->
             </div>
 
-            <div class="col-md-12 pb-3 pt-3 pl-0 pr-1" *ngIf="verGrid">
+            <div *ngIf="verGrid">
                 <app-grid-chronos [gridOptions]="gridData"
                     (jsonDinamicoEnviado)="recibirJsonDinamico($event)"></app-grid-chronos>
             </div>

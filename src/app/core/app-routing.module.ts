@@ -9,10 +9,10 @@ import { GerateJsonComponent } from '../module/home/partial/gerate-json/gerate-j
 import { EstimacionesComponent } from '../module/home/partial/estimaciones/estimaciones.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
-    path: 'login', component: LoginComponent, pathMatch: 'full',
-    //canActivate: [(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AutenticationService).canActivateLogin()],
+    path: 'login', component: LoginComponent,
+    canActivate: [(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AutenticationService).canActivateLogin()],
     data: {
       title: 'Login'
     }

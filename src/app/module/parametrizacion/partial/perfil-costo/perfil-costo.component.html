@@ -1,6 +1,6 @@
 <app-toolbar [toolbar]="toolbarButton"></app-toolbar>
 
-<div class="col-lg-12 col-md-12 col-sm-12 col-12 pl-0 pr-0 ">
+<div class="col-lg-11 col-md-11 col-sm-12 col-12 pl-0 pr-0 " style="margin: 0 auto;">
     <form [ngClass]="validate ? 'was-validated' : ''" #form="ngForm">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="card card-danger" [hidden]="verGrid==true">
@@ -101,7 +101,7 @@
                 <!-- /.card-body -->
             </div>
 
-            <div class="col-md-12 pb-3 pt-3 pl-0 pr-1" [hidden]="verGrid==false">
+            <div  [hidden]="verGrid==false">
                 <app-grid-chronos [gridOptions]="gridDataPerfilCos"></app-grid-chronos>
             </div>
         </div>

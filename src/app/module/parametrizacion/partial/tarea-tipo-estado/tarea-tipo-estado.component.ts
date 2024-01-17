@@ -36,7 +36,7 @@ export class TareaTipoEstadoComponent implements OnInit {
       width: 100
     },
     { field: "nombre", headerName: 'Nombre', width: 200 },
-    { field: "descripcion", headerName: 'Descripción', width: 600 },
+    { field: "descripcion", headerName: 'Descripción', width: 650 },
     { field: "fechacreacion", headerName: 'Fecha Creación', width: 150 },
     { field: "fechamodificacion", headerName: 'Fecha Modificación', width: 150 },
   ];
@@ -44,7 +44,6 @@ export class TareaTipoEstadoComponent implements OnInit {
   constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private validationService: ValidationService,private tareaTipoEstado: TareaTipoEstadoService) {
     this.gridDataTarTipEst = {
       context: (api: GridApi) => {
-        api.setColumnDefs(this.colDefs)
       },
       rowSelection: 'multiple'
       , pagination: false
@@ -96,7 +95,8 @@ export class TareaTipoEstadoComponent implements OnInit {
         data.data.forEach((element: any) => {
           element.fechacreacion = this.validationService.formatFecha(element.fechacreacion);
           element.fechamodificacion = this.validationService.formatFecha(element.fechamodificacion);
-        });
+        });        
+        this.gridDataTarTipEst.api?.setColumnDefs(this.colDefs)
         this.gridDataTarTipEst.api?.setRowData(data.data);
         this.activationButtons();
       },

@@ -29,14 +29,13 @@ export class PerfilTipoComponent implements OnInit {
       field: "Accion", cellRenderer: TemplateRenderComponent,
       onCellClicked: this.handleEditClick.bind(this),
       cellRendererParams: { edit: 'Editar' },
-      width: 100
+      width: 120
     },
-    { field: "nombre", headerName: 'Nombre', width: 900 }
+    { field: "nombre", headerName: 'Nombre', width: 1100 }
   ];
   constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private perfilTipoService: PerfilTipoService) {
     this.gridDataPerfil = {
       context: (api: GridApi) => {
-        api.setColumnDefs(this.colDefs)
       },
       rowSelection: 'multiple'
       , pagination: false
@@ -68,7 +67,8 @@ export class PerfilTipoComponent implements OnInit {
 
   getPerfilTpo() {
     this.perfilTipoService.getPerfilTipo(this.user).subscribe({
-      next: (data) => {
+      next: (data) => {        
+        this.gridDataPerfil.api?.setColumnDefs(this.colDefs)
         this.gridDataPerfil.api?.setRowData(data.data);
         this.activationButtons();
       },

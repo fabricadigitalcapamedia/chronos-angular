@@ -13,7 +13,6 @@ export class TareaModificarService {
 
 
   getProyecto(clUsuario: any, idCoor: number, startDate: string, finalDate: string): Observable<any> {
-
     const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);
     const params = new HttpParams()
       .set('startDate',startDate)
@@ -36,11 +35,15 @@ export class TareaModificarService {
     );
   }
 
-  private formatDateForJava(dateString: string): string {
-    const dateObj = new Date(dateString);
-    const formattedDate = `${dateObj.getDate()}-${dateObj.getMonth() + 1}-${dateObj.getFullYear()}`;
-    return formattedDate;
+  getUbication(clUsuario: any, id: number): Observable<any> {
+    const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);
+    return this.http.get(`${this.url}/tarea/vu/${id}`,{  headers }).pipe(
+      catchError((error: any) => {
+        return throwError(() => Error(error.message));
+      })
+    );
   }
+
 
   getTarModi(clUsuario: any): Observable<any> {
     const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);

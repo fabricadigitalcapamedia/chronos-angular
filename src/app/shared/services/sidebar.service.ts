@@ -18,9 +18,9 @@ export class SidebarService {
     { id: 10, titulo: 'Terceros', icon: 'fa fa fa-archive', idparent: 1, path: 'terceros' },
     { id: 11, titulo: 'Tareas', icon: 'fa fa fa-tasks', idparent: 1, path: null },
     { id: 12, titulo: 'Tipo', icon: 'fa fa fa-tasks', idparent: 11, path: 'tareaTipo' },
-    { id: 13, titulo: 'Tipo de Estados', icon: 'fa fa fa-tasks', idparent: 11, path: 'tareaTipoEstado' },
-    { id: 14, titulo: 'Estados', icon: 'fa fa fa-tasks', idparent: 11, path: 'tareaEstado' },
-    { id: 15, titulo: 'Modificar', icon: 'fa fa fa-tasks', idparent: 11, path: 'tareaModificar' }, 
+    { id: 13, titulo: 'Tipo de Estados', icon: 'fa fa fa-share-alt-square', idparent: 11, path: 'tareaTipoEstado' },
+    { id: 14, titulo: 'Estados', icon: 'fa fa fa-hourglass-start', idparent: 11, path: 'tareaEstado' },
+    { id: 15, titulo: 'Modificar', icon: 'fa fa fa-book', idparent: 11, path: 'tareaModificar' }, 
   ];
 
   constructor() { } 

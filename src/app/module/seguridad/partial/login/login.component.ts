@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
       });
     }
   }
-  remove(){
+  remove() {
     localStorage.removeItem('login');
     localStorage.removeItem("user");
     localStorage.removeItem("nameuser");
@@ -77,5 +77,7 @@ export class LoginComponent implements OnInit {
   olvidasteContrasena() {
     this.restablecerPass = !this.restablecerPass;
   }
+
+
 
 }

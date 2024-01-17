@@ -30,10 +30,10 @@ export class PerfilComponent implements OnInit {
       field: "Accion", cellRenderer: TemplateRenderComponent,
       onCellClicked: this.handleEditClick.bind(this),
       cellRendererParams: { edit: 'Editar' },
-      width: 80
+      width: 120
     },
-    { field: "nombre", headerName: 'Nombre', width: 800 },
-    { field: "estado", headerName: 'Estado', width: 150 }
+    { field: "nombre", headerName: 'Nombre', width: 850 },
+    { field: "estado", headerName: 'Estado', width: 230 }
   ];
 
 
@@ -41,7 +41,6 @@ export class PerfilComponent implements OnInit {
 
     this.gridDataPerfil = {
       context: (api: GridApi) => {
-        api.setColumnDefs(this.colDefs)
       },
       rowSelection: 'multiple'
       , pagination: false
@@ -100,7 +99,8 @@ export class PerfilComponent implements OnInit {
 
   getPerfil() {
     this.perfilService.getPerfil(this.user).subscribe({
-      next: (data) => {
+      next: (data) => {        
+        this.gridDataPerfil.api?.setColumnDefs(this.colDefs);
         this.gridDataPerfil.api?.setRowData(data.data);
         this.activationButtons();
       },

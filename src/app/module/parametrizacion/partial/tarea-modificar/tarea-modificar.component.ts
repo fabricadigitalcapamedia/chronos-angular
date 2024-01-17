@@ -22,10 +22,17 @@ export class TareaModificarComponent implements OnInit {
   column?: any[];
   rowData: any;
   DatosTarMod: any = {};
+  DatosUbication: any = {};
   user = localStorage.getItem('user');
-  verGrid: boolean = true;
+  datosJerarquia?: any[];
+
   validate: boolean = false;
+  DatosTarEdit: any = {};
   idTarMod: any = {};
+
+  verGrid: boolean = false;
+  verEdit: boolean = false;
+  verCoord: boolean = false;
 
   coordFilterCtrl = new FormControl();
   filteredCoord?: Observable<any>;
@@ -41,12 +48,12 @@ export class TareaModificarComponent implements OnInit {
       field: "Accion", cellRenderer: TemplateRenderComponent,
       onCellClicked: this.handleEditClick.bind(this),
       cellRendererParams: { edit: 'Editar' },
-      width: 80,
+      width: 100,
     },
-    { field: "nombre", headerName: 'Nombre', width: 200 },
-    { field: "descripcion", headerName: 'Descripción', width: 450 },
-    { field: "fechacreacion", headerName: 'Fecha Creación', width: 180 },
-    { field: "fechamodificacion", headerName: 'Fecha Modificación', width: 180 },
+    { field: "codtarea", headerName: 'Id', width: 150 },
+    { field: "tareaestado", headerName: 'Estado', width: 150 },
+    { field: "empleadoasignado", headerName: 'Asignado', width: 450 },
+    { field: "nombre", headerName: 'Tarea', width: 400 },
   ];
 
   constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private tareaModificarService: TareaModificarService,
@@ -70,11 +77,15 @@ export class TareaModificarComponent implements OnInit {
       filter: () => {
         this.filtrar();
       },
+      search: () => {
+        this.consultTask();
+      },
       editShow: false,
       saveShow: false,
       deleteShow: false,
       newShow: false,
-      filterShow: false
+      filterShow: false,
+      searchShow: false
     }
   }
   ngOnInit(): void {
@@ -93,7 +104,6 @@ export class TareaModificarComponent implements OnInit {
     this.verGrid = true;
     this.router.navigate([], { queryParams: {} });
     this.idTarMod = {};
-    this.getTarEstado();
   }
 
   filtrardataCoord() {
@@ -133,22 +143,7 @@ export class TareaModificarComponent implements OnInit {
     }
   }
 
-  getTarEstado() {
-    this.tareaModificarService.getTarEst(this.user).subscribe({
-      next: (data) => {
-        data.data.forEach((element: any) => {
-          element.fechacreacion = this.formatFecha(element.fechacreacion);
-          element.fechamodificacion = this.formatFecha(element.fechamodificacion);
-        });
-        this.gridDataTarMod.api?.setColumnDefs(this.colDefs);
-        this.gridDataTarMod.api?.setRowData(data.data);
-        this.activationButtons();
-      },
-      error: (error) => {
-        this.toastr.error('error de conexion con el servidor.')
-      }
-    })
-  }
+
 
   getTareaEstadoXid(id: number) {
     this.tareaModificarService.getTarEstXid(this.user, id).subscribe((response) => {
@@ -180,6 +175,7 @@ export class TareaModificarComponent implements OnInit {
     console.log('Coordinación seleccionada:', event.value);
     this.DatosTarMod.codtareaestadotipo = event.value;
     this.getProyecto();
+    this.toolbarButton.searchShow = false;
   }
 
   getProyecto() {
@@ -198,10 +194,14 @@ export class TareaModificarComponent implements OnInit {
 
 
   onProyectoChange(event: any): void {
-    console.log('Proyecto seleccionado:', event.value);
+    this.toolbarButton.searchShow = true;
     this.DatosTarMod
-    this.tareaModificarService.getTask(this.user, event.value).subscribe({
+  }
+
+  consultTask() {
+    this.tareaModificarService.getTask(this.user, this.DatosTarMod.codproyecto).subscribe({
       next: (data) => {
+        this.verGrid = true;
         this.gridDataTarMod.api?.setColumnDefs(this.colDefs);
         this.gridDataTarMod.api?.setRowData(data.data);
       },
@@ -209,6 +209,41 @@ export class TareaModificarComponent implements OnInit {
         this.toastr.error('error de conexion con el servidor.')
       }
     })
+  }
+
+  consultUbication() {
+    this.tareaModificarService.getUbication(this.user, this.DatosTarEdit.codtarea).subscribe({
+      next: (data) => {
+        if (data.data !== null) {
+          this.DatosUbication = data.data;
+          this.datosJerarquia = this.extraerJerarquias(this.DatosUbication.jerarquia, this.DatosTarEdit.codtarea);
+          if (this.datosJerarquia.length > 2) {
+            this.datosJerarquia.forEach((j, i) => {
+              if (this.DatosTarEdit.codtarea !== j) {
+                this.recorrerUbicacion(j)
+              }
+            });
+          }
+        }
+      },
+      error: (error) => {
+        this.toastr.error('error de conexion con el servidor.')
+      }
+    })
+  }
+
+  recorrerUbicacion(codigoTarea: number) {
+    this.tareaModificarService.getUbication(this.user, codigoTarea).subscribe({
+      next: (data) => {
+        if (data.data !== null) {
+          this.DatosUbication.push(data.data);
+        }
+      },
+      error: (error) => {
+        this.toastr.error('error de conexion con el servidor.')
+      }
+    })
+
   }
 
   save() {
@@ -256,25 +291,29 @@ export class TareaModificarComponent implements OnInit {
   handleEditClick(event: any): void {
     var nuevoArray = event.eventPath[0].id;
     if (nuevoArray == 'edit') {
-      this.DatosTarMod = event.data;
+      const idtarea = event.data.id;
+      this.DatosTarEdit = event.data;
       this.verGrid = false;
+      this.verCoord = false;
+      this.verEdit = true;
       this.router.navigate([], { queryParams: { idTarMod: this.DatosTarMod.id } });
       this.idTarMod = this.route.snapshot.queryParams;
       this.filterCoord(this.DatosTarMod.codtareaestadotipo);
       this.activationButtons();
+      this.consultUbication();
+
     }
   };
 
   activationButtons() {
-    if (this.verGrid) {
-      this.toolbarButton.saveShow = false;
-      this.toolbarButton.filterShow = false;
-      this.toolbarButton.deleteShow = false;
-      this.toolbarButton.newShow = true;
-    } else {
+    if (this.verEdit) {
       this.toolbarButton.saveShow = true;
       this.toolbarButton.filterShow = true;
-      this.toolbarButton.newShow = true;
+      this.toolbarButton.newShow = false;
+    } else {
+      this.toolbarButton.saveShow = false;
+      this.toolbarButton.filterShow = false;
+      this.toolbarButton.newShow = false;
     }
   }
 
@@ -311,16 +350,22 @@ export class TareaModificarComponent implements OnInit {
     return new Date(parseInt(partesFecha[2]), parseInt(partesFecha[1]) - 1, parseInt(partesFecha[0]));
   }
 
+  extraerJerarquias(jerarquia: string, proyectoId: string): number[] {
+    const jerarquias = (jerarquia.match(/.{1,10}/g) || []).map((x) => Number(x));
+    jerarquias.splice(0, 0, +proyectoId);
+    return jerarquias;
+  }
+
   fnLoad() {
     this.idTarMod = this.route.snapshot.queryParams;
     this.getCoordinador();
     if (this.idTarMod?.idTarMod) {
       this.getTareaEstadoXid(parseInt(this.idTarMod.idTarEst));
       this.verGrid = false;
+    } else {
+      this.verCoord = true;
     }
-    else {
-      this.getTarEstado();
-    }
+
   }
 
 }

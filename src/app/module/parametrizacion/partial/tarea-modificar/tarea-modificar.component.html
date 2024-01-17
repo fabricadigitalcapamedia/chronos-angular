@@ -1,9 +1,9 @@
 <app-toolbar [toolbar]="toolbarButton"></app-toolbar>
 
-<div class="col-lg-12 col-md-12 col-sm-12 col-12 pl-0 pr-0 ">
+<div class="col-lg-11 col-md-11 col-sm-12 col-12 pl-0 pr-0 " style="margin: 0 auto;">
     <form [ngClass]="validate ? 'was-validated' : ''" #form="ngForm">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-            <div class="card card-danger" [hidden]="verGrid==true">
+            <div class="card card-danger" [hidden]="verCoord==false">
                 <div class="card-header">
                 </div>
                 <div class="card-body">
@@ -17,7 +17,7 @@
                                         #dp1="bsDatepicker" placeholder="DD/MM/AAAA" class="form-control"
                                         [(ngModel)]="DatosTarMod.fechainicio"
                                         [bsConfig]="{ adaptivePosition: true,isAnimated: true, dateInputFormat: 'DD/MM/YYYY',containerClass:'theme-dark-blue', customTodayClass: 'bg-warning'}">
-                                    <span class="input-group-addon calendar-icon" (click)="dp1.show()"
+                                    <span class="btn btn-outline-secondary" (click)="dp1.show()"
                                         [attr.aria-expanded]="dp1.isOpen">
                                         <i class="fa fa fa-calendar"></i>
                                     </span>
@@ -34,7 +34,7 @@
                                         #dp2="bsDatepicker" placeholder="DD/MM/AAAA" class="form-control"
                                         [(ngModel)]="DatosTarMod.fechafin"
                                         [bsConfig]="{ adaptivePosition: true,isAnimated: true, dateInputFormat: 'DD/MM/YYYY',containerClass:'theme-dark-blue', customTodayClass: 'bg-warning'}">
-                                    <span class="input-group-addon calendar-icon" (click)="dp2.show()"
+                                    <span class="btn btn-outline-secondary" (click)="dp2.show()"
                                         [attr.aria-expanded]="dp2.isOpen">
                                         <i class="fa fa fa-calendar"></i>
                                     </span>
@@ -90,8 +90,82 @@
                 <!-- /.card-body -->
             </div>
 
-            <div class="col-md-12 pb-3 pt-3 pl-0 pr-1" [hidden]="verGrid==false">
+            <div [hidden]="verGrid==false">
                 <app-grid-chronos [gridOptions]="gridDataTarMod"></app-grid-chronos>
+            </div>
+
+            <div class="card card-danger" [hidden]="verEdit==false">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Asignado</label>
+                                <input type="text" name="empleadoasignado" [disabled]="true" [(ngModel)]="DatosTarEdit.empleadoasignado"
+                                    class="form-control" placeholder="Asignado">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Nombre tarea</label>
+                                <input type="text" name="nombre" [(ngModel)]="DatosTarEdit.nombre"
+                                    class="form-control" placeholder="Nombre">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Proyecto</label>
+                                <input type="text" name="proyecto" [disabled]="true"  [(ngModel)]="DatosTarEdit.proyecto"
+                                    class="form-control" placeholder="Proyecto">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="bankSelect">Ubicación</label>
+                                <mat-select  [(ngModel)]="DatosTarEdit.ubicacion" #singleSelect
+                                    class="form-control" name="ubicacion" placeholder="Seleccione.."
+                                    [required]="true">
+                                    <mat-option>
+                                        <ngx-mat-select-search [formControl]="proyectoFilterCtrl" placeholder="Buscar"
+                                            placeholderLabel="Buscar"
+                                            noEntriesFoundLabel="No hay Registros"></ngx-mat-select-search>
+                                    </mat-option>
+
+                                    <mat-option *ngFor="let tipo of filteredProyecto | async" [value]="tipo.codeProject"
+                                        noEntriesFoundLabel="Buscar">
+                                        {{ tipo.project }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <!-- textarea -->
+                            <div class="form-group">
+                                <label>Descripción</label>
+                                <textarea class="form-control" name="descripcion" rows="3" placeholder="Descripción"
+                                    [(ngModel)]="DatosTarEdit.descripcion"></textarea>
+                            </div>
+                        </div>    
+                        
+                        
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <!-- textarea -->
+                            <div class="form-group">
+                                <label>Descripción</label>
+                                <textarea class="form-control" name="descripcion" rows="3" placeholder="Descripción"
+                                    [(ngModel)]="DatosTarEdit.descripcion"></textarea>
+                            </div>
+                        </div> 
+
+                    </div>
+                </div>
+                <!-- /.card-body -->
             </div>
         </div>
     </form>

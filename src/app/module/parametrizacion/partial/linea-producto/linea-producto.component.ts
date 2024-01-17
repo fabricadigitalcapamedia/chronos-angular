@@ -32,14 +32,13 @@ export class LineaProductoComponent implements OnInit {
       cellRendererParams: { edit: 'Editar' },
       width: 100
     },
-    { field: "nombre", headerName: 'Nombre Linea Producto', width: 900 },
+    { field: "nombre", headerName: 'Nombre Linea Producto', width: 800 },
     { field: "fechacreacion", headerName: 'Fecha Creacion', width: 180 },
     { field: "fechamodificacion", headerName: 'Fecha Modificacion', width: 180 },
   ];
   constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private validationService: ValidationService, private lineaProdcutSerice: LineaProductoService) {
     this.gridDataLineaProducto = {
       context: (api: GridApi) => {
-        api.setColumnDefs(this.colDefs)
       },
       rowSelection: 'multiple'
       , pagination: false
@@ -92,6 +91,8 @@ export class LineaProductoComponent implements OnInit {
           element.fechacreacion = this.validationService.formatFecha(element.fechacreacion);
           element.fechamodificacion = this.validationService.formatFecha(element.fechamodificacion);
         });
+        
+        this.gridDataLineaProducto.api?.setColumnDefs(this.colDefs);
         this.gridDataLineaProducto.api?.setRowData(data.data);
         this.activationButtons();
       },

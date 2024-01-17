@@ -20,9 +20,10 @@ export class AutenticationService {
     const valorGuardado = localStorage.getItem('login');
     this.isAuthenticated = valorGuardado === 'true';
     if (this.isAuthenticated) {
-      return this.router.createUrlTree(['/home']);
+      this.router.navigate(['/home']);
+      return true;
     }
-    else { return this.router.navigate(['/login']);}
+    else { return true;}
   }
 
   logout(): void {

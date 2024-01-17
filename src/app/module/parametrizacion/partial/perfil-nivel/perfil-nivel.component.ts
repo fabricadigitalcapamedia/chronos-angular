@@ -30,9 +30,9 @@ export class PerfilNivelComponent implements OnInit {
       field: "Accion", cellRenderer: TemplateRenderComponent,
       onCellClicked: this.handleEditClick.bind(this),
       cellRendererParams: { edit: 'Editar' },
-      width: 100
+      width: 120
     },
-    { field: "nombre", headerName: 'Nombre', width: 900 },
+    { field: "nombre", headerName: 'Nombre', width: 1000 },
     { field: "jerarquia", headerName: 'Jerarquia', width: 150 }
   ];
 

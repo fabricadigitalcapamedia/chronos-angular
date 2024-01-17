@@ -17,6 +17,8 @@ import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { ParametrizacionRoutingModule } from './parametrizacion-routing.module';
 import { SharedModule } from "../../shared/shared.module";
 
+import { NgbAlertModule, NgbDatepickerModule, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
@@ -72,7 +74,9 @@ import { TareaModificarComponent } from './partial/tarea-modificar/tarea-modific
         MatTabsModule,
         RouterModule,
         ParametrizacionRoutingModule,
-        SharedModule
+        SharedModule,
+        NgbAlertModule, 
+        NgbDatepickerModule
     ]
 })
 export class ParametrizacionModule { }

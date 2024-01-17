@@ -37,10 +37,10 @@ export class TareaEstadosComponent implements OnInit {
       field: "Accion", cellRenderer: TemplateRenderComponent,
       onCellClicked: this.handleEditClick.bind(this),
       cellRendererParams: { edit: 'Editar' },
-      width: 80
+      width: 100
     },
-    { field: "nombre", headerName: 'Nombre', width: 200 },
-    { field: "descripcion", headerName: 'Descripción', width: 450 },
+    { field: "nombre", headerName: 'Nombre', width: 170 },
+    { field: "descripcion", headerName: 'Descripción', width: 650 },
     { field: "fechacreacion", headerName: 'Fecha Creación', width: 180 },
     { field: "fechamodificacion", headerName: 'Fecha Modificación', width: 180 },
   ];

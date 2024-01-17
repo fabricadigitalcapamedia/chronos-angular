@@ -31,22 +31,21 @@ export class TercerosComponent implements OnInit {
       field: "Accion", cellRenderer: TemplateRenderComponent,
       onCellClicked: this.handleEditClick.bind(this),
       cellRendererParams: { edit: 'Editar' },
-      width: 100
+      width: 150
     },
-    { field: "nombre", headerName: 'Nombre', width: 400 },
-    { field: "nit", headerName: 'Nit', width: 150 },
-    { field: "telefono", headerName: 'Telefono', width: 150 }
+    { field: "nombre", headerName: 'Nombre', width: 650 },
+    { field: "nit", headerName: 'Nit', width: 350 },
+    { field: "telefono", headerName: 'Telefono', width: 250 }
   ];
 
   constructor(private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private terceroService: TercerosService) {
     this.gridDataTercero = {
       context: (api: GridApi) => {
-        api.setColumnDefs(this.colDefs)
       },
       rowSelection: 'multiple'
       , pagination: false
       , singleClickEdit: false
-      , enableCellTextSelection: false
+      , enableCellTextSelection: false 
     }
 
     this.toolbarButton = {
@@ -87,8 +86,11 @@ export class TercerosComponent implements OnInit {
   }
 
   getTercero() {
+    this.gridDataTercero.api?.setColumnDefs([]);
+    this.gridDataTercero.api?.setRowData([]);
     this.terceroService.getTercero(this.user).subscribe({
-      next: (data) => {       
+      next: (data) => {          
+        this.gridDataTercero.api?.setColumnDefs(this.colDefs)
         this.gridDataTercero.api?.setRowData(data.data);
         this.activationButtons();
       },
@@ -130,7 +132,7 @@ export class TercerosComponent implements OnInit {
   create(data: any) {
     this.terceroService.createTercero(this.user, data).subscribe({
       next: (data) => {
-        this.DatosTercero= data.data;
+        this.DatosTercero = data.data;
         this.router.navigate([], { queryParams: { idTercero: this.DatosTercero.id } });
         this.activationButtons();
         this.toastr.success(data.mensaje);
