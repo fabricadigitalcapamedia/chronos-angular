@@ -43,6 +43,7 @@ export class ActividadesComponent implements OnInit {
   user = localStorage.getItem('user');
   codpersona = localStorage.getItem('codpersona');
   idEmpleado: any;
+  DataEstadoTarea: any= {};
 
   calendarVisible = signal(true);
   calendarOptions = signal<CalendarOptions>({
@@ -196,9 +197,10 @@ export class ActividadesComponent implements OnInit {
     modalRef.componentInstance.idTarea = id;
     modalRef.componentInstance.codempleado = this.idEmpleado;
     modalRef.componentInstance.fechaDia = moment(clickInfo.event.start, 'DD/MM/YYYY').toDate();
+    modalRef.componentInstance.DataEstadoTarea = this.DataEstadoTarea;
     modalRef.result.then((result) => {
       this.changeDetector.detectChanges();
-      window.location.reload();
+      //window.location.reload();
       console.log('Ventana emergente cerrada con resultado:', result);
     }, (reason) => {
       
@@ -224,7 +226,16 @@ export class ActividadesComponent implements OnInit {
     this.DatosActividades.fechafin = moment().endOf('month').format('DD/MM/YYYY');
     this.loadEvents();
     this.cargaIdEmpleado();
+    this.getTareasEstadoCombo();
     
+  }
+
+  getTareasEstadoCombo(){
+    this.actividadesService.getTareasEstados().subscribe((response) => {
+      if (response.data) {
+        this.DataEstadoTarea = response.data;
+      }
+    });
   }
 
   async cargaIdEmpleado() : Promise<void>{
