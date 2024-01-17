@@ -13,7 +13,7 @@ export const INITIAL_EVENTS: EventInput[] = [
 {id: '37929', title: 'MSAngularActividades/Desarrollov1', start: '2023-12-13T08:00:00', end: '2023-12-13T18:00:00'} ,
 {id: '37930', title: 'MSAngularActividades/Desarrollov2', start: '2023-12-14T08:00:00', end: '2023-12-14T18:00:00'},
 {id: '37931', title: 'MSAngularActividades/DesarrolloV3', start: '2023-12-15T08:00:00', end: '2023-12-19T18:00:00'},
-{id: '37933', title: 'MSAngularActividades/Pruebas', start: '2023-12-18T08:00:00', end: '2023-12-18T18:00:00'},
+{id: '37933', title: 'MSAngularActividades/Pruebas', start: '2023-12-18T08:00:00', end: '2023-12-18T18:00:00', backgroundColor: 'blue'},
 {id: '38151', title: 'MSAngularActividades/Desarrollo V4', start: '2023-12-20T08:00:00', end: '2023-12-29T18:00:00'}
 ];
 

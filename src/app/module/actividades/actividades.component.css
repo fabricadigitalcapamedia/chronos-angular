@@ -46,3 +46,10 @@ h2 {
     margin: 0 auto;
   }
   
+  .daysBack {
+    background-color: #b2f1f1;
+  }
+
+  .daysBackHoursFull {
+    background-color: #a53724;
+  }
