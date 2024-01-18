@@ -8,12 +8,12 @@
           <div class="row">
             <div class="col-md-3">
               <div class="form-group">
-                <label for="bankSelect">Fecha Inicio</label>
+                <label class="label-hours" for="bankSelect">Fecha Inicio</label>
                 <div class="input-group">
                   <input name="fechainicio" [required]="true" type="text" bsDatepicker #dp1="bsDatepicker"
                     placeholder="DD/MM/AAAA" class="form-control" [(ngModel)]="DatosActividades.fechainicio"
                     [bsConfig]="{ adaptivePosition: true,isAnimated: true, dateInputFormat: 'DD/MM/YYYY',containerClass:'theme-dark-blue', customTodayClass: 'bg-warning'}">
-                  <span class="input-group-addon calendar-icon" (click)="dp1.show()" [attr.aria-expanded]="dp1.isOpen">
+                  <span class="btn btn-outline-secondary" (click)="dp1.show()" [attr.aria-expanded]="dp1.isOpen">
                     <i class="fa fa fa-calendar"></i>
                   </span>
                 </div>
@@ -21,7 +21,7 @@
             </div>
             <div class="col-md-3">
               <div class="form-group">
-                <label for="bankSelect">Fecha Fin</label>
+                <label class="label-hours"  for="bankSelect">Fecha Fin</label>
                 <div class="input-group">
                   <input name="fechafin" [required]="true" type="text" bsDatepicker #dp2="bsDatepicker"
                     placeholder="DD/MM/AAAA" class="form-control" [(ngModel)]="DatosActividades.fechafin"
@@ -36,10 +36,10 @@
             </div>
             <div class="col-md-3">
               <div class="form-group">
-                <label for="bankSelect">Horas Registradas</label>
-                <div class="input-group">
-                  <label for="bankSelect" [textContent]="horasMes"></label>
-                </div>
+                <label class="label-hours" for="bankSelect">Horas registradas en el mes actual:</label>
+                
+                <label class="label-hours" for="bankSelect" [textContent]="horasMes"></label>
+                
               </div>
             </div>
           </div>

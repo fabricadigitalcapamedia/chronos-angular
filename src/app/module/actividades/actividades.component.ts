@@ -53,6 +53,18 @@ export class ActividadesComponent implements OnInit {
       timeGridPlugin,
       listPlugin,
     ],
+    height: 850,
+    dayHeaderFormat: { weekday: 'long', omitCommas: true },
+    dayHeaderClassNames : 'label-hours',
+    dayCellClassNames : 'label-hours',
+    slotLabelClassNames : 'label-hours',
+    navLinks: false,
+    weekNumberClassNames : 'label-hours',
+    nowIndicator: true,
+    stickyHeaderDates: true,
+    themeSystem: 'standard',
+    titleFormat: { year: 'numeric', month: 'long'},
+    eventTextColor: '#d9d9d9',
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
@@ -66,10 +78,10 @@ export class ActividadesComponent implements OnInit {
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
-    
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this)
+    eventsSet: this.handleEvents.bind(this),
+    //eventChange: 
     /* you can update a remote database when these fire:
     eventAdd:
     eventChange:
@@ -141,9 +153,10 @@ export class ActividadesComponent implements OnInit {
           title: item.text,
           start: fechaInicio,
           end: fechaFin,
-          backgroundColor: 'blue',
-          borderColor: 'blue',
+          backgroundColor: '#007bff',
+          borderColor: '#007bff',
           allDay: true,
+          className: 'label-hours',
         });
       }else{
         calendarApi.addEvent({
@@ -151,10 +164,11 @@ export class ActividadesComponent implements OnInit {
           title: item.text,
           start: fechaInicio,
           end: fechaFin,
-          backgroundColor: 'red',
-          borderColor: 'red',
-          color: 'red',
-          allDay: true
+          backgroundColor: '#f14331',
+          borderColor: '#f14331',
+          color: '#f14331',
+          allDay: true,
+          className: 'label-hours',
         });
       }
     });
@@ -200,7 +214,9 @@ export class ActividadesComponent implements OnInit {
     modalRef.componentInstance.DataEstadoTarea = this.DataEstadoTarea;
     modalRef.result.then((result) => {
       this.changeDetector.detectChanges();
-      //window.location.reload();
+      const calendarApi = this.calendarComponent.getApi();
+      calendarApi.removeAllEvents();
+      this.loadEvents();
       console.log('Ventana emergente cerrada con resultado:', result);
     }, (reason) => {
       
