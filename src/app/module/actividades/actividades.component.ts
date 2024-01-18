@@ -153,8 +153,8 @@ export class ActividadesComponent implements OnInit {
           title: item.text,
           start: fechaInicio,
           end: fechaFin,
-          backgroundColor: '#007bff',
-          borderColor: '#007bff',
+          backgroundColor: '#98c1ef',
+          borderColor: '#98c1ef',
           allDay: true,
           className: 'label-hours',
         });
@@ -164,9 +164,9 @@ export class ActividadesComponent implements OnInit {
           title: item.text,
           start: fechaInicio,
           end: fechaFin,
-          backgroundColor: '#f14331',
-          borderColor: '#f14331',
-          color: '#f14331',
+          backgroundColor: '#ff985b',
+          borderColor: '#ff985b',
+          color: '#ff985b',
           allDay: true,
           className: 'label-hours',
         });
