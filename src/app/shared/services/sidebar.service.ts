@@ -21,6 +21,9 @@ export class SidebarService {
     { id: 13, titulo: 'Tipo de Estados', icon: 'fa fa fa-share-alt-square', idparent: 11, path: 'tareaTipoEstado' },
     { id: 14, titulo: 'Estados', icon: 'fa fa fa-hourglass-start', idparent: 11, path: 'tareaEstado' },
     { id: 15, titulo: 'Modificar', icon: 'fa fa fa-book', idparent: 11, path: 'tareaModificar' }, 
+    { id: 16, titulo: 'Estructura', icon: 'fa fa fa-book', idparent: 1, path: 'estructura' }, 
+    { id: 17, titulo: 'Administracion', icon: 'fa fa fa-book', idparent: null, path: null }, 
+    { id: 18, titulo: 'Proveedor', icon: 'fa fa fa-book', idparent: 17, path: 'proveedor' }, 
   ];
 
   constructor() { } 

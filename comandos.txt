@@ -1,0 +1,8 @@
+--Crear Routing del modulo a crear
+ng g m namecarpeta/namerouting --routing
+
+--Crear componente
+ng g c namemodule/namecarpeta/partial/namecomponente
+
+--Crear servicio
+ng g s module/namemodulo/service/nameservice

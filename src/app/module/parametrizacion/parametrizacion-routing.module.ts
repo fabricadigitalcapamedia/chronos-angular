@@ -11,6 +11,7 @@ import { TareaTipoComponent } from './partial/tarea-tipo/tarea-tipo.component';
 import { TareaTipoEstadoComponent } from './partial/tarea-tipo-estado/tarea-tipo-estado.component';
 import { TareaEstadosComponent } from './partial/tarea-estados/tarea-estados.component';
 import { TareaModificarComponent } from './partial/tarea-modificar/tarea-modificar.component';
+import { EstructuraOrganizacionalComponent } from './partial/estructura-organizacional/estructura-organizacional.component';
 
 const routes: Routes = [
   {
@@ -67,6 +68,11 @@ const routes: Routes = [
     path: 'tareaModificar',
     component: TareaModificarComponent,
     data: { titulo: 'Tarea Modificar' }
+  },
+  {
+    path: 'estructura',
+    component: EstructuraOrganizacionalComponent,
+    data: { titulo: 'Estructura' }
   },
 ];
 

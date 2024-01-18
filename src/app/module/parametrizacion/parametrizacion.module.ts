@@ -1,6 +1,5 @@
 import { NgModule,Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProyectoComponent } from './partial/proyecto/proyecto.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { FormsModule } from '@angular/forms';
 
@@ -17,8 +16,7 @@ import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { ParametrizacionRoutingModule } from './parametrizacion-routing.module';
 import { SharedModule } from "../../shared/shared.module";
 
-import { NgbAlertModule, NgbDatepickerModule, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbAlertModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
@@ -26,6 +24,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
+import { ProyectoComponent } from './partial/proyecto/proyecto.component';
 import { PerfilComponent } from './partial/perfil/perfil.component';
 import { PerfilTipoComponent } from './partial/perfil-tipo/perfil-tipo.component';
 import { PerfilNivelComponent } from './partial/perfil-nivel/perfil-nivel.component';
@@ -36,6 +35,7 @@ import { TareaTipoComponent } from './partial/tarea-tipo/tarea-tipo.component';
 import { TareaTipoEstadoComponent } from './partial/tarea-tipo-estado/tarea-tipo-estado.component';
 import { TareaEstadosComponent } from './partial/tarea-estados/tarea-estados.component';
 import { TareaModificarComponent } from './partial/tarea-modificar/tarea-modificar.component';
+import { EstructuraOrganizacionalComponent } from './partial/estructura-organizacional/estructura-organizacional.component';
 
 
 @NgModule({
@@ -50,7 +50,8 @@ import { TareaModificarComponent } from './partial/tarea-modificar/tarea-modific
         TareaTipoComponent,
         TareaTipoEstadoComponent,
         TareaEstadosComponent,
-        TareaModificarComponent
+        TareaModificarComponent,
+        EstructuraOrganizacionalComponent
     ],
     exports: [],
     imports: [

@@ -22,7 +22,7 @@ export class TareaModificarComponent implements OnInit {
   column?: any[];
   rowData: any;
   DatosTarMod: any = {};
-  DatosUbication: any = {};
+  DatosUbication: any = [{}];
   user = localStorage.getItem('user');
   datosJerarquia?: any[];
 
@@ -236,6 +236,8 @@ export class TareaModificarComponent implements OnInit {
     this.tareaModificarService.getUbication(this.user, codigoTarea).subscribe({
       next: (data) => {
         if (data.data !== null) {
+          
+      debugger
           this.DatosUbication.push(data.data);
         }
       },
