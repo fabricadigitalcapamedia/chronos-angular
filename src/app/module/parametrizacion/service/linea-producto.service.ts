@@ -40,7 +40,7 @@ export class LineaProductoService {
     );
   }
 
-  updategetLineaProduct(clUsuario: any, data: any): Observable<any> {
+  updateLineaProduct(clUsuario: any, data: any): Observable<any> {
     const headers = new HttpHeaders().set('CL_USUARIO', clUsuario);
     return this.http.put(this.url + '/lineaproducto/' + data.id, data, { headers }).pipe(
       catchError((error: any) => {

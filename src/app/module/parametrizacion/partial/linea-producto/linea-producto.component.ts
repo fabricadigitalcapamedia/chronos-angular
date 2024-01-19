@@ -149,7 +149,7 @@ export class LineaProductoComponent implements OnInit {
     data.fechamodificacion = typeof data.fechamodificacion === 'number' ? data.fechamodificacion : this.validationService.convertirAFecha(data.fechamodificacion);
     data.fechacreacion = typeof data.fechacreacion === 'number' ? data.fechacreacion : this.validationService.convertirAFecha(data.fechacreacion);
     
-    this.lineaProdcutSerice.updategetLineaProduct(this.user, data).subscribe({
+    this.lineaProdcutSerice.updateLineaProduct(this.user, data).subscribe({
       next: (data) => {
         this.toastr.success(data.mensaje);
       },

@@ -1,1 +1,136 @@
-<p>proveedor works!</p>
+<app-toolbar [toolbar]="toolbarButton"></app-toolbar>
+
+<div class="col-lg-11 col-md-11 col-sm-12 col-12 pl-0 pr-0 " style="margin: 0 auto;">
+    <form [ngClass]="validate ? 'was-validated' : ''" #form="ngForm">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card card-danger" [hidden]="verGrid==true">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 ">
+                            <div class="form-group">
+                                <label>Nit</label>
+                                <input type="text" [required]="false" name="nit" [(ngModel)]="DatosProveedor.nit"
+                                    class="form-control" placeholder="Nit">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 ">
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input type="text" [required]="true" name="nombre" [(ngModel)]="DatosProveedor.nombre"
+                                    class="form-control" placeholder="Nombre">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 ">
+                            <div class="form-group">
+                                <label>Contrato Marco</label>
+                                <input type="text" [required]="false" name="contratomarco"
+                                    [(ngModel)]="DatosProveedor.contratomarco" class="form-control"
+                                    placeholder="Contrato Marco">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 ">
+                            <div class="form-group">
+                                <label>Especialidad</label>
+                                <input type="text" [required]="false" name="especialidad"
+                                    [(ngModel)]="DatosProveedor.especialidad" class="form-control"
+                                    placeholder="Especialidad">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 ">
+                            <div class="form-group">
+                                <label>Línea</label>
+                                <input type="text" [required]="false" name="linea" [(ngModel)]="DatosProveedor.linea"
+                                    class="form-control" placeholder="Linea">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 form-group">
+                            <label class="D-label">País</label>
+                            <select name="pais" [required]="true" class="form-control" title="Seleccione país"
+                                [(ngModel)]="DatosProveedor.pais">
+                                <option value="Colombia" selected>Colombia</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 form-group">
+                            <label class="D-label">Departamento</label>
+                            <select name="departamento" [required]="true" class="form-control"
+                                title="Seleccione Departamento" [(ngModel)]="DatosProveedor.departamento">
+                                <option value="Cundinamarca" selected>Cundinamarca</option>
+                                <option value="Amazonas">Amazonas</option>
+                                <option value="Antioquia">Antioquia</option>
+                                <option value="Arauca">Arauca</option>
+                                <option value="Atlántico">Atlántico</option>
+                                <option value="Bolívar">Bolívar</option>
+                                <option value="Boyacá">Boyacá</option>
+                                <option value="Caldas">Caldas</option>
+                                <option value="Caquetá">Caquetá</option>
+                                <option value="Casanare">Casanare</option>
+                                <option value="Cauca">Cauca</option>
+                                <option value="Cesar">Cesar</option>
+                                <option value="Chocó">Chocó</option>
+                                <option value="Córdoba">Córdoba</option>
+                                <option value="Guainía">Guainía</option>
+                                <option value="Guaviare">Guaviare</option>
+                                <option value="Huila">Huila</option>
+                                <option value="La Guajira">La Guajira</option>
+                                <option value="Magdalena">Magdalena</option>
+                                <option value="Meta">Meta</option>
+                                <option value="Nariño">Nariño</option>
+                                <option value="Norte">Norte de Santander</option>
+                                <option value="Putumayo">Putumayo</option>
+                                <option value="Quindío">Quindío</option>
+                                <option value="Risaralda">Risaralda</option>
+                                <option value="San">San Andrés y Providencia</option>
+                                <option value="Santander">Santander</option>
+                                <option value="Sucre">Sucre</option>
+                                <option value="Tolima">Tolima</option>
+                                <option value="Valle">Valle del Cauca</option>
+                                <option value="Vaupés">Vaupés</option>
+                                <option value="Vichada">Vichada</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 form-group">
+                            <label class="D-label">Ciudad</label>
+                            <select name="ciudad" [required]="true" class="form-control" title="Seleccione Ciudad"
+                                [(ngModel)]="DatosProveedor.ciudad">
+                                <option value="Bogota" selected>Bogotá</option>
+                                <option value="Villavicencio">Villavicencio</option>
+                                <option value="Medellin">Medellín</option>
+                                <option value="Ibague">Ibagué</option>
+                                <option value="Cali">Cali</option>
+                                <option value="Santa">Santa</option> Marta
+                                <option value="Barranquilla">Barranquilla</option>
+                                <option value="Valledupar">Valledupar</option>
+                                <option value="Cartagena">Cartagena</option>
+                                <option value="Manizales">Manizales</option>
+                                <option value="Soacha">Soacha</option>
+                                <option value="Pereira">Pereira</option>
+                                <option value="Cucuta">Cúcuta</option>
+                                <option value="Monteria">Montería</option>
+                                <option value="Soledad">Soledad</option>
+                                <option value="Neiva">Neiva</option>
+                                <option value="Bucaramanga">Bucaramanga</option>
+                                <option value="Pasto">Pasto</option>
+                                <option value="Bello">Bello</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+
+            <div [hidden]="verGrid==false">
+                <app-grid-chronos [gridOptions]="gridDataProveedor"></app-grid-chronos>
+            </div>
+        </div>
+    </form>
+</div>

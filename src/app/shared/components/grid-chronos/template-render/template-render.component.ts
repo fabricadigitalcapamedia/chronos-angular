@@ -11,9 +11,9 @@ interface ButtonConfig {
 @Component({
   selector: 'app-template-render',
   template: `
-  <div style="display: flex; gap: 10px;">
-   <div *ngFor="let button of buttons">
-    <button type="button" class="btn btn-sm btn-pad scale-up-center">
+  <div style="display: flex; gap: 10px; justify-content: center; align-items: center;">
+   <div *ngFor="let button of buttons" >
+    <button type="button" class="btn btn-sm btn-pad scale-up-center" style="cursor: pointer;">
       <i  class="{{ button.iconClass }}" title="{{ button.title }}" [id]="button.name"></i>
     </button>
    </div>
