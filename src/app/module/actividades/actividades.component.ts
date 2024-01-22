@@ -15,7 +15,7 @@ import listPlugin from '@fullcalendar/list';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { INITIAL_EVENTS, createEventId } from 'src/app/shared/components/calendar/event-utils';
-import { ActividadesService } from './actividades.service';
+import { ActividadesService } from './service/actividades.service';
 import { EmpleadoService } from '../administracion/personas/empleado.service';
 import * as moment from 'moment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -213,22 +213,18 @@ export class ActividadesComponent implements OnInit {
     modalRef.componentInstance.fechaDia = moment(clickInfo.event.start, 'DD/MM/YYYY').toDate();
     modalRef.componentInstance.DataEstadoTarea = this.DataEstadoTarea;
     modalRef.result.then((result) => {
-      this.changeDetector.detectChanges();
-      const calendarApi = this.calendarComponent.getApi();
-      calendarApi.removeAllEvents();
-      this.loadEvents();
-      console.log('Ventana emergente cerrada con resultado:', result);
+      if(result!=='cancel'){
+        this.changeDetector.detectChanges();
+        const calendarApi = this.calendarComponent.getApi();
+        calendarApi.removeAllEvents();
+        this.loadEvents();
+      }
     }, (reason) => {
-      
       console.log('Ventana emergente cerrada debido a:', reason);
     });
-    //if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      //clickInfo.event.remove();
-    //}
   }
 
   handleEvents(events: EventApi[]) {
-    //console.log(events);
     this.currentEvents.set(events);
     this.changeDetector.detectChanges();
   

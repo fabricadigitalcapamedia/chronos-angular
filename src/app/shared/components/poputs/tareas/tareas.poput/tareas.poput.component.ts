@@ -1,11 +1,12 @@
 import { Component, Output, OnInit, EventEmitter, ViewChild, ChangeDetectorRef} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, NgForm } from '@angular/forms';
-import { ActividadesService } from '../../../../../../app/module/actividades/actividades.service';
+import { ActividadesService } from '../../../../../module/actividades/service/actividades.service';
 import { Observable, map, startWith} from 'rxjs';
 import { ProyectoService } from '../../../../../../app/module/parametrizacion/service/proyecto.service';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
+import { TareaService } from '../../../../../../app/module/actividades/service/tarea.service';
 
 @Component({
   selector: 'app-tareas.poput',
@@ -33,6 +34,7 @@ export class TareasPoputComponent  implements OnInit {
     hora: null,
     descripcionRegistro: null,
   };
+  tareaObj: any;
   idTarea: any;
   validate: boolean = false;
   toolbarButton: any = {};
@@ -40,13 +42,15 @@ export class TareasPoputComponent  implements OnInit {
   codempleado: any;
   idEmpleadoControl: any = 0;
   DataEstadoTarea: any= {};
-  
+  fechaCreacionEmpleadoControl: any;
+  fechaModificacionEmpleadoControl: any;
   DatosEmpleadoControl: any= {};
   constructor(public activeModal: NgbActiveModal, 
     private actividadesService: ActividadesService,
     private proyectoService: ProyectoService,
     private toastr: ToastrService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private tareaService: TareaService,
     ) {
     
     this.toolbarButton = {
@@ -111,16 +115,26 @@ export class TareasPoputComponent  implements OnInit {
         this.toastr.warning('Las horas no deben superar 9');
       }else {
         //Creacion
-        if(this.idEmpleadoControl===0){ 
+        if(this.idEmpleadoControl===0){
           data.id = null;
           data.fechacreacion = null;
           data.fechamodificacion = null;
           this.actividadesService.saveEmpleadoControl(data).subscribe((response) => {
             if (response.data) {
               console.log(response.data);
-              this.activeModal.close();
+              this.actualizaTarea()
             } 
           });  
+        }else {
+          data.id = this.idEmpleadoControl;
+          data.fechacreacion = new Date(this.fechaCreacionEmpleadoControl);
+          data.fechamodificacion = new Date(this.fechaModificacionEmpleadoControl);
+          this.actividadesService.updateEmpleadoControl(data, this.idEmpleadoControl).subscribe((response) => {
+            if (response.data) {
+              console.log(response.data);
+              this.actualizaTarea()
+            } 
+          }); 
         }
       }
     }
@@ -130,14 +144,25 @@ export class TareasPoputComponent  implements OnInit {
   cancel() {
     // Puedes emitir un evento para informar al componente principal sobre el cierre y proporcionar datos si es necesario
     this.formularioCompletado.emit({ mensaje: 'Formulario completado' });
-    this.activeModal.close();
+    this.activeModal.close('cancel');
+  }
+
+  actualizaTarea(){
+    this.tareaObj.codtareaestado = this.DatosTareas.estado;
+    this.tareaService.updateTarea(this.tareaObj.id, this.tareaObj).subscribe((response) => {
+      if (response.data) {
+        console.log(response.data);
+        this.activeModal.close();
+      } 
+    }); 
+    
   }
 
   getTareaById(id: any){
-    
-    this.actividadesService.getTareaById(id).subscribe((response) => {
+    this.tareaService.getTareaById(id).subscribe((response) => {
       if (response.data) {
         console.log(response.data);
+        this.tareaObj = response.data;
         this.DatosTareas.nombre = response.data.nombre;
         this.DatosTareas.descrip = response.data.descripcion === null ? response.data.nombre : response.data.descripcion;   
         this.DatosTareas.estado =response.data.codtareaestado;
@@ -154,7 +179,6 @@ export class TareasPoputComponent  implements OnInit {
   getProyectoName(idProyecto: any){
     this.proyectoService.getProyectoXid(this.user, idProyecto).subscribe((response) => {
       if (response.data) {
-        //console.log(response.data);
         this.DatosTareas.proyecto = response.data.nombre;
       }
     });
@@ -167,6 +191,8 @@ export class TareasPoputComponent  implements OnInit {
         this.DatosTareas.hora = response.data[0].horas;
         this.DatosTareas.descripcionRegistro = response.data[0].descripcion;
         this.idEmpleadoControl = response.data[0].id;
+        this.fechaCreacionEmpleadoControl = response.data[0].fechacreacion;
+        this.fechaModificacionEmpleadoControl = response.data[0].fechamodificacion;
       }
     });
   }

@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, catchError, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from '../../../environments/environment';
-import { LoginService } from '../seguridad/service/login.service';
+import { environment } from '../../../../environments/environment';
+import { LoginService } from '../../seguridad/service/login.service';
 import * as moment from 'moment';
 
 @Injectable({
@@ -26,10 +26,7 @@ export class ActividadesService {
     return this.http.get(url, { headers });
   }
 
-  getTareaById(id: any): Observable<any>{
-    let url = this.url + '/tarea/'+id;
-    return this.http.get(url, )
-  }
+  
 
   getTareasEstados() : Observable<any>{
     let url = this.url + '/tareaestado';
@@ -44,5 +41,10 @@ export class ActividadesService {
   saveEmpleadoControl(data: any): Observable<any>{
     let url = this.url + '/empleadocontrol' ;
     return this.http.post(url, data, );
+  }
+
+  updateEmpleadoControl(data: any, id: any): Observable<any>{
+    let url = this.url + '/empleadocontrol/' + id;
+    return this.http.put(url, data, );
   }
 }
